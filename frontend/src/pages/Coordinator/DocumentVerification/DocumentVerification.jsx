@@ -11,10 +11,6 @@ const documentData = {
     title: "Offer Letter Verification",
     type: "Offer Letter",
   },
-  weekly: {
-    title: "Weekly Report Verification",
-    type: "Weekly Report",
-  },
   final: {
     title: "Final Report Verification",
     type: "Final Internship Report",

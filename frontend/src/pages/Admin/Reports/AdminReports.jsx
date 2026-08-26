@@ -1,6 +1,7 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminReports.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+
 const reports = [
   {
     id: 1,
@@ -30,7 +31,7 @@ const reports = [
     id: 4,
     report: "Completion Certificate Report",
     department: "AI & DS",
-    generatedBy: "HOD",
+    generatedBy: "Admin",
     date: "22 Jul 2026",
     status: "Generated",
   },
@@ -39,21 +40,25 @@ const reports = [
 const AdminReports = () => {
   return (
     <DashboardLayout>
-       <BackButton />
+      <BackButton />
+
       <div className="admin-reports">
 
         <div className="page-header">
           <h1>Reports Management</h1>
+
           <p>
             View and download internship reports.
           </p>
         </div>
+
 
         <div className="table-card">
 
           <table>
 
             <thead>
+
               <tr>
                 <th>ID</th>
                 <th>Report Name</th>
@@ -63,7 +68,9 @@ const AdminReports = () => {
                 <th>Status</th>
                 <th>Action</th>
               </tr>
+
             </thead>
+
 
             <tbody>
 
@@ -71,12 +78,29 @@ const AdminReports = () => {
 
                 <tr key={report.id}>
 
-                  <td>{report.id}</td>
-                  <td>{report.report}</td>
-                  <td>{report.department}</td>
-                  <td>{report.generatedBy}</td>
-                  <td>{report.date}</td>
-                  <td>{report.status}</td>
+                  <td>
+                    {report.id}
+                  </td>
+
+                  <td>
+                    {report.report}
+                  </td>
+
+                  <td>
+                    {report.department}
+                  </td>
+
+                  <td>
+                    {report.generatedBy}
+                  </td>
+
+                  <td>
+                    {report.date}
+                  </td>
+
+                  <td>
+                    {report.status}
+                  </td>
 
                   <td>
 
@@ -101,6 +125,7 @@ const AdminReports = () => {
         </div>
 
       </div>
+
     </DashboardLayout>
   );
 };

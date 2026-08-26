@@ -8,7 +8,7 @@ const AuthLayout = ({ children }) => {
           <h1>Student Internship Management System</h1>
           <p>
             Simplifying internship management for students,
-            coordinators, HODs and administrators through one
+            coordinators and administrators through one
             powerful platform.
           </p>
         </div>

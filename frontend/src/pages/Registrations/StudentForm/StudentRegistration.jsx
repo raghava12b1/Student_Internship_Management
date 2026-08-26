@@ -220,7 +220,7 @@ function StudentRegistration() {
 
           <p>
             Create your student account to manage internship
-            applications, offer letters, weekly reports,
+            applications, offer letters, final reports,
             progress and certificates.
           </p>
 

@@ -110,7 +110,7 @@ function Contact() {
             </div>
 
             <p>
-              Whether you are a student, coordinator, HOD,
+              Whether you are a student, coordinator,
               or administrator, use the information below
               to connect with the university.
             </p>
@@ -378,9 +378,6 @@ function Contact() {
                         Coordinator
                       </option>
 
-                      <option value="HOD">
-                        HOD
-                      </option>
 
                       <option value="Admin">
                         Administrator
@@ -519,7 +516,7 @@ function Contact() {
             </div>
 
 
-            <div className="support-item">
+            {/* <div className="support-item">
 
               <span>03</span>
 
@@ -536,12 +533,12 @@ function Contact() {
                 monitoring, and reporting.
               </p>
 
-            </div>
+            </div> */}
 
 
             <div className="support-item">
 
-              <span>04</span>
+              <span>03</span>
 
               <div className="support-icon">
                 ⚙️

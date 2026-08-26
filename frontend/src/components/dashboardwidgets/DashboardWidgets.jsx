@@ -19,7 +19,7 @@ const DashboardWidgets = () => {
    *   notifications: [
    *     {
    *       sender: "Coordinator",
-   *       message: "Your weekly report has been approved."
+   *       message: "Your notification message."
    *     }
    *   ]
    * }
@@ -29,13 +29,22 @@ const DashboardWidgets = () => {
   let currentUser = null;
 
   try {
-    const storedUser = localStorage.getItem("currentUser");
+
+    const storedUser =
+      localStorage.getItem("currentUser");
 
     if (storedUser) {
-      currentUser = JSON.parse(storedUser);
+      currentUser =
+        JSON.parse(storedUser);
     }
+
   } catch (error) {
-    console.error("Unable to read current user:", error);
+
+    console.error(
+      "Unable to read current user:",
+      error
+    );
+
   }
 
 
@@ -46,10 +55,12 @@ const DashboardWidgets = () => {
    */
 
   const companyName =
-    currentUser?.companyName || "No company assigned";
+    currentUser?.companyName ||
+    "No company assigned";
 
   const internshipEndDate =
-    currentUser?.internshipEndDate || "--";
+    currentUser?.internshipEndDate ||
+    "--";
 
 
   /*
@@ -58,15 +69,18 @@ const DashboardWidgets = () => {
    * =====================================================
    */
 
-  const notifications = Array.isArray(
-    currentUser?.notifications
-  )
-    ? currentUser.notifications
-    : [];
+  const notifications =
+    Array.isArray(
+      currentUser?.notifications
+    )
+      ? currentUser.notifications
+      : [];
 
 
   return (
+
     <div className="widgets-grid">
+
 
       {/* =================================================
           UPCOMING DEADLINES
@@ -119,24 +133,36 @@ const DashboardWidgets = () => {
 
         {notifications.length > 0 ? (
 
-          notifications.map((notification, index) => (
+          notifications.map(
+            (notification, index) => (
 
-            <div
-              className="widget-item"
-              key={notification.id || index}
-            >
+              <div
+                className="widget-item"
+                key={
+                  notification.id ||
+                  index
+                }
+              >
 
-              <strong>
-                {notification.sender || "Notification"}
-              </strong>
+                <strong>
+                  {
+                    notification.sender ||
+                    "Notification"
+                  }
+                </strong>
 
-              <p>
-                {notification.message || "--"}
-              </p>
+                <p>
+                  {
+                    notification.message ||
+                    "--"
+                  }
+                </p>
 
-            </div>
+              </div>
 
-          ))
+            )
+
+          )
 
         ) : (
 
@@ -153,7 +179,9 @@ const DashboardWidgets = () => {
       </div>
 
     </div>
+
   );
+
 };
 
 export default DashboardWidgets;

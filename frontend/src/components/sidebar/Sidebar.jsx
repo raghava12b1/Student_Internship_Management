@@ -18,10 +18,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     role = "coordinator";
     portalName = "Coordinator Portal";
     loginRole = "Coordinator";
-  } else if (location.pathname.startsWith("/hod")) {
-    role = "hod";
-    portalName = "HOD Portal";
-    loginRole = "HOD";
   } else if (location.pathname.startsWith("/admin")) {
     role = "admin";
     portalName = "Admin Portal";

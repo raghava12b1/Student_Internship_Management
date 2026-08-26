@@ -16,12 +16,6 @@ const stats = [
     icon: "👨‍🏫",
   },
   {
-    title: "HODs",
-    value: 4,
-    color: "#8b5cf6",
-    icon: "🎓",
-  },
-  {
     title: "Companies",
     value: 42,
     color: "#f59e0b",
@@ -59,6 +53,7 @@ const AdminDashboard = () => {
 
         </div>
 
+
         {/* Statistics */}
 
         <div className="stats-grid">
@@ -89,6 +84,7 @@ const AdminDashboard = () => {
 
         </div>
 
+
         {/* Quick Actions */}
 
         <div className="dashboard-section">
@@ -98,53 +94,80 @@ const AdminDashboard = () => {
           <div className="quick-grid">
 
             <button
-              onClick={() => navigate("/admin/students")}
+              onClick={() =>
+                navigate("/admin/students")
+              }
             >
               🎓 Manage Students
             </button>
 
+
             <button
-              onClick={() => navigate("/admin/coordinators")}
+              onClick={() =>
+                navigate("/admin/coordinators")
+              }
             >
               👨‍🏫 Manage Coordinators
             </button>
 
-            <button
-              onClick={() => navigate("/admin/hods")}
-            >
-              🎓 Manage HODs
-            </button>
 
             <button
-              onClick={() => navigate("/admin/companies")}
+              onClick={() =>
+                navigate("/admin/companies")
+              }
             >
               🏢 Manage Companies
             </button>
 
+
             <button
-              onClick={() => navigate("/admin/reports")}
+              onClick={() =>
+                navigate("/admin/reports")
+              }
             >
               📊 View Reports
             </button>
-            <button onClick={() => navigate("/admin/analytics")}>
+
+
+            <button
+              onClick={() =>
+                navigate("/admin/analytics")
+              }
+            >
               📈 Analytics
             </button>
 
-            <button onClick={() => navigate("/admin/notifications")}>
+
+            <button
+              onClick={() =>
+                navigate("/admin/notifications")
+              }
+            >
               🔔 Notifications
             </button>
 
-            <button onClick={() => navigate("/admin/profile")}>
+
+            <button
+              onClick={() =>
+                navigate("/admin/profile")
+              }
+            >
               👤 Profile
             </button>
 
-            <button onClick={() => navigate("/admin/settings")}>
+
+            <button
+              onClick={() =>
+                navigate("/admin/settings")
+              }
+            >
               ⚙️ Settings
             </button>
 
           </div>
 
         </div>
+
 
         {/* Recent Activities */}
 
@@ -166,35 +189,50 @@ const AdminDashboard = () => {
 
             </thead>
 
+
             <tbody>
 
               <tr>
 
                 <td>Bala Krishna</td>
 
-                <td>Registered for Internship</td>
+                <td>
+                  Registered for Internship
+                </td>
 
-                <td>Completed</td>
+                <td>
+                  Completed
+                </td>
 
               </tr>
+
 
               <tr>
 
                 <td>Rahul</td>
 
-                <td>Submitted Final Report</td>
+                <td>
+                  Submitted Final Report
+                </td>
 
-                <td>Pending</td>
+                <td>
+                  Pending
+                </td>
 
               </tr>
+
 
               <tr>
 
                 <td>Coordinator</td>
 
-                <td>Approved Offer Letter</td>
+                <td>
+                  Approved Offer Letter
+                </td>
 
-                <td>Approved</td>
+                <td>
+                  Approved
+                </td>
 
               </tr>
 

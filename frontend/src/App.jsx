@@ -20,9 +20,6 @@ import StudentRegistration
 import CoordinatorRegistration
   from "./pages/Registrations/CoordinatorForm/CoordinatorRegistraion";
 
-import HodRegistration
-  from "./pages/Registrations/HodForm/HodRegistration";
-
 // ============================================================
 // STUDENT
 // ============================================================
@@ -32,9 +29,6 @@ import StudentDashboard
 
 import OfferLetter
   from "./pages/Student/OfferLetter/OfferLetter";
-
-import WeeklyReport
-  from "./pages/Student/WeeklyReport/WeeklyReport";
 
 import FinalReport
   from "./pages/Student/FinalReport/FinalReport";
@@ -83,37 +77,6 @@ import CoordinatorSettings
   from "./pages/Coordinator/Settings/CoordinatorSettings";
 
 // ============================================================
-// HOD
-// ============================================================
-
-import HODDashboard
-  from "./pages/HOD/Dashboard/HODDashboard";
-
-import HODStudents
-  from "./pages/HOD/Students/HODStudents";
-
-import HODCoordinators
-  from "./pages/HOD/Coordinators/HODCoordinators";
-
-import HODApprovals
-  from "./pages/HOD/Approvals/HODApprovals";
-
-import HODReports
-  from "./pages/HOD/Reports/HODReports";
-
-import HODAnalytics
-  from "./pages/HOD/Analytics/HODAnalytics";
-
-import HODNotifications
-  from "./pages/HOD/Notifications/HODNotifications";
-
-import HODProfile
-  from "./pages/HOD/Profile/HODProfile";
-
-import HODSettings
-  from "./pages/HOD/Settings/HODSettings";
-
-// ============================================================
 // ADMIN
 // ============================================================
 
@@ -125,9 +88,6 @@ import AdminStudents
 
 import AdminCoordinators
   from "./pages/Admin/Coordinators/AdminCoordinators";
-
-import AdminHODs
-  from "./pages/Admin/HODs/AdminHODs";
 
 import AdminCompanies
   from "./pages/Admin/Companies/AdminCompanies";
@@ -203,11 +163,6 @@ function App() {
           element={<CoordinatorRegistration />}
         />
 
-        <Route
-          path="/register/hod"
-          element={<HodRegistration />}
-        />
-
         {/* ====================================================
             STUDENT
         ==================================================== */}
@@ -220,11 +175,6 @@ function App() {
         <Route
           path="/student/offer-letter"
           element={<OfferLetter />}
-        />
-
-        <Route
-          path="/student/weekly-report"
-          element={<WeeklyReport />}
         />
 
         <Route
@@ -302,55 +252,6 @@ function App() {
         />
 
         {/* ====================================================
-            HOD
-        ==================================================== */}
-
-        <Route
-          path="/hod/dashboard"
-          element={<HODDashboard />}
-        />
-
-        <Route
-          path="/hod/students"
-          element={<HODStudents />}
-        />
-
-        <Route
-          path="/hod/coordinators"
-          element={<HODCoordinators />}
-        />
-
-        <Route
-          path="/hod/approvals"
-          element={<HODApprovals />}
-        />
-
-        <Route
-          path="/hod/reports"
-          element={<HODReports />}
-        />
-
-        <Route
-          path="/hod/analytics"
-          element={<HODAnalytics />}
-        />
-
-        <Route
-          path="/hod/notifications"
-          element={<HODNotifications />}
-        />
-
-        <Route
-          path="/hod/profile"
-          element={<HODProfile />}
-        />
-
-        <Route
-          path="/hod/settings"
-          element={<HODSettings />}
-        />
-
-        {/* ====================================================
             ADMIN
         ==================================================== */}
 
@@ -367,11 +268,6 @@ function App() {
         <Route
           path="/admin/coordinators"
           element={<AdminCoordinators />}
-        />
-
-        <Route
-          path="/admin/hods"
-          element={<AdminHODs />}
         />
 
         <Route

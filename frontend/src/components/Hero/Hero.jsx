@@ -50,16 +50,6 @@ function Hero() {
 
   // ============================================================
   // HANDLE ROUTER STATE
-  //
-  // This is important when Sidebar sends:
-  //
-  // navigate("/", {
-  //   state: {
-  //     showLogin: true,
-  //     selectedRole: "Student"
-  //   }
-  // })
-  //
   // ============================================================
 
   useEffect(() => {
@@ -82,277 +72,212 @@ function Hero() {
   // ============================================================
   // LOGIN
   // ============================================================
-    const handleLogin = async () => {
 
-  // ----------------------------------------------------------
-  // EMPTY FIELD VALIDATION
-  // ----------------------------------------------------------
+  const handleLogin = async () => {
 
-  if (
-    username.trim() === "" ||
-    password.trim() === ""
-  ) {
-    alert("Please enter Username and Password");
-    return;
-  }
+    // ----------------------------------------------------------
+    // EMPTY FIELD VALIDATION
+    // ----------------------------------------------------------
 
-  try {
+    if (
+      username.trim() === "" ||
+      password.trim() === ""
+    ) {
 
-    // --------------------------------------------------------
-    // LOGIN API
-    // --------------------------------------------------------
-
-    const response = await fetch(
-      "http://127.0.0.1:8000/api/accounts/login/",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type": "application/json",
-        },
-
-        body: JSON.stringify({
-          username: username.trim(),
-          password: password,
-        }),
-      }
-    );
-
-
-    // --------------------------------------------------------
-    // READ RESPONSE
-    // --------------------------------------------------------
-
-    const data = await response.json();
-
-
-    // --------------------------------------------------------
-    // LOGIN FAILED
-    // --------------------------------------------------------
-
-    if (!response.ok) {
-
-      const errorMessage =
-        data?.detail ||
-        data?.message ||
-        data?.error ||
-        "Invalid username or password.";
-
-      alert(errorMessage);
-
+      alert("Please enter Username and Password");
       return;
+
     }
 
 
-    // --------------------------------------------------------
-    // CHECK ACCESS TOKEN
-    // --------------------------------------------------------
+    try {
 
-    if (!data.access) {
+      // --------------------------------------------------------
+      // LOGIN API
+      // --------------------------------------------------------
 
-      alert(
-        "Login successful, but access token was not received."
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/accounts/login/",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            username: username.trim(),
+            password: password,
+          }),
+        }
       );
 
-      return;
-    }
+
+      // --------------------------------------------------------
+      // READ RESPONSE
+      // --------------------------------------------------------
+
+      const data = await response.json();
 
 
-    // --------------------------------------------------------
-    // SAVE AUTHENTICATION DATA
-    // --------------------------------------------------------
+      // --------------------------------------------------------
+      // LOGIN FAILED
+      // --------------------------------------------------------
 
-    localStorage.setItem(
-      "accessToken",
-      data.access
-    );
+      if (!response.ok) {
 
-    localStorage.setItem(
-      "refreshToken",
-      data.refresh
-    );
+        const errorMessage =
+          data?.detail ||
+          data?.message ||
+          data?.error ||
+          "Invalid username or password.";
 
-    localStorage.setItem(
-      "userName",
-      data.username
-    );
+        alert(errorMessage);
+
+        return;
+      }
 
 
-    // --------------------------------------------------------
-    // CONVERT DJANGO ROLE
-    // --------------------------------------------------------
+      // --------------------------------------------------------
+      // CHECK ACCESS TOKEN
+      // --------------------------------------------------------
 
-    let frontendRole = "";
-
-    switch (data.role) {
-
-      case "STUDENT":
-        frontendRole = "Student";
-        break;
-
-      case "COORDINATOR":
-        frontendRole = "Internship Coordinator";
-        break;
-
-      case "HOD":
-        frontendRole = "Head of Department";
-        break;
-
-      case "ADMIN":
-        frontendRole = "Administrator";
-        break;
-
-      default:
-        frontendRole = data.role || selectedRole;
-    }
-
-
-    localStorage.setItem(
-      "userRole",
-      frontendRole
-    );
-
-
-    // --------------------------------------------------------
-    // STORE BASIC CURRENT USER INFORMATION
-    // --------------------------------------------------------
-
-    const currentUser = {
-      username: data.username,
-      role: frontendRole,
-    };
-
-    localStorage.setItem(
-      "currentUser",
-      JSON.stringify(currentUser)
-    );
-
-
-    // --------------------------------------------------------
-    // REDIRECT BASED ON BACKEND ROLE
-    // --------------------------------------------------------
-
-    switch (data.role) {
-
-      case "STUDENT":
-
-        navigate("/student/dashboard");
-
-        break;
-
-
-      case "COORDINATOR":
-
-        navigate("/coordinator/dashboard");
-
-        break;
-
-
-      case "HOD":
-
-        navigate("/hod/dashboard");
-
-        break;
-
-
-      case "ADMIN":
-
-        navigate("/admin/dashboard");
-
-        break;
-
-
-      default:
+      if (!data.access) {
 
         alert(
-          "Login successful, but the user role is not recognized."
+          "Login successful, but access token was not received."
         );
+
+        return;
+      }
+
+
+      // --------------------------------------------------------
+      // SAVE AUTHENTICATION DATA
+      // --------------------------------------------------------
+
+      localStorage.setItem(
+        "accessToken",
+        data.access
+      );
+
+      localStorage.setItem(
+        "refreshToken",
+        data.refresh
+      );
+
+      localStorage.setItem(
+        "userName",
+        data.username
+      );
+
+
+      // --------------------------------------------------------
+      // CONVERT DJANGO ROLE
+      // --------------------------------------------------------
+
+      let frontendRole = "";
+
+      switch (data.role) {
+
+        case "STUDENT":
+
+          frontendRole = "Student";
+          break;
+
+
+        case "COORDINATOR":
+
+          frontendRole = "Internship Coordinator";
+          break;
+
+
+        case "ADMIN":
+
+          frontendRole = "Administrator";
+          break;
+
+
+        default:
+
+          frontendRole =
+            data.role || selectedRole;
+
+      }
+
+
+      localStorage.setItem(
+        "userRole",
+        frontendRole
+      );
+
+
+      // --------------------------------------------------------
+      // STORE BASIC CURRENT USER INFORMATION
+      // --------------------------------------------------------
+
+      const currentUser = {
+        username: data.username,
+        role: frontendRole,
+      };
+
+
+      localStorage.setItem(
+        "currentUser",
+        JSON.stringify(currentUser)
+      );
+
+
+      // --------------------------------------------------------
+      // REDIRECT BASED ON BACKEND ROLE
+      // --------------------------------------------------------
+
+      switch (data.role) {
+
+        case "STUDENT":
+
+          navigate("/student/dashboard");
+
+          break;
+
+
+        case "COORDINATOR":
+
+          navigate("/coordinator/dashboard");
+
+          break;
+
+
+        case "ADMIN":
+
+          navigate("/admin/dashboard");
+
+          break;
+
+
+        default:
+
+          alert(
+            "Login successful, but the user role is not recognized."
+          );
+
+      }
+
+
+    } catch (error) {
+
+      console.error(
+        "Login error:",
+        error
+      );
+
+      alert(
+        "Unable to connect to the server. Please make sure Django is running."
+      );
 
     }
 
-  } catch (error) {
-
-    console.error(
-      "Login error:",
-      error
-    );
-
-    alert(
-      "Unable to connect to the server. Please make sure Django is running."
-    );
-
-  }
-};
-  // const handleLogin = () => {
-
-  //   // ----------------------------------------------------------
-  //   // EMPTY FIELD VALIDATION
-  //   // ----------------------------------------------------------
-
-  //   if (
-  //     username.trim() === "" ||
-  //     password.trim() === ""
-  //   ) {
-
-  //     alert(
-  //       "Please enter Username and Password"
-  //     );
-
-  //     return;
-  //   }
-
-
-  //   // ----------------------------------------------------------
-  //   // ROLE BASED DASHBOARD
-  //   // ----------------------------------------------------------
-
-  //   switch (selectedRole) {
-
-  //     case "Student":
-
-  //       navigate(
-  //         "/student/dashboard"
-  //       );
-
-  //       break;
-
-
-  //     case "Coordinator":
-
-  //       navigate(
-  //         "/coordinator/dashboard"
-  //       );
-
-  //       break;
-
-
-  //     case "HOD":
-
-  //       navigate(
-  //         "/hod/dashboard"
-  //       );
-
-  //       break;
-
-
-  //     case "Admin":
-
-  //       navigate(
-  //         "/admin/dashboard"
-  //       );
-
-  //       break;
-
-
-  //     default:
-
-  //       alert(
-  //         "Please select a role"
-  //       );
-
-  //   }
-
-  // };
+  };
 
 
   // ============================================================
@@ -371,11 +296,6 @@ function Hero() {
       case "Coordinator":
 
         return "/register/coordinator";
-
-
-      case "HOD":
-
-        return "/register/hod";
 
 
       case "Admin":
@@ -444,6 +364,10 @@ function Hero() {
   };
 
 
+  // ============================================================
+  // UI
+  // ============================================================
+
   return (
 
     <section
@@ -453,7 +377,6 @@ function Hero() {
           : "home-view"
       }`}
     >
-
 
       {/* ======================================================
           HOME / HERO VIEW
@@ -467,15 +390,14 @@ function Hero() {
 
             <div className="hero-content">
 
-
               {/* ==================================================
                   LEFT SIDE
               ================================================== */}
 
               <div className="hero-text">
 
-
                 {/* UNIVERSITY */}
+
                 <div className="hero-eyebrow">
 
                   <span className="eyebrow-line"></span>
@@ -486,6 +408,7 @@ function Hero() {
 
 
                 {/* PORTAL BADGE */}
+
                 <div className="hero-badge">
 
                   <span className="hero-badge-dot"></span>
@@ -498,12 +421,14 @@ function Hero() {
 
 
                 {/* MAIN HEADING */}
+
                 <h1>
                   Student Internship Management System
                 </h1>
 
 
                 {/* DESCRIPTION */}
+
                 <p>
 
                   A centralized digital platform for
@@ -516,10 +441,11 @@ function Hero() {
 
 
                 {/* ACTIONS */}
+
                 <div className="hero-actions">
 
-
                   {/* GET STARTED */}
+
                   <button
                     type="button"
                     className="btn-get-started"
@@ -538,6 +464,7 @@ function Hero() {
 
 
                   {/* STATUS */}
+
                   <div className="hero-status">
 
                     <span className="status-dot"></span>
@@ -662,7 +589,6 @@ function Hero() {
 
             <div className="login-header">
 
-
               {/* BRAND MARK */}
 
               <div className="login-brand-mark">
@@ -704,16 +630,13 @@ function Hero() {
 
               <div className="login-info">
 
-
                 <div className="login-info-number">
                   01
                 </div>
 
-
                 <h2>
                   Welcome Back
                 </h2>
-
 
                 <p>
 
@@ -722,9 +645,7 @@ function Hero() {
 
                 </p>
 
-
                 <div className="login-info-divider"></div>
-
 
                 <div className="login-security">
 
@@ -735,7 +656,6 @@ function Hero() {
                   Secure University Access
 
                 </div>
-
 
                 <div className="login-security">
 
@@ -806,9 +726,7 @@ function Hero() {
                         : ""
                     }`}
                     onClick={() =>
-                      handleRoleChange(
-                        "Coordinator"
-                      )
+                      handleRoleChange("Coordinator")
                     }
                   >
 
@@ -821,31 +739,6 @@ function Hero() {
                     </span>
 
                   </button>
-
-
-                  {/* HOD */}
-
-                  {/* <button
-                    type="button"
-                    className={`role-btn ${
-                      selectedRole === "HOD"
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() =>
-                      handleRoleChange("HOD")
-                    }
-                  >
-
-                    <span className="role-icon">
-                      🏢
-                    </span>
-
-                    <span>
-                      HOD
-                    </span>
-
-                  </button> */}
 
 
                   {/* ADMIN */}

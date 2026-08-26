@@ -1,7 +1,7 @@
 import "./StatCards.css";
+
 import {
   FaFileAlt,
-  FaCheckCircle,
   FaClock,
   FaCertificate,
 } from "react-icons/fa";
@@ -19,8 +19,6 @@ const StatCards = () => {
    *
    * {
    *   offerLetterStatus: "Uploaded",
-   *   weeklyReportsSubmitted: 8,
-   *   weeklyReportsRequired: 12,
    *   pendingReviews: 3,
    *   certificateStatus: "Uploaded"
    * }
@@ -29,14 +27,23 @@ const StatCards = () => {
   let currentUser = null;
 
   try {
-    const storedUser = localStorage.getItem("currentUser");
+
+    const storedUser =
+      localStorage.getItem("currentUser");
 
     if (storedUser) {
       currentUser = JSON.parse(storedUser);
     }
+
   } catch (error) {
-    console.error("Unable to read current user:", error);
+
+    console.error(
+      "Unable to read current user:",
+      error
+    );
+
   }
+
 
   /*
    * =====================================================
@@ -45,19 +52,17 @@ const StatCards = () => {
    */
 
   const offerLetterStatus =
-    currentUser?.offerLetterStatus || "Not Uploaded";
-
-  const weeklyReportsSubmitted =
-    Number(currentUser?.weeklyReportsSubmitted ?? 0);
-
-  const weeklyReportsRequired =
-    Number(currentUser?.weeklyReportsRequired ?? 0);
+    currentUser?.offerLetterStatus ||
+    "Not Uploaded";
 
   const pendingReviews =
-    Number(currentUser?.pendingReviews ?? 0);
+    Number(
+      currentUser?.pendingReviews ?? 0
+    );
 
   const certificateStatus =
-    currentUser?.certificateStatus || "Not Uploaded";
+    currentUser?.certificateStatus ||
+    "Not Uploaded";
 
 
   /*
@@ -67,16 +72,11 @@ const StatCards = () => {
    */
 
   const cards = [
+
     {
       title: "Offer Letter",
       value: offerLetterStatus,
       icon: <FaFileAlt />,
-    },
-
-    {
-      title: "Weekly Reports",
-      value: `${weeklyReportsSubmitted} / ${weeklyReportsRequired}`,
-      icon: <FaCheckCircle />,
     },
 
     {
@@ -90,6 +90,7 @@ const StatCards = () => {
       value: certificateStatus,
       icon: <FaCertificate />,
     },
+
   ];
 
 
@@ -100,6 +101,7 @@ const StatCards = () => {
    */
 
   return (
+
     <div className="stats-grid">
 
       {cards.map((card, index) => (
@@ -126,7 +128,9 @@ const StatCards = () => {
       ))}
 
     </div>
+
   );
+
 };
 
 export default StatCards;

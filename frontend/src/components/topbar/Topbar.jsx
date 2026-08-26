@@ -10,27 +10,16 @@ import NotificationDropdown from "../common/NotificationDropdown/NotificationDro
 import ProfileDropdown from "../common/ProfileDropdown/ProfileDropdown";
 
 const Topbar = ({ setSidebarOpen }) => {
+
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
 
   const location = useLocation();
 
-  /*
-   * =====================================================
-   * CURRENT USER
-   * =====================================================
-   *
-   * Later Django will provide this information.
-   *
-   * Expected format:
-   *
-   * {
-   *   name: "Actual Database Name",
-   *   role: "Internship Coordinator"
-   * }
-   *
-   */
+  // =====================================================
+  // CURRENT USER
+  // =====================================================
 
   let currentUser = null;
 
@@ -41,139 +30,186 @@ const Topbar = ({ setSidebarOpen }) => {
       currentUser = JSON.parse(storedUser);
     }
   } catch (error) {
-    console.error("Unable to read current user:", error);
+    console.error(
+      "Unable to read current user:",
+      error
+    );
   }
 
-  /*
-   * Temporary fallback for the current frontend.
-   *
-   * Once Django login is connected,
-   * currentUser will come from the backend.
-   */
+  // =====================================================
+  // USER NAME & ROLE
+  // =====================================================
 
-  let userName = currentUser?.name || currentUser?.full_name;
+  let userName =
+    currentUser?.name ||
+    currentUser?.full_name;
 
-  let role = currentUser?.role;
+  let role =
+    currentUser?.role;
 
-  /*
-   * Backward compatibility with our old frontend
-   */
-
+  // Backward compatibility
   if (!userName) {
-    userName = localStorage.getItem("userName");
+    userName =
+      localStorage.getItem("userName");
   }
 
   if (!role) {
-    role = localStorage.getItem("userRole");
+    role =
+      localStorage.getItem("userRole");
   }
 
-  /*
-   * Detect role from URL if no user data exists.
-   */
+  // =====================================================
+  // ROLE DETECTION
+  // =====================================================
 
   if (!role) {
-    if (location.pathname.startsWith("/coordinator")) {
+
+    if (
+      location.pathname.startsWith("/coordinator")
+    ) {
       role = "Internship Coordinator";
-    } else if (location.pathname.startsWith("/hod")) {
-      role = "Head of Department";
-    } else if (location.pathname.startsWith("/admin")) {
+
+    } else if (
+      location.pathname.startsWith("/admin")
+    ) {
       role = "Administrator";
+
     } else {
       role = "Student";
     }
   }
 
-  /*
-   * Do NOT hardcode Bala anymore.
-   */
-
+  // Don't hardcode student name
   if (!userName) {
     userName = "User";
   }
 
-  /*
-   * =====================================================
-   * ROLE PATH
-   * =====================================================
-   */
+  // =====================================================
+  // ROLE PATH
+  // =====================================================
 
   const rolePath =
     role === "Student"
       ? "student"
       : role === "Internship Coordinator"
       ? "coordinator"
-      : role === "Head of Department"
-      ? "hod"
       : "admin";
 
-  /*
-   * =====================================================
-   * LOGOUT
-   * =====================================================
-   */
+  // =====================================================
+  // LOGOUT
+  // =====================================================
 
   const handleLogout = () => {
     setShowLogoutModal(true);
   };
 
-  /*
-   * =====================================================
-   * PAGE TITLES
-   * =====================================================
-   */
+  // =====================================================
+  // PAGE TITLES
+  // =====================================================
 
   const pageTitles = {
-    "/student/dashboard": "Dashboard",
-    "/student/offer-letter": "Offer Letter",
-    "/student/weekly-report": "Weekly Report",
-    "/student/final-report": "Final Report",
-    "/student/certificate": "Completion Certificate",
-    "/student/progress": "Progress",
-    "/student/profile": "My Profile",
-    "/student/settings": "Settings",
 
-    "/coordinator/dashboard": "Dashboard",
-    "/coordinator/students": "Students",
-    "/coordinator/document/offer": "Offer Verification",
-    "/coordinator/document/weekly": "Weekly Documents",
-    "/coordinator/document/final": "Final Documents",
-    "/coordinator/document/certificate": "Certificate Documents",
-    "/coordinator/reports": "Reports",
-    "/coordinator/notifications": "Notifications",
-    "/coordinator/profile": "My Profile",
-    "/coordinator/settings": "Settings",
+    // -----------------------------------------------------
+    // STUDENT
+    // -----------------------------------------------------
 
-    "/hod/dashboard": "Dashboard",
-    "/hod/students": "Students",
-    "/hod/coordinators": "Coordinators",
-    "/hod/approvals": "Approvals",
-    "/hod/reports": "Reports",
-    "/hod/analytics": "Analytics",
-    "/hod/notifications": "Notifications",
-    "/hod/profile": "My Profile",
-    "/hod/settings": "Settings",
+    "/student/dashboard":
+      "Dashboard",
 
-    "/admin/dashboard": "Dashboard",
-    "/admin/students": "Students",
-    "/admin/coordinators": "Coordinators",
-    "/admin/hods": "HODs",
-    "/admin/companies": "Companies",
-    "/admin/internships": "Internship Management",
-    "/admin/reports": "Reports",
-    "/admin/analytics": "Analytics",
-    "/admin/notifications": "Notifications",
-    "/admin/profile": "My Profile",
-    "/admin/settings": "Settings",
+    "/student/offer-letter":
+      "Offer Letter",
+
+    "/student/final-report":
+      "Final Report",
+
+    "/student/certificate":
+      "Completion Certificate",
+
+    "/student/progress":
+      "Progress",
+
+    "/student/profile":
+      "My Profile",
+
+    "/student/settings":
+      "Settings",
+
+    // -----------------------------------------------------
+    // COORDINATOR
+    // -----------------------------------------------------
+
+    "/coordinator/dashboard":
+      "Dashboard",
+
+    "/coordinator/students":
+      "Students",
+
+    "/coordinator/document/offer":
+      "Offer Verification",
+
+    "/coordinator/document/weekly":
+      "Weekly Documents",
+
+    "/coordinator/document/final":
+      "Final Documents",
+
+    "/coordinator/document/certificate":
+      "Certificate Documents",
+
+    "/coordinator/reports":
+      "Reports",
+
+    "/coordinator/notifications":
+      "Notifications",
+
+    "/coordinator/profile":
+      "My Profile",
+
+    "/coordinator/settings":
+      "Settings",
+
+    // -----------------------------------------------------
+    // ADMIN
+    // -----------------------------------------------------
+
+    "/admin/dashboard":
+      "Dashboard",
+
+    "/admin/students":
+      "Students",
+
+    "/admin/coordinators":
+      "Coordinators",
+
+    "/admin/companies":
+      "Companies",
+
+    "/admin/internships":
+      "Internship Management",
+
+    "/admin/reports":
+      "Reports",
+
+    "/admin/analytics":
+      "Analytics",
+
+    "/admin/notifications":
+      "Notifications",
+
+    "/admin/profile":
+      "My Profile",
+
+    "/admin/settings":
+      "Settings",
   };
 
   const pageTitle =
-    pageTitles[location.pathname] || "Dashboard";
+    pageTitles[location.pathname] ||
+    "Dashboard";
 
-  /*
-   * =====================================================
-   * UI
-   * =====================================================
-   */
+  // =====================================================
+  // UI
+  // =====================================================
 
   return (
     <header className="topbar">
@@ -184,12 +220,16 @@ const Topbar = ({ setSidebarOpen }) => {
 
         <button
           className="menu-toggle"
-          onClick={() => setSidebarOpen(true)}
+          onClick={() =>
+            setSidebarOpen(true)
+          }
         >
           <FiMenu />
         </button>
 
-        <h2>{pageTitle}</h2>
+        <h2>
+          {pageTitle}
+        </h2>
 
       </div>
 
@@ -204,14 +244,18 @@ const Topbar = ({ setSidebarOpen }) => {
           <button
             className="notification-btn"
             onClick={() =>
-              setShowNotifications(!showNotifications)
+              setShowNotifications(
+                !showNotifications
+              )
             }
           >
+
             <IoNotificationsOutline />
 
             <span className="notification-badge">
               3
             </span>
+
           </button>
 
           {showNotifications && (
@@ -227,17 +271,25 @@ const Topbar = ({ setSidebarOpen }) => {
           <div
             className="profile"
             onClick={() =>
-              setShowProfile(!showProfile)
+              setShowProfile(
+                !showProfile
+              )
             }
           >
 
-            <FaUserCircle className="profile-icon" />
+            <FaUserCircle
+              className="profile-icon"
+            />
 
             <div>
 
-              <h4>{userName}</h4>
+              <h4>
+                {userName}
+              </h4>
 
-              <p>{role}</p>
+              <p>
+                {role}
+              </p>
 
             </div>
 

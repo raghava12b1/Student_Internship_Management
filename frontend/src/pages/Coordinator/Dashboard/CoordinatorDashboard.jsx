@@ -139,35 +139,35 @@ const CoordinatorDashboard = () => {
 
         <div className="stats-grid">
 
-  {stats.map((item, index) => (
+          {stats.map((item, index) => (
 
-    <div
-      className="stat-card"
-      key={index}
-    >
+            <div
+              className="stat-card"
+              key={index}
+            >
 
-      <div
-        className="icon-box"
-        style={{
-          background: item.color,
-        }}
-      >
-        {item.icon}
-      </div>
+              <div
+                className="icon-box"
+                style={{
+                  background: item.color,
+                }}
+              >
+                {item.icon}
+              </div>
 
-      <h2>
-        {item.value}
-      </h2>
+              <h2>
+                {item.value}
+              </h2>
 
-      <p>
-        {item.title}
-      </p>
+              <p>
+                {item.title}
+              </p>
 
-    </div>
+            </div>
 
-  ))}
+          ))}
 
-</div>
+        </div>
 
 
         {/* =================================================
@@ -190,13 +190,6 @@ const CoordinatorDashboard = () => {
               📄 Verify Offer Letters
             </button>
 
-            {/* <button
-              onClick={() =>
-                navigate("/coordinator/document/weekly")
-              }
-            >
-              📝 Review Weekly Reports
-            </button> */}
 
             <button
               onClick={() =>
@@ -206,6 +199,7 @@ const CoordinatorDashboard = () => {
               📚 Review Final Reports
             </button>
 
+
             <button
               onClick={() =>
                 navigate("/coordinator/document/certificate")
@@ -213,6 +207,7 @@ const CoordinatorDashboard = () => {
             >
               🏆 View Completion Certificates
             </button>
+
 
             <button
               onClick={() =>
@@ -272,7 +267,11 @@ const CoordinatorDashboard = () => {
                 {recentApplications.map(
                   (application, index) => (
 
-                    <tr key={application.id || index}>
+                    <tr
+                      key={
+                        application.id || index
+                      }
+                    >
 
                       <td>
                         {application.student_name ||

@@ -32,7 +32,7 @@ function About() {
           <p>
             Our aim is to make internship management smarter,
             simpler, and more transparent — connecting students,
-            coordinators, HODs, and administrators through one
+            coordinators, and administrators through one
             centralized digital platform.
           </p>
 
@@ -224,9 +224,9 @@ function About() {
               </h3>
 
               <p>
-                Coordinators and HODs can monitor student
-                activities, review information, and manage
-                internship processes efficiently.
+                Coordinators can monitor student activities,
+                review information, and manage internship
+                processes efficiently.
               </p>
 
               <span className="solution-line"></span>
@@ -250,8 +250,7 @@ function About() {
 
               <p>
                 Dedicated dashboards provide relevant access
-                for students, coordinators, HODs, and
-                administrators.
+                for students, coordinators, and administrators.
               </p>
 
               <span className="solution-line"></span>
@@ -344,7 +343,7 @@ function About() {
             </div>
 
 
-            <div className="ecosystem-item">
+            {/* <div className="ecosystem-item">
 
               <span className="ecosystem-index">
                 03
@@ -363,13 +362,13 @@ function About() {
                 oversee internship operations.
               </p>
 
-            </div>
+            </div> */}
 
 
             <div className="ecosystem-item">
 
               <span className="ecosystem-index">
-                04
+                03
               </span>
 
               <div className="ecosystem-icon">
