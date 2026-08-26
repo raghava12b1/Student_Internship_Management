@@ -24,3 +24,21 @@ yarn-error.log*
 # Operating system files
 .DS_Store
 Thumbs.db
+
+# Python / Django
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual environment
+venv/
+backend/venv/
+.venv/
+
+# Django database
+db.sqlite3
+backend/db.sqlite3
+
+# Django media uploads
+backend/media/*
+!backend/media/.gitkeep
