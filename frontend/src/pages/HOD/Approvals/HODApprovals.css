@@ -1,0 +1,1199 @@
+/* =========================================================
+   PREMIUM HOD APPROVALS PAGE
+   Aditya University
+   Student Internship Management System
+========================================================= */
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+
+    --hod-navy: #071a3a;
+    --hod-navy-2: #0b2550;
+
+    --hod-blue: #1557b0;
+    --hod-blue-light: #3b82f6;
+
+    --hod-green: #16a34a;
+    --hod-green-dark: #15803d;
+
+    --hod-red: #dc2626;
+    --hod-red-dark: #b91c1c;
+
+    --hod-gold: #d5a32a;
+    --hod-gold-light: #f1d78a;
+
+    --hod-bg: #f5f8fd;
+    --hod-surface: #ffffff;
+
+    --hod-text: #172033;
+    --hod-text-dark: #0f172a;
+
+    --hod-muted: #64748b;
+    --hod-muted-light: #94a3b8;
+
+    --hod-border: #e5eaf2;
+
+    --hod-radius: 18px;
+
+    --hod-shadow:
+        0 10px 30px rgba(7, 26, 58, 0.055),
+        0 2px 6px rgba(7, 26, 58, 0.035);
+
+    --hod-shadow-hover:
+        0 20px 45px rgba(7, 26, 58, 0.09),
+        0 5px 12px rgba(7, 26, 58, 0.045);
+
+    --hod-ease:
+        cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.hod-approvals {
+
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 30px;
+
+    background:
+
+        radial-gradient(
+            circle at 92% 0%,
+            rgba(37, 99, 235, 0.075),
+            transparent 27%
+        ),
+
+        radial-gradient(
+            circle at 3% 95%,
+            rgba(213, 163, 42, 0.045),
+            transparent 25%
+        ),
+
+        linear-gradient(
+            180deg,
+            #f9fbff 0%,
+            #f4f7fc 100%
+        );
+
+    color: var(--hod-text);
+
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.hod-approvals .page-header {
+
+    position: relative;
+
+    margin-bottom: 28px;
+
+    padding-left: 17px;
+
+    padding-bottom: 18px;
+
+    border-bottom:
+        1px solid
+        rgba(226, 232, 240, 0.9);
+}
+
+
+/* Gold + blue accent */
+
+.hod-approvals .page-header::before {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    top: 2px;
+
+    width: 4px;
+    height: 62px;
+
+    border-radius:
+        0 8px 8px 0;
+
+    background:
+
+        linear-gradient(
+            180deg,
+            var(--hod-gold),
+            var(--hod-blue-light)
+        );
+
+    box-shadow:
+        0 4px 12px
+        rgba(37, 99, 235, 0.15);
+}
+
+
+/* Bottom accent */
+
+.hod-approvals .page-header::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 17px;
+    bottom: -1px;
+
+    width: 75px;
+    height: 3px;
+
+    border-radius: 10px;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--hod-blue),
+            var(--hod-blue-light),
+            var(--hod-gold)
+        );
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.hod-approvals .page-header h1 {
+
+    margin: 0;
+
+    color: var(--hod-navy);
+
+    font-family:
+        "Plus Jakarta Sans",
+        "Inter",
+        sans-serif;
+
+    font-size: 31px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -0.035em;
+}
+
+
+/* =========================================================
+   PAGE DESCRIPTION
+========================================================= */
+
+.hod-approvals .page-header p {
+
+    max-width: 720px;
+
+    margin: 8px 0 0;
+
+    color: var(--hod-muted);
+
+    font-size: 13px;
+
+    line-height: 1.6;
+
+    font-weight: 500;
+}
+
+
+/* =========================================================
+   APPROVAL CARD
+========================================================= */
+
+.approval-card {
+
+    position: relative;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 26px;
+
+    margin-bottom: 25px;
+
+    border:
+        1px solid
+        rgba(229, 234, 242, 0.95);
+
+    border-radius:
+        var(--hod-radius);
+
+    background:
+        rgba(255, 255, 255, 0.97);
+
+    box-shadow:
+        var(--hod-shadow);
+
+    overflow-x: auto;
+
+    transition:
+        box-shadow 0.35s var(--hod-ease),
+        border-color 0.35s ease;
+}
+
+
+/* =========================================================
+   CARD TOP ACCENT
+========================================================= */
+
+.approval-card::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+    right: 0;
+
+    height: 3px;
+
+    border-radius:
+        18px 18px 0 0;
+
+    background:
+
+        linear-gradient(
+            90deg,
+            var(--hod-navy),
+            var(--hod-blue),
+            var(--hod-gold)
+        );
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.approval-card:hover {
+
+    border-color:
+        rgba(21, 87, 176, 0.12);
+
+    box-shadow:
+        var(--hod-shadow-hover);
+}
+
+
+/* =========================================================
+   TABLE WRAPPER SUPPORT
+========================================================= */
+
+.approval-card .table-wrapper {
+
+    width: 100%;
+
+    overflow-x: auto;
+
+    border:
+        1px solid
+        #e8edf4;
+
+    border-radius: 13px;
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.approval-card table {
+
+    width: 100%;
+
+    min-width: 900px;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    background:
+        #ffffff;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.approval-card thead {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            var(--hod-navy),
+            var(--hod-navy-2)
+        );
+
+    color: #ffffff;
+}
+
+
+/* =========================================================
+   TABLE HEADER CELLS
+========================================================= */
+
+.approval-card th {
+
+    padding:
+        14px 16px;
+
+    text-align: left;
+
+    color:
+        rgba(255, 255, 255, 0.94);
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.055em;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+
+    border: none;
+}
+
+
+/* First header */
+
+.approval-card th:first-child {
+
+    border-radius:
+        12px 0 0 0;
+}
+
+
+/* Last header */
+
+.approval-card th:last-child {
+
+    border-radius:
+        0 12px 0 0;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.approval-card tbody tr {
+
+    background: #ffffff;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+/* =========================================================
+   TABLE ROW HOVER
+========================================================= */
+
+.approval-card tbody tr:hover {
+
+    background:
+        #f8fbff;
+}
+
+
+/* =========================================================
+   TABLE CELLS
+========================================================= */
+
+.approval-card td {
+
+    padding:
+        15px 16px;
+
+    color:
+        #475569;
+
+    font-size:
+        12px;
+
+    font-weight:
+        500;
+
+    white-space:
+        nowrap;
+
+    border-bottom:
+        1px solid
+        #edf1f5;
+}
+
+
+/* Last row */
+
+.approval-card tbody tr:last-child td {
+
+    border-bottom:
+        none;
+}
+
+
+/* =========================================================
+   STRONG TEXT
+========================================================= */
+
+.approval-card td strong {
+
+    color:
+        var(--hod-text-dark);
+
+    font-weight:
+        700;
+}
+
+
+/* =========================================================
+   OPTIONAL STUDENT NAME
+========================================================= */
+
+.approval-card td:first-child {
+
+    color:
+        var(--hod-text-dark);
+
+    font-weight:
+        650;
+}
+
+
+/* =========================================================
+   ACTION AREA
+========================================================= */
+
+.approval-card td:last-child {
+
+    min-width:
+        235px;
+}
+
+
+/* =========================================================
+   ACTION BUTTON COMMON
+========================================================= */
+
+.view-btn,
+.approve-btn,
+.reject-btn {
+
+    position: relative;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    min-height: 34px;
+
+    padding:
+        0 13px;
+
+    margin-right: 7px;
+
+    border:
+        1px solid transparent;
+
+    border-radius:
+        8px;
+
+    color:
+        #ffffff;
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size:
+        10px;
+
+    font-weight:
+        700;
+
+    letter-spacing:
+        0.01em;
+
+    white-space:
+        nowrap;
+
+    cursor:
+        pointer;
+
+    overflow:
+        hidden;
+
+    transition:
+        transform 0.25s var(--hod-ease),
+        box-shadow 0.25s var(--hod-ease),
+        background 0.25s ease;
+}
+
+
+/* =========================================================
+   BUTTON SHINE
+========================================================= */
+
+.view-btn::before,
+.approve-btn::before,
+.reject-btn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: -20px;
+    left: -70px;
+
+    width: 45px;
+    height: 80px;
+
+    background:
+        rgba(255, 255, 255, 0.16);
+
+    transform:
+        rotate(25deg);
+
+    transition:
+        left 0.5s ease;
+}
+
+
+.view-btn:hover::before,
+.approve-btn:hover::before,
+.reject-btn:hover::before {
+
+    left: 120%;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+========================================================= */
+
+.view-btn {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    box-shadow:
+
+        0 5px 13px
+        rgba(37, 99, 235, 0.18);
+}
+
+
+.view-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #1d4ed8,
+            #1e3a8a
+        );
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(37, 99, 235, 0.25);
+}
+
+
+/* =========================================================
+   APPROVE BUTTON
+========================================================= */
+
+.approve-btn {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
+        );
+
+    box-shadow:
+
+        0 5px 13px
+        rgba(22, 163, 74, 0.16);
+}
+
+
+.approve-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #15803d,
+            #166534
+        );
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(22, 163, 74, 0.23);
+}
+
+
+/* =========================================================
+   REJECT BUTTON
+========================================================= */
+
+.reject-btn {
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #dc2626,
+            #b91c1c
+        );
+
+    box-shadow:
+
+        0 5px 13px
+        rgba(220, 38, 38, 0.15);
+}
+
+
+.reject-btn:hover {
+
+    transform:
+        translateY(-2px);
+
+    background:
+
+        linear-gradient(
+            135deg,
+            #b91c1c,
+            #991b1b
+        );
+
+    box-shadow:
+
+        0 8px 18px
+        rgba(220, 38, 38, 0.22);
+}
+
+
+/* =========================================================
+   BUTTON ACTIVE
+========================================================= */
+
+.view-btn:active,
+.approve-btn:active,
+.reject-btn:active {
+
+    transform:
+        translateY(0)
+        scale(0.97);
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   Works if JSX contains:
+   approved / pending / rejected
+========================================================= */
+
+.approved,
+.pending,
+.rejected {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    padding:
+        6px 10px;
+
+    border-radius:
+        999px;
+
+    font-size:
+        10px;
+
+    font-weight:
+        800;
+
+    white-space:
+        nowrap;
+}
+
+
+/* Status dot */
+
+.approved::before,
+.pending::before,
+.rejected::before {
+
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    flex-shrink: 0;
+
+    border-radius:
+        50%;
+}
+
+
+/* Approved */
+
+.approved {
+
+    color:
+        #15803d;
+
+    background:
+        rgba(22, 163, 74, 0.09);
+
+    border:
+        1px solid
+        rgba(22, 163, 74, 0.13);
+}
+
+
+.approved::before {
+
+    background:
+        #16a34a;
+}
+
+
+/* Pending */
+
+.pending {
+
+    color:
+        #b45309;
+
+    background:
+        rgba(245, 158, 11, 0.10);
+
+    border:
+        1px solid
+        rgba(245, 158, 11, 0.14);
+}
+
+
+.pending::before {
+
+    background:
+        #f59e0b;
+}
+
+
+/* Rejected */
+
+.rejected {
+
+    color:
+        #b91c1c;
+
+    background:
+        rgba(220, 38, 38, 0.08);
+
+    border:
+        1px solid
+        rgba(220, 38, 38, 0.12);
+}
+
+
+.rejected::before {
+
+    background:
+        #dc2626;
+}
+
+
+/* =========================================================
+   TABLE SCROLLBAR
+========================================================= */
+
+.approval-card::-webkit-scrollbar {
+
+    height: 7px;
+}
+
+
+.approval-card::-webkit-scrollbar-track {
+
+    background:
+        #f1f5f9;
+
+    border-radius:
+        10px;
+}
+
+
+.approval-card::-webkit-scrollbar-thumb {
+
+    background:
+        #cbd5e1;
+
+    border-radius:
+        10px;
+}
+
+
+.approval-card::-webkit-scrollbar-thumb:hover {
+
+    background:
+        #94a3b8;
+}
+
+
+/* =========================================================
+   TABLE WRAPPER SCROLLBAR
+========================================================= */
+
+.approval-card .table-wrapper::-webkit-scrollbar {
+
+    height: 7px;
+}
+
+
+.approval-card .table-wrapper::-webkit-scrollbar-track {
+
+    background:
+        #f1f5f9;
+
+    border-radius:
+        10px;
+}
+
+
+.approval-card .table-wrapper::-webkit-scrollbar-thumb {
+
+    background:
+        #cbd5e1;
+
+    border-radius:
+        10px;
+}
+
+
+/* =========================================================
+   EMPTY TABLE STATE
+========================================================= */
+
+.approval-card .empty-state {
+
+    padding:
+        55px 20px;
+
+    text-align:
+        center;
+
+    color:
+        var(--hod-muted);
+
+    font-size:
+        13px;
+}
+
+
+/* =========================================================
+   FOCUS ACCESSIBILITY
+========================================================= */
+
+.view-btn:focus-visible,
+.approve-btn:focus-visible,
+.reject-btn:focus-visible {
+
+    outline:
+        3px solid
+        rgba(37, 99, 235, 0.20);
+
+    outline-offset:
+        3px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .hod-approvals {
+
+        padding:
+            25px;
+    }
+
+
+    .hod-approvals .page-header h1 {
+
+        font-size:
+            28px;
+    }
+
+
+    .approval-card {
+
+        padding:
+            22px;
+    }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .hod-approvals {
+
+        padding:
+            18px;
+    }
+
+
+    .hod-approvals .page-header {
+
+        margin-bottom:
+            22px;
+
+        padding-left:
+            14px;
+
+        padding-bottom:
+            17px;
+    }
+
+
+    .hod-approvals .page-header::before {
+
+        width:
+            3px;
+
+        height:
+            52px;
+    }
+
+
+    .hod-approvals .page-header::after {
+
+        left:
+            14px;
+
+        width:
+            60px;
+    }
+
+
+    .hod-approvals .page-header h1 {
+
+        font-size:
+            24px;
+    }
+
+
+    .hod-approvals .page-header p {
+
+        font-size:
+            12px;
+    }
+
+
+    .approval-card {
+
+        padding:
+            18px;
+
+        border-radius:
+            15px;
+    }
+
+
+    .approval-card table {
+
+        min-width:
+            820px;
+    }
+
+
+    .approval-card th {
+
+        padding:
+            13px 14px;
+
+        font-size:
+            9px;
+    }
+
+
+    .approval-card td {
+
+        padding:
+            14px;
+
+        font-size:
+            11px;
+    }
+
+
+    .view-btn,
+    .approve-btn,
+    .reject-btn {
+
+        min-height:
+            32px;
+
+        padding:
+            0 11px;
+
+        font-size:
+            9px;
+    }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .hod-approvals {
+
+        padding:
+            14px;
+    }
+
+
+    .hod-approvals .page-header {
+
+        padding-left:
+            12px;
+    }
+
+
+    .hod-approvals .page-header h1 {
+
+        font-size:
+            21px;
+    }
+
+
+    .hod-approvals .page-header p {
+
+        font-size:
+            11px;
+
+        line-height:
+            1.5;
+    }
+
+
+    .approval-card {
+
+        padding:
+            14px;
+
+        border-radius:
+            13px;
+    }
+
+
+    .approval-card table {
+
+        min-width:
+            760px;
+    }
+
+
+    .approval-card th {
+
+        padding:
+            12px;
+    }
+
+
+    .approval-card td {
+
+        padding:
+            12px;
+    }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .approval-card,
+    .approval-card tbody tr,
+    .view-btn,
+    .approve-btn,
+    .reject-btn,
+    .view-btn::before,
+    .approve-btn::before,
+    .reject-btn::before {
+
+        transition:
+            none !important;
+    }
+
+}

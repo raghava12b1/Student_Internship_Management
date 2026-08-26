@@ -1,0 +1,1488 @@
+/* =========================================================
+   PREMIUM CERTIFICATE PAGE
+   Aditya University — Student Internship Management System
+
+   FINAL VERSION
+   - Properly centered inside DashboardLayout
+   - No duplicate sidebar offset
+   - Premium university design
+   - Glassmorphism card
+   - Blue + gold accents
+   - Professional form controls
+   - Responsive desktop/tablet/mobile
+========================================================= */
+
+@import url(
+  "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap"
+);
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+
+  --navbar-height: 78px;
+
+  --cert-navy: #071a3a;
+  --cert-navy-light: #0d2b5c;
+
+  --cert-blue: #1557b0;
+  --cert-blue-light: #2469c7;
+
+  --cert-gold: #d5a32a;
+  --cert-gold-light: #f1d78a;
+
+  --cert-text: #101828;
+  --cert-text-soft: #344054;
+
+  --cert-muted: #667085;
+  --cert-muted-light: #98a2b3;
+
+  --cert-border: #e4e7ec;
+  --cert-border-dark: #d0d5dd;
+
+  --cert-white: #ffffff;
+  --cert-bg: #f6f9fd;
+
+  --cert-success: #16845b;
+
+  --cert-heading: "Plus Jakarta Sans", sans-serif;
+  --cert-body: "Inter", sans-serif;
+
+  --cert-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   BOX SIZING
+========================================================= */
+
+.certificate-page,
+.certificate-page *,
+.certificate-page *::before,
+.certificate-page *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.certificate-page {
+
+  position: relative;
+
+  width: 100%;
+
+  min-height:
+    calc(100vh - var(--navbar-height));
+
+  padding:
+    42px 45px 70px;
+
+  overflow-x: hidden;
+
+  overflow-y: visible;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  font-family:
+    var(--cert-body);
+
+  color:
+    var(--cert-text);
+
+  background:
+
+    radial-gradient(
+      circle at 82% 7%,
+      rgba(21, 87, 176, .075),
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at 10% 88%,
+      rgba(213, 163, 42, .055),
+      transparent 24%
+    ),
+
+    linear-gradient(
+      135deg,
+      #f5f8fc 0%,
+      #ffffff 48%,
+      #f5f8fc 100%
+    );
+
+  animation:
+    certificatePageIn
+    .6s
+    var(--cert-ease)
+    both;
+}
+
+
+/* =========================================================
+   PREMIUM BACKGROUND GRID
+========================================================= */
+
+.certificate-page::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: .30;
+
+  background-image:
+
+    linear-gradient(
+      rgba(7, 26, 58, .018) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(7, 26, 58, .018) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    58px 58px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black 0%,
+      black 65%,
+      transparent 100%
+    );
+}
+
+
+/* =========================================================
+   DECORATIVE BLUE ORB
+========================================================= */
+
+.certificate-page::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 360px;
+
+  height: 360px;
+
+  right: -180px;
+
+  bottom: -180px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(21, 87, 176, .06),
+      transparent 70%
+    );
+
+  filter:
+    blur(5px);
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================================
+   CONTENT LAYER
+========================================================= */
+
+.certificate-page > * {
+
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   PAGE HEADING
+========================================================= */
+
+.certificate-page h1 {
+
+  width: 100%;
+
+  max-width: 900px;
+
+  margin:
+    0 0 12px;
+
+  text-align:
+    center;
+
+  color:
+    var(--cert-navy);
+
+  font-family:
+    var(--cert-heading);
+
+  font-size:
+    clamp(
+      32px,
+      3.2vw,
+      46px
+    );
+
+  font-weight:
+    800;
+
+  line-height:
+    1.08;
+
+  letter-spacing:
+    -.047em;
+
+  -webkit-font-smoothing:
+    antialiased;
+
+  animation:
+    certificateHeaderIn
+    .65s
+    var(--cert-ease)
+    both;
+}
+
+
+/* =========================================================
+   GOLD HEADING ACCENT
+========================================================= */
+
+.certificate-page h1::after {
+
+  content: "";
+
+  display: block;
+
+  width: 58px;
+
+  height: 3px;
+
+  margin:
+    16px auto 0;
+
+  border-radius:
+    20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--cert-gold),
+      var(--cert-gold-light)
+    );
+
+  transform-origin:
+    center;
+
+  animation:
+    certificateAccent
+    .75s
+    var(--cert-ease)
+    .15s
+    both;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.certificate-page > p {
+
+  width: 100%;
+
+  max-width: 650px;
+
+  margin:
+    0 0 34px;
+
+  text-align:
+    center;
+
+  color:
+    var(--cert-muted);
+
+  font-size:
+    13px;
+
+  line-height:
+    1.8;
+
+  animation:
+    certificateHeaderIn
+    .65s
+    var(--cert-ease)
+    .05s
+    both;
+}
+
+
+/* =========================================================
+   MAIN CERTIFICATE CARD
+========================================================= */
+
+.certificate-card {
+
+  position: relative;
+
+  width:
+    min(760px, 100%);
+
+  margin:
+    0 auto;
+
+  padding:
+    36px 38px 34px;
+
+  overflow:
+    hidden;
+
+  border:
+    1px solid
+    rgba(228, 231, 236, .95);
+
+  border-radius:
+    20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, .98),
+      rgba(248, 251, 255, .95)
+    );
+
+  box-shadow:
+
+    0 30px 80px
+    rgba(16, 24, 40, .08),
+
+    0 8px 25px
+    rgba(16, 24, 40, .035),
+
+    inset 0 1px 0
+    rgba(255, 255, 255, .95);
+
+  backdrop-filter:
+    blur(18px);
+
+  animation:
+    certificateCardIn
+    .7s
+    var(--cert-ease)
+    .08s
+    both;
+
+  transition:
+
+    transform .4s
+    var(--cert-ease),
+
+    box-shadow .4s
+    var(--cert-ease),
+
+    border-color .4s
+    var(--cert-ease);
+}
+
+
+/* =========================================================
+   PREMIUM CARD TOP LINE
+========================================================= */
+
+.certificate-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--cert-gold),
+      var(--cert-blue) 48%,
+      var(--cert-navy)
+    );
+}
+
+
+/* =========================================================
+   CARD SOFT GLOW
+========================================================= */
+
+.certificate-card::after {
+
+  content: "";
+
+  position: absolute;
+
+  top: -100px;
+
+  right: -100px;
+
+  width: 210px;
+
+  height: 210px;
+
+  border-radius:
+    50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(21, 87, 176, .06),
+      transparent 68%
+    );
+
+  pointer-events:
+    none;
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.certificate-card:hover {
+
+  transform:
+    translateY(-4px);
+
+  border-color:
+    rgba(21, 87, 176, .14);
+
+  box-shadow:
+
+    0 38px 90px
+    rgba(16, 24, 40, .11),
+
+    0 10px 30px
+    rgba(21, 87, 176, .035);
+}
+
+
+/* =========================================================
+   FORM GROUP
+========================================================= */
+
+.form-group {
+
+  position:
+    relative;
+
+  margin-bottom:
+    22px;
+}
+
+
+.form-group:last-of-type {
+
+  margin-bottom:
+    26px;
+}
+
+
+/* =========================================================
+   FORM LABEL
+========================================================= */
+
+.form-group label {
+
+  display:
+    block;
+
+  margin-bottom:
+    8px;
+
+  color:
+    var(--cert-text-soft);
+
+  font-family:
+    var(--cert-body);
+
+  font-size:
+    10px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .025em;
+}
+
+
+/* =========================================================
+   REQUIRED STAR
+========================================================= */
+
+.form-group label::after {
+
+  content:
+    " *";
+
+  color:
+    var(--cert-gold);
+
+  font-weight:
+    800;
+}
+
+
+/*
+   Certificate Number is optional.
+*/
+
+.form-group:nth-child(2) label::after {
+
+  content:
+    "";
+}
+
+
+/* =========================================================
+   INPUT
+========================================================= */
+
+.form-group input {
+
+  width:
+    100%;
+
+  height:
+    48px;
+
+  padding:
+    0 14px;
+
+  border:
+    1px solid
+    var(--cert-border);
+
+  border-radius:
+    10px;
+
+  outline:
+    none;
+
+  background:
+    rgba(252, 253, 255, .96);
+
+  color:
+    var(--cert-text);
+
+  font-family:
+    var(--cert-body);
+
+  font-size:
+    11px;
+
+  font-weight:
+    500;
+
+  transition:
+
+    border-color .25s
+    var(--cert-ease),
+
+    box-shadow .25s
+    var(--cert-ease),
+
+    background .25s
+    var(--cert-ease),
+
+    transform .25s
+    var(--cert-ease);
+}
+
+
+/* =========================================================
+   PLACEHOLDER
+========================================================= */
+
+.form-group input::placeholder {
+
+  color:
+    var(--cert-muted-light);
+
+  opacity:
+    1;
+}
+
+
+/* =========================================================
+   INPUT HOVER
+========================================================= */
+
+.form-group input:hover {
+
+  border-color:
+    #cbd3df;
+
+  background:
+    #ffffff;
+}
+
+
+/* =========================================================
+   INPUT FOCUS
+========================================================= */
+
+.form-group input:focus {
+
+  border-color:
+    var(--cert-blue);
+
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0 0 0 3px
+    rgba(21, 87, 176, .075),
+
+    0 8px 20px
+    rgba(21, 87, 176, .05);
+
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================================
+   DATE INPUT
+========================================================= */
+
+.form-group input[type="date"] {
+
+  cursor:
+    pointer;
+}
+
+
+/* =========================================================
+   FILE INPUT
+========================================================= */
+
+.form-group input[type="file"] {
+
+  height:
+    auto;
+
+  min-height:
+    48px;
+
+  padding:
+    9px 11px;
+
+  cursor:
+    pointer;
+
+  border:
+    1px dashed
+    #cbd5e1;
+
+  background:
+    #f8fafc;
+}
+
+
+.form-group input[type="file"]:hover {
+
+  border-color:
+    var(--cert-blue);
+
+  background:
+    rgba(21, 87, 176, .025);
+}
+
+
+/* =========================================================
+   FILE SELECT BUTTON
+========================================================= */
+
+.form-group input[type="file"]::file-selector-button {
+
+  margin-right:
+    10px;
+
+  padding:
+    7px 12px;
+
+  border:
+    1px solid
+    rgba(21, 87, 176, .14);
+
+  border-radius:
+    7px;
+
+  background:
+    rgba(21, 87, 176, .07);
+
+  color:
+    var(--cert-blue);
+
+  font-family:
+    var(--cert-body);
+
+  font-size:
+    10px;
+
+  font-weight:
+    700;
+
+  cursor:
+    pointer;
+
+  transition:
+    all .25s
+    var(--cert-ease);
+}
+
+
+.form-group input[type="file"]::file-selector-button:hover {
+
+  background:
+    var(--cert-blue);
+
+  color:
+    #ffffff;
+}
+
+
+/* =========================================================
+   SUBMIT BUTTON
+========================================================= */
+
+.submit-btn {
+
+  position:
+    relative;
+
+  width:
+    100%;
+
+  height:
+    50px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    9px;
+
+  overflow:
+    hidden;
+
+  margin-top:
+    4px;
+
+  border:
+    none;
+
+  border-radius:
+    10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--cert-blue),
+      var(--cert-navy)
+    );
+
+  color:
+    #ffffff;
+
+  font-family:
+    var(--cert-body);
+
+  font-size:
+    11px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .02em;
+
+  cursor:
+    pointer;
+
+  box-shadow:
+
+    0 11px 27px
+    rgba(21, 87, 176, .19),
+
+    inset 0 1px 0
+    rgba(255, 255, 255, .12);
+
+  transition:
+
+    transform .35s
+    var(--cert-ease),
+
+    box-shadow .35s
+    var(--cert-ease);
+}
+
+
+/* =========================================================
+   BUTTON SHINE
+========================================================= */
+
+.submit-btn::before {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  top:
+    0;
+
+  left:
+    -130%;
+
+  width:
+    65%;
+
+  height:
+    100%;
+
+  transform:
+    skewX(-20deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, .24),
+      transparent
+    );
+
+  transition:
+    left .75s
+    var(--cert-ease);
+}
+
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.submit-btn:hover {
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+
+    0 17px 36px
+    rgba(21, 87, 176, .28),
+
+    0 5px 12px
+    rgba(7, 26, 58, .08);
+}
+
+
+.submit-btn:hover::before {
+
+  left:
+    140%;
+}
+
+
+/* =========================================================
+   BUTTON ACTIVE
+========================================================= */
+
+.submit-btn:active {
+
+  transform:
+    translateY(0)
+    scale(.985);
+}
+
+
+/* =========================================================
+   OPTIONAL BUTTON ICON
+========================================================= */
+
+.submit-btn span {
+
+  position:
+    relative;
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  font-size:
+    15px;
+
+  transition:
+    transform .3s
+    var(--cert-ease);
+}
+
+
+.submit-btn:hover span {
+
+  transform:
+    translateX(4px);
+}
+
+
+/* =========================================================
+   OPTIONAL STATUS
+========================================================= */
+
+.certificate-status {
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    9px;
+
+  margin-top:
+    17px;
+
+  padding-top:
+    15px;
+
+  border-top:
+    1px solid
+    rgba(228, 231, 236, .75);
+
+  color:
+    var(--cert-muted);
+
+  font-size:
+    9px;
+
+  font-weight:
+    600;
+}
+
+
+/* =========================================================
+   STATUS DOT
+========================================================= */
+
+.certificate-status-dot {
+
+  position:
+    relative;
+
+  width:
+    7px;
+
+  height:
+    7px;
+
+  flex-shrink:
+    0;
+
+  border-radius:
+    50%;
+
+  background:
+    var(--cert-success);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(34, 160, 107, .09);
+}
+
+
+.certificate-status-dot::after {
+
+  content:
+    "";
+
+  position:
+    absolute;
+
+  inset:
+    -4px;
+
+  border-radius:
+    50%;
+
+  border:
+    1px solid
+    rgba(34, 160, 107, .20);
+
+  animation:
+    certificateStatusPulse
+    2s
+    ease-out
+    infinite;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.certificate-page button:focus-visible,
+.certificate-page input:focus-visible,
+.certificate-page a:focus-visible {
+
+  outline:
+    3px solid
+    rgba(21, 87, 176, .18);
+
+  outline-offset:
+    3px;
+}
+
+
+/* =========================================================
+   PAGE ANIMATION
+========================================================= */
+
+@keyframes certificatePageIn {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      translateY(10px);
+  }
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   HEADER ANIMATION
+========================================================= */
+
+@keyframes certificateHeaderIn {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      translateY(14px);
+  }
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   CARD ANIMATION
+========================================================= */
+
+@keyframes certificateCardIn {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      translateY(22px)
+      scale(.985);
+  }
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   GOLD ACCENT ANIMATION
+========================================================= */
+
+@keyframes certificateAccent {
+
+  from {
+
+    opacity:
+      0;
+
+    transform:
+      scaleX(0);
+  }
+
+  to {
+
+    opacity:
+      1;
+
+    transform:
+      scaleX(1);
+  }
+}
+
+
+/* =========================================================
+   STATUS PULSE
+========================================================= */
+
+@keyframes certificateStatusPulse {
+
+  0% {
+
+    opacity:
+      .8;
+
+    transform:
+      scale(.7);
+  }
+
+  70% {
+
+    opacity:
+      0;
+
+    transform:
+      scale(1.5);
+  }
+
+  100% {
+
+    opacity:
+      0;
+
+    transform:
+      scale(1.5);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .certificate-page {
+
+    width:
+      100%;
+
+    padding:
+      38px 25px 55px;
+  }
+
+
+  .certificate-page h1 {
+
+    font-size:
+      39px;
+  }
+
+
+  .certificate-card {
+
+    width:
+      min(760px, 100%);
+
+    padding:
+      32px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .certificate-page {
+
+    width:
+      100%;
+
+    min-height:
+      calc(100vh - 64px);
+
+    padding:
+      30px 18px 48px;
+  }
+
+
+  .certificate-page h1 {
+
+    font-size:
+      31px;
+
+    letter-spacing:
+      -.04em;
+  }
+
+
+  .certificate-page > p {
+
+    font-size:
+      12px;
+
+    line-height:
+      1.7;
+
+    margin-bottom:
+      26px;
+  }
+
+
+  .certificate-card {
+
+    width:
+      100%;
+
+    padding:
+      27px 21px;
+
+    border-radius:
+      17px;
+  }
+
+
+  .form-group {
+
+    margin-bottom:
+      19px;
+  }
+
+
+  .form-group label {
+
+    font-size:
+      10px;
+  }
+
+
+  .form-group input {
+
+    height:
+      46px;
+
+    font-size:
+      11px;
+  }
+
+
+  .form-group input[type="file"] {
+
+    min-height:
+      46px;
+  }
+
+
+  .submit-btn {
+
+    height:
+      48px;
+
+    font-size:
+      11px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .certificate-page {
+
+    padding:
+      24px 14px 40px;
+  }
+
+
+  .certificate-page h1 {
+
+    font-size:
+      27px;
+
+    line-height:
+      1.15;
+  }
+
+
+  .certificate-page h1::after {
+
+    width:
+      46px;
+
+    height:
+      2px;
+
+    margin-top:
+      12px;
+  }
+
+
+  .certificate-page > p {
+
+    font-size:
+      11px;
+
+    margin-bottom:
+      22px;
+  }
+
+
+  .certificate-card {
+
+    padding:
+      24px 17px;
+
+    border-radius:
+      15px;
+  }
+
+
+  .form-group {
+
+    margin-bottom:
+      18px;
+  }
+
+
+  .form-group input {
+
+    height:
+      44px;
+
+    padding:
+      0 12px;
+
+    font-size:
+      10px;
+  }
+
+
+  .form-group input[type="file"] {
+
+    min-height:
+      44px;
+
+    padding:
+      8px 10px;
+  }
+
+
+  .form-group input[type="file"]::file-selector-button {
+
+    padding:
+      6px 9px;
+
+    font-size:
+      9px;
+  }
+
+
+  .submit-btn {
+
+    height:
+      46px;
+
+    font-size:
+      10px;
+  }
+
+
+  .certificate-status {
+
+    font-size:
+      8px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .certificate-page,
+  .certificate-page *,
+  .certificate-page *::before,
+  .certificate-page *::after {
+
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+  }
+}

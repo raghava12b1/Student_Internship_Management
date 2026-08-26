@@ -1,0 +1,1059 @@
+/* =========================================================
+   PREMIUM UNIVERSITY SIDEBAR
+   Aditya University — Student Internship Management System
+
+   UPDATED
+   - SIMS removed
+   - S logo removed
+   - Student Portal shown cleanly
+   - Role-based portal names supported
+   - Back to Login button added
+   - Only menu section scrolls
+   - Responsive desktop/tablet/mobile
+========================================================= */
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap'
+);
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+
+  --sidebar-width: 272px;
+
+  --sidebar-navy: #071a3a;
+  --sidebar-navy-light: #0d2b5c;
+
+  --sidebar-blue: #1557b0;
+  --sidebar-blue-light: #2469c7;
+
+  --sidebar-gold: #d5a32a;
+  --sidebar-gold-light: #f1d78a;
+
+  --sidebar-white: #ffffff;
+
+  --sidebar-text: rgba(255, 255, 255, .78);
+  --sidebar-text-muted: rgba(255, 255, 255, .48);
+
+  --sidebar-border: rgba(255, 255, 255, .09);
+
+  --sidebar-ease:
+    cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   SIDEBAR
+   DESKTOP
+========================================================= */
+
+.sidebar {
+
+  position: fixed;
+
+  /*
+    Desktop sidebar starts below navbar.
+  */
+
+  top: var(--nav-height);
+  left: 0;
+
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+
+  height: calc(100vh - var(--nav-height));
+  min-height: 0;
+
+  box-sizing: border-box;
+
+  padding: 26px 16px 18px;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  color: var(--sidebar-white);
+
+  font-family: "Inter", sans-serif;
+
+  background:
+
+    radial-gradient(
+      circle at 85% 8%,
+      rgba(36, 105, 199, .20),
+      transparent 28%
+    ),
+
+    radial-gradient(
+      circle at 15% 85%,
+      rgba(213, 163, 42, .055),
+      transparent 25%
+    ),
+
+    linear-gradient(
+      180deg,
+      #071a3a 0%,
+      #081d42 48%,
+      #061631 100%
+    );
+
+  border-right:
+    1px solid
+    rgba(255, 255, 255, .055);
+
+  box-shadow:
+    12px 0 40px
+    rgba(7, 26, 58, .08);
+
+  z-index: 900;
+}
+
+
+/* =========================================================
+   SUBTLE GRID
+========================================================= */
+
+.sidebar::before {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: .20;
+
+  background-image:
+
+    linear-gradient(
+      rgba(255, 255, 255, .025) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(255, 255, 255, .025) 1px,
+      transparent 1px
+    );
+
+  background-size:
+    42px 42px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 90%
+    );
+}
+
+
+/* =========================================================
+   TOP GLOW
+========================================================= */
+
+.sidebar::after {
+
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: -120px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  background:
+    rgba(21, 87, 176, .18);
+
+  filter:
+    blur(45px);
+}
+
+
+/* =========================================================
+   SIDEBAR HEADER
+========================================================= */
+
+.sidebar-logo {
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 58px;
+
+  padding:
+    6px 10px 22px;
+
+  margin-bottom:
+    18px;
+
+  border-bottom:
+    1px solid
+    var(--sidebar-border);
+
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   PORTAL NAME
+========================================================= */
+
+.sidebar-logo h2 {
+
+  margin: 0;
+
+  color:
+    #ffffff;
+
+  font-family:
+    "Plus Jakarta Sans",
+    sans-serif;
+
+  font-size:
+    19px;
+
+  line-height:
+    1.2;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    -.025em;
+
+  text-align:
+    center;
+
+  white-space:
+    nowrap;
+}
+
+
+/* =========================================================
+   OPTIONAL PORTAL SUBTITLE
+========================================================= */
+
+.sidebar-logo p {
+
+  display: none;
+}
+
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.close-sidebar {
+
+  display: none;
+
+  position: absolute;
+
+  top: 22px;
+  right: 17px;
+
+  width: 34px;
+  height: 34px;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(255,255,255,.10);
+
+  border-radius:
+    9px;
+
+  background:
+    rgba(255,255,255,.05);
+
+  color:
+    rgba(255,255,255,.75);
+
+  font-size:
+    15px;
+
+  cursor:
+    pointer;
+
+  transition:
+    all .25s var(--sidebar-ease);
+}
+
+
+.close-sidebar:hover {
+
+  color:
+    #ffffff;
+
+  background:
+    rgba(255,255,255,.10);
+
+  border-color:
+    rgba(255,255,255,.18);
+
+  transform:
+    rotate(4deg);
+}
+
+
+/* =========================================================
+   NAVIGATION
+   ONLY THIS SECTION SCROLLS
+========================================================= */
+
+.sidebar-menu {
+
+  position: relative;
+
+  z-index: 2;
+
+  display:
+    flex;
+
+  flex-direction:
+    column;
+
+  gap:
+    5px;
+
+  flex:
+    1;
+
+  min-height:
+    0;
+
+  overflow-y:
+    auto;
+
+  overflow-x:
+    hidden;
+
+  padding:
+    3px 1px 10px;
+
+  scrollbar-width:
+    thin;
+
+  scrollbar-color:
+    rgba(255,255,255,.12)
+    transparent;
+}
+
+
+/* =========================================================
+   MENU ITEM
+========================================================= */
+
+.menu-item {
+
+  position: relative;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  gap:
+    13px;
+
+  min-height:
+    47px;
+
+  box-sizing:
+    border-box;
+
+  padding:
+    0 13px;
+
+  border:
+    1px solid
+    transparent;
+
+  border-radius:
+    10px;
+
+  color:
+    var(--sidebar-text);
+
+  text-decoration:
+    none;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size:
+    12px;
+
+  font-weight:
+    500;
+
+  letter-spacing:
+    -.005em;
+
+  flex-shrink:
+    0;
+
+  transition:
+
+    color .28s var(--sidebar-ease),
+
+    background .28s var(--sidebar-ease),
+
+    border-color .28s var(--sidebar-ease),
+
+    transform .28s var(--sidebar-ease),
+
+    box-shadow .28s var(--sidebar-ease);
+}
+
+
+/* =========================================================
+   MENU ICON
+========================================================= */
+
+.menu-item svg {
+
+  width:
+    19px;
+
+  height:
+    19px;
+
+  flex-shrink:
+    0;
+
+  color:
+    rgba(255,255,255,.52);
+
+  stroke-width:
+    1.8;
+
+  transition:
+
+    color .28s var(--sidebar-ease),
+
+    transform .28s var(--sidebar-ease);
+}
+
+
+/* =========================================================
+   MENU TEXT
+========================================================= */
+
+.menu-item span {
+
+  font-weight:
+    500;
+
+  white-space:
+    nowrap;
+
+  transition:
+    color .28s var(--sidebar-ease);
+}
+
+
+/* =========================================================
+   HOVER
+========================================================= */
+
+.menu-item:hover {
+
+  color:
+    #ffffff;
+
+  background:
+    rgba(255,255,255,.055);
+
+  border-color:
+    rgba(255,255,255,.07);
+
+  transform:
+    translateX(3px);
+}
+
+
+.menu-item:hover svg {
+
+  color:
+    rgba(255,255,255,.90);
+
+  transform:
+    scale(1.06);
+}
+
+
+/* =========================================================
+   ACTIVE ITEM
+========================================================= */
+
+.menu-item.active {
+
+  position:
+    relative;
+
+  color:
+    #ffffff;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(255,255,255,.98),
+      rgba(247,250,255,.96)
+    );
+
+  border-color:
+    rgba(255,255,255,.75);
+
+  box-shadow:
+
+    0 10px 25px
+    rgba(0,0,0,.12),
+
+    0 2px 5px
+    rgba(0,0,0,.05);
+}
+
+
+/* =========================================================
+   ACTIVE LEFT ACCENT
+========================================================= */
+
+.menu-item.active::before {
+
+  content: "";
+
+  position:
+    absolute;
+
+  left:
+    -1px;
+
+  top:
+    9px;
+
+  width:
+    3px;
+
+  height:
+    29px;
+
+  border-radius:
+    0 5px 5px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--sidebar-gold),
+      var(--sidebar-gold-light)
+    );
+
+  box-shadow:
+    0 0 10px
+    rgba(213,163,42,.22);
+}
+
+
+/* =========================================================
+   ACTIVE ICON
+========================================================= */
+
+.menu-item.active svg {
+
+  color:
+    var(--sidebar-blue);
+
+  transform:
+    scale(1.02);
+}
+
+
+/* =========================================================
+   ACTIVE TEXT
+========================================================= */
+
+.menu-item.active span {
+
+  color:
+    var(--sidebar-navy);
+
+  font-weight:
+    700;
+}
+
+
+/* =========================================================
+   MENU ACTIVE HOVER
+========================================================= */
+
+.menu-item.active:hover {
+
+  transform:
+    translateX(2px);
+
+  background:
+    #ffffff;
+
+  box-shadow:
+
+    0 13px 30px
+    rgba(0,0,0,.15);
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.sidebar-menu::-webkit-scrollbar {
+
+  width:
+    4px;
+}
+
+
+.sidebar-menu::-webkit-scrollbar-track {
+
+  background:
+    transparent;
+}
+
+
+.sidebar-menu::-webkit-scrollbar-thumb {
+
+  border-radius:
+    20px;
+
+  background:
+    rgba(255,255,255,.12);
+}
+
+
+.sidebar-menu::-webkit-scrollbar-thumb:hover {
+
+  background:
+    rgba(255,255,255,.20);
+}
+
+
+/* =========================================================
+   BACK TO LOGIN SECTION
+========================================================= */
+
+.sidebar-bottom {
+
+  position:
+    relative;
+
+  z-index:
+    3;
+
+  flex-shrink:
+    0;
+
+  padding:
+    13px 1px 0;
+
+  margin-top:
+    7px;
+
+  border-top:
+    1px solid
+    rgba(255,255,255,.08);
+}
+
+
+/* =========================================================
+   BACK TO LOGIN BUTTON
+========================================================= */
+
+.back-login-btn {
+
+  width:
+    100%;
+
+  min-height:
+    44px;
+
+  display:
+    flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    9px;
+
+  padding:
+    0 12px;
+
+  border:
+    1px solid
+    rgba(255,255,255,.09);
+
+  border-radius:
+    9px;
+
+  background:
+    rgba(255,255,255,.045);
+
+  color:
+    rgba(255,255,255,.68);
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size:
+    11px;
+
+  font-weight:
+    600;
+
+  cursor:
+    pointer;
+
+  transition:
+
+    color .28s var(--sidebar-ease),
+
+    background .28s var(--sidebar-ease),
+
+    border-color .28s var(--sidebar-ease),
+
+    transform .28s var(--sidebar-ease),
+
+    box-shadow .28s var(--sidebar-ease);
+}
+
+
+/* =========================================================
+   BACK ICON
+========================================================= */
+
+.back-login-icon {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  font-size:
+    16px;
+
+  line-height:
+    1;
+
+  transition:
+    transform .28s var(--sidebar-ease);
+}
+
+
+/* =========================================================
+   BACK BUTTON HOVER
+========================================================= */
+
+.back-login-btn:hover {
+
+  color:
+    #ffffff;
+
+  background:
+    rgba(255,255,255,.085);
+
+  border-color:
+    rgba(255,255,255,.15);
+
+  transform:
+    translateY(-1px);
+
+  box-shadow:
+    0 8px 20px
+    rgba(0,0,0,.12);
+}
+
+
+.back-login-btn:hover .back-login-icon {
+
+  transform:
+    translateX(-3px);
+}
+
+
+/* =========================================================
+   BACK BUTTON ACTIVE
+========================================================= */
+
+.back-login-btn:active {
+
+  transform:
+    translateY(0)
+    scale(.985);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+
+  :root {
+
+    --sidebar-width:
+      250px;
+  }
+
+
+  .sidebar {
+
+    padding:
+      23px 14px 17px;
+  }
+
+
+  .sidebar-logo {
+
+    padding-bottom:
+      21px;
+  }
+
+
+  .sidebar-logo h2 {
+
+    font-size:
+      18px;
+  }
+
+
+  .menu-item {
+
+    min-height:
+      45px;
+
+    font-size:
+      11px;
+  }
+
+
+  .back-login-btn {
+
+    min-height:
+      42px;
+
+    font-size:
+      10px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE SIDEBAR
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /*
+    Mobile sidebar becomes a full-screen overlay.
+    It starts from the top.
+  */
+
+  .sidebar {
+
+    position:
+      fixed;
+
+    top:
+      0;
+
+    left:
+      calc(-1 * var(--sidebar-width) - 20px);
+
+    width:
+      var(--sidebar-width);
+
+    height:
+      100vh;
+
+    min-height:
+      100vh;
+
+    z-index:
+      1200;
+
+    transition:
+      left .42s var(--sidebar-ease);
+
+    box-shadow:
+      18px 0 45px
+      rgba(7,26,58,.22);
+  }
+
+
+  .sidebar.show-sidebar {
+
+    left:
+      0;
+  }
+
+
+  .close-sidebar {
+
+    display:
+      flex;
+  }
+
+
+  .sidebar-logo {
+
+    justify-content:
+      flex-start;
+
+    padding-right:
+      45px;
+  }
+
+
+  .sidebar-logo h2 {
+
+    text-align:
+      left;
+  }
+
+
+  .sidebar-bottom {
+
+    padding-bottom:
+      2px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  :root {
+
+    --sidebar-width:
+      270px;
+  }
+
+
+  .sidebar {
+
+    padding:
+      22px 14px;
+  }
+
+
+  .sidebar-logo {
+
+    margin-bottom:
+      16px;
+  }
+
+
+  .sidebar-logo h2 {
+
+    font-size:
+      17px;
+  }
+
+
+  .menu-item {
+
+    min-height:
+      47px;
+
+    padding:
+      0 12px;
+
+    font-size:
+      12px;
+  }
+
+
+  .back-login-btn {
+
+    min-height:
+      44px;
+
+    font-size:
+      11px;
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.menu-item:focus-visible,
+.close-sidebar:focus-visible,
+.back-login-btn:focus-visible {
+
+  outline:
+    3px solid
+    rgba(241,215,138,.30);
+
+  outline-offset:
+    2px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .sidebar,
+  .menu-item,
+  .menu-item svg,
+  .close-sidebar,
+  .back-login-btn,
+  .back-login-icon {
+
+    transition:
+      none !important;
+  }
+
+}

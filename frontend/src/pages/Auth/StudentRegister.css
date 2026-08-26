@@ -1,0 +1,151 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: #f4f7fc;
+}
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #eef4ff, #d9e8ff);
+}
+
+.register-card {
+  width: 100%;
+  max-width: 700px;
+  background: #fff;
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.register-card h1 {
+  text-align: center;
+  color: #1e3a8a;
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.register-card p {
+  text-align: center;
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #333;
+}
+
+.input-group input,
+.input-group select {
+  padding: 12px 15px;
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  font-size: 15px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 8px rgba(37, 99, 235, 0.2);
+}
+
+.row {
+  display: flex;
+  gap: 20px;
+}
+
+.row .input-group {
+  flex: 1;
+}
+
+.show-password {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+
+.register-btn {
+  width: 100%;
+  padding: 14px;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.register-btn:hover {
+  background: #1d4ed8;
+  transform: translateY(-2px);
+}
+
+.login-link {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.login-link a {
+  color: #2563eb;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsive */
+
+@media (max-width: 768px) {
+  .register-card {
+    padding: 25px;
+  }
+
+  .row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .register-card h1 {
+    font-size: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  .register-card {
+    padding: 20px;
+  }
+
+  .register-card h1 {
+    font-size: 24px;
+  }
+
+  .register-btn {
+    font-size: 15px;
+  }
+}

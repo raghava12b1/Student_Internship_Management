@@ -1,0 +1,69 @@
+.admin-notifications{
+    padding:30px;
+}
+
+.page-header{
+    margin-bottom:30px;
+}
+
+.page-header h1{
+    font-size:32px;
+    color:#1e293b;
+}
+
+.page-header p{
+    color:#64748b;
+    margin-top:8px;
+}
+
+.notification-list{
+    display:flex;
+    flex-direction:column;
+    gap:20px;
+}
+
+.notification-card{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    background:#ffffff;
+    padding:20px;
+    border-radius:16px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    transition:.3s;
+}
+
+.notification-card:hover{
+    transform:translateY(-3px);
+}
+
+.notification-icon{
+    width:60px;
+    height:60px;
+    border-radius:50%;
+    background:#2563eb;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:26px;
+    color:white;
+}
+
+.notification-content{
+    flex:1;
+}
+
+.notification-content h3{
+    color:#1e293b;
+    margin-bottom:6px;
+}
+
+.notification-content p{
+    color:#64748b;
+    margin-bottom:8px;
+}
+
+.notification-content span{
+    font-size:14px;
+    color:#94a3b8;
+}

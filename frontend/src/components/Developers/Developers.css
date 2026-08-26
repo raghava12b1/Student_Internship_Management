@@ -1,0 +1,1279 @@
+/* =========================================================
+   DEVELOPERS PAGE
+========================================================= */
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap'
+);
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+  --dev-navy: #071a3a;
+  --dev-navy-light: #0d2b5c;
+
+  --dev-blue: #1557b0;
+  --dev-blue-light: #2469c7;
+
+  --dev-gold: #d5a32a;
+  --dev-gold-light: #f1d78a;
+
+  --dev-text: #101828;
+  --dev-muted: #667085;
+
+  --dev-border: #e4e7ec;
+
+  --dev-white: #ffffff;
+
+  --dev-heading:
+    "Plus Jakarta Sans",
+    sans-serif;
+
+  --dev-body:
+    "Inter",
+    sans-serif;
+
+  --dev-ease:
+    cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.developers-page {
+  position: relative;
+
+  min-height: calc(100vh - 78px);
+
+  overflow: hidden;
+
+  font-family: var(--dev-body);
+
+  color: var(--dev-text);
+
+  background:
+    radial-gradient(
+      circle at 10% 15%,
+      rgba(21, 87, 176, 0.08),
+      transparent 28%
+    ),
+
+    radial-gradient(
+      circle at 90% 80%,
+      rgba(213, 163, 42, 0.06),
+      transparent 25%
+    ),
+
+    linear-gradient(
+      135deg,
+      #f7faff 0%,
+      #ffffff 50%,
+      #f4f7fb 100%
+    );
+}
+
+
+/* =========================================================
+   GRID PATTERN
+========================================================= */
+
+.developers-grid-pattern {
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: 0.35;
+
+  background-image:
+    linear-gradient(
+      rgba(7, 26, 58, 0.025) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(7, 26, 58, 0.025) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 90%
+    );
+}
+
+
+/* =========================================================
+   BACKGROUND GLOWS
+========================================================= */
+
+.developers-glow {
+  position: absolute;
+
+  border-radius: 50%;
+
+  pointer-events: none;
+
+  filter: blur(5px);
+}
+
+
+.developers-glow-one {
+  width: 300px;
+  height: 300px;
+
+  top: 12%;
+  left: -150px;
+
+  background:
+    rgba(21, 87, 176, 0.06);
+}
+
+
+.developers-glow-two {
+  width: 260px;
+  height: 260px;
+
+  right: -120px;
+  bottom: 8%;
+
+  background:
+    rgba(213, 163, 42, 0.055);
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.developers-container {
+  position: relative;
+
+  z-index: 2;
+
+  width:
+    min(
+      1180px,
+      calc(100% - 64px)
+    );
+
+  min-height:
+    calc(100vh - 78px);
+
+  margin: 0 auto;
+
+  padding:
+    30px 0 28px;
+
+  display: flex;
+
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.developers-back {
+  width: fit-content;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  padding:
+    9px 14px;
+
+  border:
+    1px solid var(--dev-border);
+
+  border-radius: 9px;
+
+  background:
+    rgba(255, 255, 255, 0.78);
+
+  color:
+    #667085;
+
+  font-size: 11px;
+
+  font-weight: 600;
+
+  text-decoration: none;
+
+  backdrop-filter:
+    blur(12px);
+
+  transition:
+    transform 0.3s var(--dev-ease),
+    color 0.3s var(--dev-ease),
+    border-color 0.3s var(--dev-ease),
+    box-shadow 0.3s var(--dev-ease);
+}
+
+
+.developers-back:hover {
+  color:
+    var(--dev-blue);
+
+  border-color:
+    rgba(21, 87, 176, 0.25);
+
+  box-shadow:
+    0 10px 25px
+    rgba(16, 24, 40, 0.07);
+
+  transform:
+    translateX(-3px);
+}
+
+
+.back-arrow {
+  font-size: 17px;
+
+  transition:
+    transform 0.3s var(--dev-ease);
+}
+
+
+.developers-back:hover .back-arrow {
+  transform:
+    translateX(-4px);
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.developers-header {
+  max-width: 720px;
+
+  margin:
+    22px auto 42px;
+
+  text-align: center;
+
+  animation:
+    developersHeaderIn
+    0.7s
+    var(--dev-ease)
+    both;
+}
+
+
+/* =========================================================
+   EYEBROW
+========================================================= */
+
+.developers-eyebrow {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 10px;
+
+  margin-bottom: 16px;
+
+  color:
+    var(--dev-navy-light);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    0.18em;
+}
+
+
+.eyebrow-line {
+  width: 32px;
+
+  height: 2px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--dev-gold),
+      var(--dev-blue)
+    );
+}
+
+
+/* =========================================================
+   MAIN HEADING
+========================================================= */
+
+.developers-header h1 {
+  margin: 0;
+
+  font-family:
+    var(--dev-heading);
+
+  color:
+    var(--dev-navy);
+
+  font-size:
+    clamp(
+      40px,
+      4.5vw,
+      58px
+    );
+
+  line-height:
+    1.04;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    -0.055em;
+}
+
+
+.developers-header h1 span {
+  display: block;
+
+  margin-top: 5px;
+
+  color:
+    var(--dev-blue);
+}
+
+
+/* =========================================================
+   HEADING GOLD LINE
+========================================================= */
+
+.developers-header h1::after {
+  content: "";
+
+  display: block;
+
+  width: 58px;
+
+  height: 3px;
+
+  margin:
+    17px auto 18px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--dev-gold),
+      var(--dev-gold-light)
+    );
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.developers-header p {
+  max-width: 640px;
+
+  margin: 0 auto;
+
+  color:
+    var(--dev-muted);
+
+  font-size: 13px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   DEVELOPERS GRID
+========================================================= */
+
+.developers-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 22px;
+
+  animation:
+    cardsIn
+    0.8s
+    var(--dev-ease)
+    0.1s
+    both;
+}
+
+
+/* =========================================================
+   DEVELOPER CARD
+========================================================= */
+
+.developer-card {
+  position: relative;
+
+  min-height: 475px;
+
+  padding:
+    28px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(228, 231, 236, 0.95);
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255,255,255,0.96),
+      rgba(248,250,253,0.88)
+    );
+
+  box-shadow:
+    0 15px 45px
+    rgba(16, 24, 40, 0.06);
+
+  backdrop-filter:
+    blur(16px);
+
+  transition:
+    transform 0.45s var(--dev-ease),
+    box-shadow 0.45s var(--dev-ease),
+    border-color 0.45s var(--dev-ease);
+}
+
+
+/* =========================================================
+   CARD TOP GLOW
+========================================================= */
+
+.developer-card::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -100px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(21, 87, 176, 0.06);
+
+  filter: blur(5px);
+
+  transition:
+    transform 0.5s var(--dev-ease);
+}
+
+
+.developer-card:hover::before {
+  transform:
+    scale(1.5);
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.developer-card:hover {
+  transform:
+    translateY(-9px);
+
+  border-color:
+    rgba(21, 87, 176, 0.20);
+
+  box-shadow:
+    0 28px 65px
+    rgba(7, 26, 58, 0.12);
+}
+
+
+/* =========================================================
+   CARD NUMBER
+========================================================= */
+
+.developer-number {
+  position: absolute;
+
+  top: 20px;
+  right: 24px;
+
+  color:
+    rgba(7, 26, 58, 0.065);
+
+  font-family:
+    var(--dev-heading);
+
+  font-size: 44px;
+
+  line-height: 1;
+
+  font-weight: 800;
+
+  transition:
+    color 0.4s var(--dev-ease);
+}
+
+
+.developer-card:hover .developer-number {
+  color:
+    rgba(21, 87, 176, 0.10);
+}
+
+
+/* =========================================================
+   IMAGE WRAPPER
+========================================================= */
+
+.developer-image-wrapper {
+  position: relative;
+
+  width: 120px;
+  height: 120px;
+
+  margin-bottom: 25px;
+}
+
+
+/* =========================================================
+   IMAGE RING
+========================================================= */
+
+.developer-image-ring {
+  position: absolute;
+
+  inset: -7px;
+
+  border-radius: 50%;
+
+  border:
+    1px solid
+    rgba(21, 87, 176, 0.22);
+
+  border-top-color:
+    var(--dev-gold);
+
+  border-right-color:
+    var(--dev-blue);
+
+  transform:
+    rotate(-20deg);
+
+  transition:
+    transform 0.6s var(--dev-ease);
+}
+
+
+.developer-card:hover
+.developer-image-ring {
+  transform:
+    rotate(160deg);
+}
+
+
+/* =========================================================
+   DEVELOPER IMAGE
+========================================================= */
+
+.developer-image {
+  position: relative;
+
+  z-index: 2;
+
+  width: 120px;
+  height: 120px;
+
+  display: block;
+
+  object-fit: cover;
+
+  border-radius: 50%;
+
+  border:
+    4px solid
+    #ffffff;
+
+  box-shadow:
+    0 12px 30px
+    rgba(7, 26, 58, 0.16);
+
+  transition:
+    transform 0.5s var(--dev-ease),
+    filter 0.5s var(--dev-ease);
+}
+
+
+.developer-card:hover .developer-image {
+  transform:
+    scale(1.04);
+
+  filter:
+    saturate(1.08);
+}
+
+
+/* =========================================================
+   IMAGE STATUS
+========================================================= */
+
+.image-status {
+  position: absolute;
+
+  z-index: 4;
+
+  left: 76px;
+
+  bottom: -4px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 5px;
+
+  padding:
+    5px 9px;
+
+  border:
+    1px solid
+    rgba(255,255,255,0.8);
+
+  border-radius: 20px;
+
+  background:
+    rgba(7, 26, 58, 0.94);
+
+  color:
+    #ffffff;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 7px 18px
+    rgba(7, 26, 58, 0.18);
+}
+
+
+.image-status span {
+  width: 6px;
+  height: 6px;
+
+  border-radius: 50%;
+
+  background:
+    #42d392;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(66, 211, 146, 0.12);
+}
+
+
+/* =========================================================
+   DEVELOPER INFO
+========================================================= */
+
+.developer-info {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   ROLE
+========================================================= */
+
+.developer-role {
+  margin-bottom: 8px;
+
+  color:
+    var(--dev-gold);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing:
+    0.14em;
+
+  text-transform:
+    uppercase;
+}
+
+
+/* =========================================================
+   NAME
+========================================================= */
+
+.developer-info h2 {
+  margin: 0;
+
+  color:
+    var(--dev-navy);
+
+  font-family:
+    var(--dev-heading);
+
+  font-size: 23px;
+
+  line-height: 1.2;
+
+  font-weight: 800;
+
+  letter-spacing:
+    -0.035em;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.developer-line {
+  width: 35px;
+
+  height: 2px;
+
+  margin:
+    14px 0;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--dev-gold),
+      var(--dev-blue)
+    );
+
+  transition:
+    width 0.4s var(--dev-ease);
+}
+
+
+.developer-card:hover .developer-line {
+  width: 65px;
+}
+
+
+/* =========================================================
+   DESCRIPTION
+========================================================= */
+
+.developer-info p {
+  max-width: 300px;
+
+  margin: 0;
+
+  color:
+    var(--dev-muted);
+
+  font-size: 11px;
+
+  line-height: 1.8;
+}
+
+
+/* =========================================================
+   CARD BOTTOM
+========================================================= */
+
+.developer-bottom {
+  position: absolute;
+
+  left: 28px;
+  right: 28px;
+
+  bottom: 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding-top: 17px;
+
+  border-top:
+    1px solid
+    rgba(228, 231, 236, 0.8);
+}
+
+
+/* =========================================================
+   MEMBER LABEL
+========================================================= */
+
+.developer-index {
+  color:
+    #98a2b3;
+
+  font-size: 8px;
+
+  font-weight: 700;
+
+  letter-spacing:
+    0.12em;
+}
+
+
+/* =========================================================
+   LINKEDIN BUTTON
+========================================================= */
+
+.developer-linkedin {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border:
+    1px solid
+    var(--dev-border);
+
+  border-radius: 10px;
+
+  background:
+    rgba(255,255,255,0.88);
+
+  color:
+    var(--dev-navy);
+
+  text-decoration: none;
+
+  box-shadow:
+    0 5px 15px
+    rgba(16,24,40,0.05);
+
+  transition:
+    transform 0.35s var(--dev-ease),
+    background 0.35s var(--dev-ease),
+    color 0.35s var(--dev-ease),
+    border-color 0.35s var(--dev-ease),
+    box-shadow 0.35s var(--dev-ease);
+}
+
+
+.developer-linkedin svg {
+  width: 17px;
+  height: 17px;
+
+  fill:
+    currentColor;
+}
+
+
+.developer-linkedin:hover {
+  transform:
+    translateY(-3px);
+
+  background:
+    #0a66c2;
+
+  color:
+    #ffffff;
+
+  border-color:
+    #0a66c2;
+
+  box-shadow:
+    0 10px 25px
+    rgba(10, 102, 194, 0.25);
+}
+
+
+.developer-linkedin:active {
+  transform:
+    translateY(-1px);
+}
+
+
+/* =========================================================
+   BOTTOM ACCENT
+========================================================= */
+
+.developer-accent {
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 0;
+
+  height: 3px;
+
+  border-radius:
+    0 5px 5px 0;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--dev-gold),
+      var(--dev-blue)
+    );
+
+  transition:
+    width 0.5s var(--dev-ease);
+}
+
+
+.developer-card:hover
+.developer-accent {
+  width: 100%;
+}
+
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+.developers-footer {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 18px;
+
+  margin-top: auto;
+
+  padding-top: 30px;
+
+  animation:
+    footerIn
+    0.8s
+    var(--dev-ease)
+    0.25s
+    both;
+}
+
+
+.developers-footer p {
+  margin: 0;
+
+  color:
+    #98a2b3;
+
+  font-size: 9px;
+
+  font-weight: 500;
+
+  letter-spacing:
+    0.02em;
+
+  text-align: center;
+}
+
+
+.developers-footer p span {
+  color:
+    var(--dev-blue);
+
+  font-weight: 700;
+}
+
+
+.developers-footer strong {
+  color:
+    var(--dev-navy);
+
+  font-weight: 700;
+}
+
+
+.footer-line {
+  width: 48px;
+
+  height: 1px;
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      #d0d5dd
+    );
+}
+
+
+.footer-line:last-child {
+  background:
+    linear-gradient(
+      90deg,
+      #d0d5dd,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes developersHeaderIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+@keyframes cardsIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+
+}
+
+
+@keyframes footerIn {
+
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 950px) {
+
+  .developers-container {
+    width:
+      calc(100% - 45px);
+  }
+
+  .developers-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .developer-card:last-child {
+    grid-column:
+      1 / -1;
+
+    max-width:
+      430px;
+
+    width:
+      100%;
+
+    margin:
+      0 auto;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .developers-page {
+    min-height:
+      calc(100vh - 70px);
+  }
+
+  .developers-container {
+    width:
+      calc(100% - 30px);
+
+    padding:
+      22px 0 25px;
+  }
+
+  .developers-header {
+    margin:
+      20px auto 30px;
+  }
+
+  .developers-header h1 {
+    font-size:
+      39px;
+  }
+
+  .developers-header p {
+    font-size:
+      12px;
+
+    line-height:
+      1.7;
+  }
+
+  .developers-eyebrow {
+    font-size:
+      9px;
+  }
+
+  .developers-grid {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      16px;
+  }
+
+  .developer-card {
+    min-height:
+      455px;
+
+    padding:
+      25px;
+  }
+
+  .developer-card:last-child {
+    max-width:
+      none;
+  }
+
+  .developer-bottom {
+    left:
+      25px;
+
+    right:
+      25px;
+
+    bottom:
+      21px;
+  }
+
+  .developers-footer {
+    margin-top:
+      25px;
+  }
+
+  .footer-line {
+    display:
+      none;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .developers-header h1 {
+    font-size:
+      34px;
+  }
+
+  .developer-card {
+    min-height:
+      440px;
+  }
+
+  .developer-image-wrapper {
+    width:
+      105px;
+
+    height:
+      105px;
+  }
+
+  .developer-image {
+    width:
+      105px;
+
+    height:
+      105px;
+  }
+
+  .image-status {
+    left:
+      65px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+  }
+
+}

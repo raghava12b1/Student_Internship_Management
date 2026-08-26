@@ -1,0 +1,776 @@
+/* =========================================================
+   PREMIUM RECENT SUBMISSIONS
+   Aditya University — Student Internship Management System
+========================================================= */
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap'
+);
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+  --recent-navy: #071a3a;
+  --recent-navy-light: #0d2b5c;
+
+  --recent-blue: #1557b0;
+  --recent-blue-light: #2469c7;
+
+  --recent-gold: #d5a32a;
+  --recent-gold-light: #f1d78a;
+
+  --recent-text: #101828;
+  --recent-muted: #667085;
+  --recent-muted-light: #98a2b3;
+
+  --recent-border: #e4e7ec;
+  --recent-border-light: #eef2f6;
+
+  --recent-bg: #ffffff;
+  --recent-surface: #f8fafc;
+
+  --recent-heading:
+    "Plus Jakarta Sans",
+    sans-serif;
+
+  --recent-body:
+    "Inter",
+    sans-serif;
+
+  --recent-ease:
+    cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.recent-card {
+
+  position: relative;
+
+  width: 100%;
+
+  margin-top: 28px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    var(--recent-border);
+
+  border-radius: 18px;
+
+  background:
+    rgba(255, 255, 255, .96);
+
+  box-shadow:
+    0 12px 35px
+    rgba(16, 24, 40, .055);
+
+  font-family:
+    var(--recent-body);
+
+  transition:
+    transform .35s var(--recent-ease),
+    box-shadow .35s var(--recent-ease),
+    border-color .35s var(--recent-ease);
+
+}
+
+
+/* =========================================================
+   TOP ACCENT LINE
+========================================================= */
+
+.recent-card::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 0;
+
+  width: 100%;
+
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--recent-blue),
+      var(--recent-gold),
+      transparent 85%
+    );
+
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.recent-header {
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding:
+    25px 27px 21px;
+
+  border-bottom:
+    1px solid
+    var(--recent-border-light);
+
+}
+
+
+/* =========================================================
+   HEADER TITLE
+========================================================= */
+
+.recent-header h2 {
+
+  margin: 0;
+
+  color:
+    var(--recent-navy);
+
+  font-family:
+    var(--recent-heading);
+
+  font-size: 17px;
+
+  font-weight: 800;
+
+  letter-spacing:
+    -.025em;
+
+}
+
+
+/* =========================================================
+   HEADER SUBTLE LABEL
+========================================================= */
+
+.recent-header::after {
+
+  content:
+    "INTERNSHIP ACTIVITY";
+
+  padding:
+    6px 10px;
+
+  border:
+    1px solid
+    rgba(21, 87, 176, .12);
+
+  border-radius: 7px;
+
+  background:
+    rgba(21, 87, 176, .035);
+
+  color:
+    var(--recent-blue);
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing:
+    .12em;
+
+}
+
+
+/* =========================================================
+   TABLE WRAPPER
+========================================================= */
+
+.recent-table {
+
+  width: 100%;
+
+  border-collapse:
+    separate;
+
+  border-spacing: 0;
+
+  font-size: 12px;
+
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.recent-table thead {
+
+  background:
+    #fbfcfe;
+
+}
+
+
+.recent-table th {
+
+  padding:
+    14px 22px;
+
+  color:
+    var(--recent-muted);
+
+  border-bottom:
+    1px solid
+    var(--recent-border);
+
+  font-size:
+    9px;
+
+  font-weight:
+    800;
+
+  letter-spacing:
+    .08em;
+
+  text-align:
+    left;
+
+  text-transform:
+    uppercase;
+
+  white-space:
+    nowrap;
+
+}
+
+
+/* =========================================================
+   TABLE CELLS
+========================================================= */
+
+.recent-table td {
+
+  padding:
+    17px 22px;
+
+  color:
+    #475467;
+
+  border-bottom:
+    1px solid
+    var(--recent-border-light);
+
+  font-size:
+    11px;
+
+  font-weight:
+    500;
+
+  vertical-align:
+    middle;
+
+  transition:
+    background .25s ease,
+    color .25s ease;
+
+}
+
+
+/* =========================================================
+   LAST ROW
+========================================================= */
+
+.recent-table tbody tr:last-child td {
+
+  border-bottom:
+    none;
+
+}
+
+
+/* =========================================================
+   ROW HOVER
+========================================================= */
+
+.recent-table tbody tr {
+
+  transition:
+    background .25s var(--recent-ease);
+
+}
+
+
+.recent-table tbody tr:hover {
+
+  background:
+    rgba(21, 87, 176, .025);
+
+}
+
+
+.recent-table tbody tr:hover td {
+
+  color:
+    var(--recent-text);
+
+}
+
+
+/* =========================================================
+   DOCUMENT NAME
+========================================================= */
+
+.recent-table td:first-child {
+
+  color:
+    var(--recent-navy);
+
+  font-weight:
+    700;
+
+}
+
+
+/* Add subtle document indicator */
+
+.recent-table td:first-child::before {
+
+  content: "";
+
+  display: inline-block;
+
+  width: 5px;
+
+  height: 5px;
+
+  margin-right: 9px;
+
+  vertical-align: middle;
+
+  border-radius: 50%;
+
+  background:
+    var(--recent-blue);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(21, 87, 176, .07);
+
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.status {
+
+  display:
+    inline-flex;
+
+  align-items:
+    center;
+
+  justify-content:
+    center;
+
+  gap:
+    6px;
+
+  min-width:
+    86px;
+
+  padding:
+    6px 10px;
+
+  border:
+    1px solid transparent;
+
+  border-radius:
+    7px;
+
+  font-size:
+    9px;
+
+  font-weight:
+    700;
+
+  letter-spacing:
+    .015em;
+
+  white-space:
+    nowrap;
+
+}
+
+
+/* =========================================================
+   STATUS DOT
+========================================================= */
+
+.status::before {
+
+  content: "";
+
+  width:
+    5px;
+
+  height:
+    5px;
+
+  flex-shrink:
+    0;
+
+  border-radius:
+    50%;
+
+}
+
+
+/* =========================================================
+   APPROVED
+========================================================= */
+
+.status.approved {
+
+  color:
+    #087443;
+
+  background:
+    #ecfdf3;
+
+  border-color:
+    #c7f0d9;
+
+}
+
+
+.status.approved::before {
+
+  background:
+    #12b76a;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(18, 183, 106, .10);
+
+}
+
+
+/* =========================================================
+   PENDING
+========================================================= */
+
+.status.pending {
+
+  color:
+    #9a6700;
+
+  background:
+    #fffaeb;
+
+  border-color:
+    #f9e4a9;
+
+}
+
+
+.status.pending::before {
+
+  background:
+    var(--recent-gold);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(213, 163, 42, .10);
+
+}
+
+
+/* =========================================================
+   REJECTED
+========================================================= */
+
+.status.rejected {
+
+  color:
+    #b42318;
+
+  background:
+    #fef3f2;
+
+  border-color:
+    #f7c8c3;
+
+}
+
+
+.status.rejected::before {
+
+  background:
+    #f04438;
+
+  box-shadow:
+    0 0 0 3px
+    rgba(240, 68, 56, .10);
+
+}
+
+
+/* =========================================================
+   NOT SUBMITTED
+========================================================= */
+
+.status.not-submitted {
+
+  color:
+    #667085;
+
+  background:
+    #f2f4f7;
+
+  border-color:
+    #e4e7ec;
+
+}
+
+
+.status.not-submitted::before {
+
+  background:
+    #98a2b3;
+
+}
+
+
+/* =========================================================
+   NOT UPLOADED
+========================================================= */
+
+.status.not-uploaded {
+
+  color:
+    #667085;
+
+  background:
+    #f2f4f7;
+
+  border-color:
+    #e4e7ec;
+
+}
+
+
+.status.not-uploaded::before {
+
+  background:
+    #98a2b3;
+
+}
+
+
+/* =========================================================
+   VERIFIED BY
+========================================================= */
+
+.recent-table td:last-child {
+
+  color:
+    var(--recent-muted);
+
+  font-size:
+    10px;
+
+}
+
+
+/* =========================================================
+   DASH / EMPTY VALUE
+========================================================= */
+
+.recent-table td {
+
+  font-variant-numeric:
+    tabular-nums;
+
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .recent-card {
+
+    border-radius:
+      16px;
+
+  }
+
+
+  .recent-header {
+
+    padding:
+      22px;
+
+  }
+
+
+  .recent-table th,
+  .recent-table td {
+
+    padding:
+      14px 16px;
+
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+  .recent-card {
+
+    margin-top:
+      22px;
+
+    border-radius:
+      14px;
+
+  }
+
+
+  .recent-header {
+
+    padding:
+      20px;
+
+  }
+
+
+  .recent-header h2 {
+
+    font-size:
+      15px;
+
+  }
+
+
+  .recent-header::after {
+
+    display:
+      none;
+
+  }
+
+
+  /*
+     Turn table into horizontal scroll
+     instead of destroying readability.
+  */
+
+  .recent-table {
+
+    min-width:
+      650px;
+
+  }
+
+
+  .recent-card {
+
+    overflow-x:
+      auto;
+
+    overflow-y:
+      hidden;
+
+  }
+
+
+  .recent-card::before {
+
+    position:
+      absolute;
+
+    width:
+      100%;
+
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .recent-header {
+
+    padding:
+      18px;
+
+  }
+
+
+  .recent-header h2 {
+
+    font-size:
+      14px;
+
+  }
+
+
+  .recent-table th {
+
+    font-size:
+      8px;
+
+  }
+
+
+  .recent-table td {
+
+    font-size:
+      10px;
+
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .recent-card,
+  .recent-table tbody tr,
+  .recent-table td {
+
+    transition:
+      none !important;
+
+  }
+
+}

@@ -1,0 +1,879 @@
+/* =========================================================
+   PREMIUM OFFER LETTER PAGE
+   Aditya University — Internship Management System
+========================================================= */
+
+.offer-page {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 32px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 92% 0%,
+      rgba(37, 99, 235, 0.07),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 0% 100%,
+      rgba(30, 64, 175, 0.045),
+      transparent 30%
+    ),
+    #f5f7fb;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  color: #1e293b;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+  position: relative;
+
+  margin-bottom: 30px;
+
+  padding-bottom: 20px;
+
+  border-bottom:
+    1px solid
+    #e2e8f0;
+}
+
+
+.page-header::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: -1px;
+
+  width: 55px;
+  height: 3px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #2563eb,
+      #60a5fa
+    );
+}
+
+
+.page-header h1 {
+  margin: 0;
+
+  color: #0f172a;
+
+  font-family:
+    "Plus Jakarta Sans",
+    "Inter",
+    sans-serif;
+
+  font-size: 32px;
+
+  line-height: 1.2;
+
+  font-weight: 800;
+
+  letter-spacing: -0.035em;
+}
+
+
+.page-header p {
+  margin: 9px 0 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   GENERAL CARD
+========================================================= */
+
+.card {
+  position: relative;
+
+  box-sizing: border-box;
+
+  margin-bottom: 22px;
+
+  padding: 25px;
+
+  border:
+    1px solid
+    rgba(226, 232, 240, 0.9);
+
+  border-radius: 17px;
+
+  background:
+    rgba(255, 255, 255, 0.96);
+
+  box-shadow:
+    0 5px 18px rgba(15, 23, 42, 0.045),
+    0 1px 3px rgba(15, 23, 42, 0.035);
+
+  transition:
+    transform 0.28s cubic-bezier(.22, 1, .36, 1),
+    box-shadow 0.28s ease,
+    border-color 0.28s ease;
+}
+
+
+.card:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(37, 99, 235, 0.14);
+
+  box-shadow:
+    0 13px 30px rgba(15, 23, 42, 0.07),
+    0 3px 8px rgba(37, 99, 235, 0.04);
+}
+
+
+.card h2 {
+  margin: 0 0 22px;
+
+  color: #172033;
+
+  font-family:
+    "Plus Jakarta Sans",
+    "Inter",
+    sans-serif;
+
+  font-size: 18px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   DETAILS GRID
+========================================================= */
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 14px 18px;
+}
+
+
+/* =========================================================
+   DETAIL ITEM
+========================================================= */
+
+.details-grid > div {
+  position: relative;
+
+  padding: 15px 17px;
+
+  border:
+    1px solid
+    #e8edf4;
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ffffff,
+      #f8fafc
+    );
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+.details-grid > div:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(37, 99, 235, 0.18);
+
+  box-shadow:
+    0 7px 18px rgba(15, 23, 42, 0.05);
+}
+
+
+.details-grid span {
+  display: block;
+
+  margin-bottom: 5px;
+
+  color: #94a3b8;
+
+  font-size: 10px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  letter-spacing: 0.06em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   DETAIL TEXT
+========================================================= */
+
+.details-grid > div:not(:has(span)) {
+  color: #1e293b;
+
+  font-weight: 600;
+}
+
+
+.details-grid strong {
+  display: block;
+
+  color: #1e293b;
+
+  font-size: 14px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   PDF PREVIEW
+========================================================= */
+
+.pdf-preview {
+  position: relative;
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-height: 230px;
+
+  box-sizing: border-box;
+
+  padding: 40px;
+
+  border:
+    1.5px dashed
+    rgba(37, 99, 235, 0.35);
+
+  border-radius: 16px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(239, 246, 255, 0.72),
+      rgba(248, 250, 252, 0.92)
+    );
+
+  overflow: hidden;
+}
+
+
+.pdf-preview::before {
+  content: "";
+
+  position: absolute;
+
+  width: 180px;
+  height: 180px;
+
+  top: -90px;
+  right: -70px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(37, 99, 235, 0.08);
+
+  filter:
+    blur(20px);
+}
+
+
+.pdf-preview::after {
+  content: "";
+
+  position: absolute;
+
+  width: 150px;
+  height: 150px;
+
+  bottom: -80px;
+  left: -60px;
+
+  border-radius: 50%;
+
+  background:
+    rgba(96, 165, 250, 0.06);
+
+  filter:
+    blur(18px);
+}
+
+
+/* =========================================================
+   PDF ICON
+========================================================= */
+
+.pdf-icon {
+  position: relative;
+
+  z-index: 1;
+
+  width: 78px;
+  height: 78px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 15px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  color: #2563eb;
+
+  font-size: 48px;
+
+  box-shadow:
+    0 10px 25px
+    rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================================
+   PDF TITLE / TEXT
+========================================================= */
+
+.pdf-preview h3 {
+  position: relative;
+
+  z-index: 1;
+
+  margin: 0 0 6px;
+
+  color: #1e293b;
+
+  font-family:
+    "Plus Jakarta Sans",
+    sans-serif;
+
+  font-size: 16px;
+
+  font-weight: 750;
+}
+
+
+.pdf-preview p {
+  position: relative;
+
+  z-index: 1;
+
+  margin: 0;
+
+  color: #64748b;
+
+  font-size: 12px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   DOWNLOAD BUTTON
+========================================================= */
+
+.download-btn {
+  position: relative;
+
+  z-index: 2;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 8px;
+
+  margin-top: 20px;
+
+  min-height: 44px;
+
+  padding:
+    0 20px;
+
+  border:
+    1px solid
+    rgba(255, 255, 255, 0.18);
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #2563eb,
+      #1d4ed8
+    );
+
+  color: #ffffff;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 18px
+    rgba(37, 99, 235, 0.20);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+
+.download-btn:hover {
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.04);
+
+  box-shadow:
+    0 12px 25px
+    rgba(37, 99, 235, 0.27);
+}
+
+
+.download-btn:active {
+  transform:
+    translateY(0)
+    scale(.98);
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+textarea {
+  width: 100%;
+
+  min-height: 125px;
+
+  box-sizing: border-box;
+
+  padding: 15px 16px;
+
+  border:
+    1px solid
+    #dbe2ea;
+
+  border-radius: 12px;
+
+  outline: none;
+
+  resize: vertical;
+
+  background:
+    #fbfdff;
+
+  color: #1e293b;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 13px;
+
+  line-height: 1.6;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+
+textarea::placeholder {
+  color: #94a3b8;
+}
+
+
+textarea:hover {
+  border-color:
+    #cbd5e1;
+}
+
+
+textarea:focus {
+  border-color:
+    #2563eb;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(37, 99, 235, 0.08);
+}
+
+
+/* =========================================================
+   BUTTON GROUP
+========================================================= */
+
+.button-group {
+  display: flex;
+
+  gap: 14px;
+
+  margin-top: 5px;
+}
+
+
+/* =========================================================
+   APPROVE BUTTON
+========================================================= */
+
+.approve-btn,
+.reject-btn {
+  position: relative;
+
+  flex: 1;
+
+  min-height: 50px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  color: #ffffff;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  overflow: hidden;
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+
+.approve-btn {
+  background:
+    linear-gradient(
+      135deg,
+      #16a34a,
+      #15803d
+    );
+
+  box-shadow:
+    0 7px 18px
+    rgba(22, 163, 74, 0.18);
+}
+
+
+.reject-btn {
+  background:
+    linear-gradient(
+      135deg,
+      #ef4444,
+      #dc2626
+    );
+
+  box-shadow:
+    0 7px 18px
+    rgba(220, 38, 38, 0.16);
+}
+
+
+/* =========================================================
+   BUTTON HOVER
+========================================================= */
+
+.approve-btn:hover,
+.reject-btn:hover {
+  transform:
+    translateY(-2px);
+
+  filter:
+    brightness(1.04);
+}
+
+
+.approve-btn:hover {
+  box-shadow:
+    0 11px 24px
+    rgba(22, 163, 74, 0.24);
+}
+
+
+.reject-btn:hover {
+  box-shadow:
+    0 11px 24px
+    rgba(220, 38, 38, 0.22);
+}
+
+
+.approve-btn:active,
+.reject-btn:active {
+  transform:
+    translateY(0)
+    scale(.985);
+}
+
+
+/* =========================================================
+   BUTTON FOCUS
+========================================================= */
+
+.approve-btn:focus-visible,
+.reject-btn:focus-visible,
+.download-btn:focus-visible {
+  outline:
+    3px solid
+    rgba(37, 99, 235, 0.18);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .offer-page {
+    padding: 25px;
+  }
+
+
+  .page-header h1 {
+    font-size: 29px;
+  }
+
+
+  .card {
+    padding: 22px;
+  }
+
+
+  .details-grid {
+    gap: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .offer-page {
+    padding: 20px;
+  }
+
+
+  .page-header {
+    margin-bottom: 22px;
+
+    padding-bottom: 17px;
+  }
+
+
+  .page-header h1 {
+    font-size: 25px;
+  }
+
+
+  .page-header p {
+    font-size: 13px;
+  }
+
+
+  .card {
+    padding: 18px;
+
+    border-radius: 15px;
+  }
+
+
+  .card h2 {
+    font-size: 16px;
+
+    margin-bottom: 17px;
+  }
+
+
+  .details-grid {
+    grid-template-columns: 1fr;
+
+    gap: 10px;
+  }
+
+
+  .details-grid > div {
+    padding: 13px 14px;
+  }
+
+
+  .pdf-preview {
+    min-height: 210px;
+
+    padding: 30px 20px;
+  }
+
+
+  .pdf-icon {
+    width: 68px;
+    height: 68px;
+
+    font-size: 40px;
+  }
+
+
+  .button-group {
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+
+  .approve-btn,
+  .reject-btn {
+    min-height: 47px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .offer-page {
+    padding: 16px;
+  }
+
+
+  .page-header h1 {
+    font-size: 23px;
+  }
+
+
+  .page-header p {
+    font-size: 12px;
+  }
+
+
+  .card {
+    padding: 16px;
+  }
+
+
+  .details-grid span {
+    font-size: 9px;
+  }
+
+
+  .details-grid strong {
+    font-size: 13px;
+  }
+
+
+  .pdf-preview {
+    padding: 25px 15px;
+  }
+
+
+  .download-btn {
+    width: 100%;
+  }
+
+
+  textarea {
+    min-height: 110px;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .card,
+  .details-grid > div,
+  .download-btn,
+  .approve-btn,
+  .reject-btn {
+    transition: none !important;
+  }
+
+}

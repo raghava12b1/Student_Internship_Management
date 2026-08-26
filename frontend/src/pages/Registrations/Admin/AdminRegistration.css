@@ -1,0 +1,363 @@
+/* =========================================================
+   ADMIN REGISTRATION
+========================================================= */
+
+.admin-registration-page {
+  min-height: 100vh;
+  padding: 32px 6%;
+  background:
+    radial-gradient(circle at 90% 90%, rgba(245,158,11,.08), transparent 30%),
+    #f7f9fc;
+  color: #172033;
+}
+
+.admin-registration-topbar {
+  max-width: 1250px;
+  margin: 0 auto 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.admin-back-button,
+.admin-close-button {
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.admin-back-button {
+  background: transparent;
+  color: #172033;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.admin-back-button span {
+  font-size: 20px;
+  transition: .25s;
+}
+
+.admin-back-button:hover span {
+  transform: translateX(-4px);
+}
+
+.admin-close-button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: white;
+  color: #172033;
+  font-size: 25px;
+  box-shadow: 0 8px 25px rgba(15,23,42,.08);
+  transition: .25s;
+}
+
+.admin-close-button:hover {
+  background: #172033;
+  color: white;
+  transform: rotate(90deg);
+}
+
+.admin-registration-header {
+  max-width: 1250px;
+  margin: 0 auto 38px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.admin-brand-mark {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: #172033;
+  color: white;
+  font-weight: 900;
+  box-shadow: 0 15px 30px rgba(23,32,51,.18);
+}
+
+.admin-university-name {
+  color: #d97706;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+.admin-registration-header h1 {
+  margin: 5px 0;
+  font-size: clamp(30px,4vw,44px);
+  letter-spacing: -1.5px;
+}
+
+.admin-registration-header p {
+  margin: 0;
+  color: #738095;
+  font-size: 14px;
+}
+
+.admin-registration-wrapper {
+  max-width: 1250px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: .78fr 1.5fr;
+  background: white;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(15,23,42,.10);
+}
+
+.admin-registration-info {
+  background: #172033;
+  color: white;
+  padding: 52px 44px;
+}
+
+.admin-info-number {
+  color: #fbbf24;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+.admin-info-kicker {
+  display: block;
+  margin-top: 45px;
+  color: #fcd34d;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+.admin-registration-info h2 {
+  margin: 14px 0 20px;
+  font-size: 38px;
+  line-height: 1.08;
+}
+
+.admin-registration-info h2 span {
+  display: block;
+  color: #fbbf24;
+}
+
+.admin-registration-info > p {
+  color: #b8c2d1;
+  line-height: 1.8;
+  font-size: 14px;
+}
+
+.admin-info-divider {
+  height: 1px;
+  background: rgba(255,255,255,.12);
+  margin: 35px 0;
+}
+
+.admin-security-item {
+  display: flex;
+  gap: 13px;
+  margin-bottom: 24px;
+}
+
+.admin-security-item > span {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(251,191,36,.12);
+  color: #fbbf24;
+}
+
+.admin-security-item strong,
+.admin-security-item small {
+  display: block;
+}
+
+.admin-security-item strong {
+  font-size: 13px;
+}
+
+.admin-security-item small {
+  margin-top: 5px;
+  color: #8e9aaf;
+  font-size: 11px;
+}
+
+.admin-registration-form {
+  padding: 52px;
+}
+
+.admin-form-heading {
+  margin-bottom: 32px;
+}
+
+.admin-form-heading > span {
+  color: #d97706;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+.admin-form-heading h2 {
+  margin: 7px 0;
+  font-size: 27px;
+}
+
+.admin-form-heading p {
+  margin: 0;
+  color: #7c8799;
+  font-size: 13px;
+}
+
+.admin-form-row {
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.admin-form-field label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.admin-form-field input,
+.admin-form-field select {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  border: 1px solid #e1e7ef;
+  border-radius: 12px;
+  padding: 0 15px;
+  background: #fbfcfe;
+  outline: none;
+  font-family: inherit;
+  font-size: 13px;
+  transition: .25s;
+}
+
+.admin-form-field input:focus,
+.admin-form-field select:focus {
+  border-color: #d97706;
+  background: white;
+  box-shadow: 0 0 0 4px rgba(217,119,6,.08);
+}
+
+.admin-field-hint {
+  display: block;
+  margin-top: 6px;
+  color: #9099a9;
+  font-size: 10px;
+}
+
+.admin-password-wrapper {
+  position: relative;
+}
+
+.admin-password-wrapper input {
+  padding-right: 65px;
+}
+
+.admin-password-wrapper button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #d97706;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.admin-authorization-notice {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 15px;
+  margin-bottom: 20px;
+  background: #fffaf0;
+  border: 1px solid #fde9b7;
+  border-radius: 11px;
+}
+
+.admin-authorization-notice span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #d97706;
+  color: white;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.admin-authorization-notice p {
+  margin: 0;
+  color: #6f6870;
+  font-size: 11px;
+}
+
+.admin-register-button {
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 13px;
+  background: #172033;
+  color: white;
+  font-weight: 800;
+  cursor: pointer;
+  font-family: inherit;
+  transition: .3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.admin-register-button span {
+  font-size: 20px;
+  transition: .3s;
+}
+
+.admin-register-button:hover {
+  background: #d97706;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(217,119,6,.22);
+}
+
+.admin-register-button:hover span {
+  transform: translateX(5px);
+}
+
+@media (max-width: 950px) {
+  .admin-registration-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-registration-info {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .admin-registration-page {
+    padding: 22px 16px;
+  }
+
+  .admin-form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-registration-form {
+    padding: 30px 22px;
+  }
+}

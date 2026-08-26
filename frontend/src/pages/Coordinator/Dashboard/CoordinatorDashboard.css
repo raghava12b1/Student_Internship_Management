@@ -1,0 +1,917 @@
+/* =========================================================
+   PREMIUM COORDINATOR DASHBOARD
+   Aditya University
+   Student Internship Management System
+========================================================= */
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-deep: #1e3a8a;
+
+    --navy: #0f172a;
+    --text: #172033;
+    --text-secondary: #64748b;
+    --text-muted: #94a3b8;
+
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --border: #e8edf5;
+
+    --success: #16a34a;
+    --warning: #d97706;
+    --danger: #dc2626;
+
+    --shadow-sm: 0 4px 14px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 10px 28px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 18px 45px rgba(15, 23, 42, 0.11);
+
+    --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   MAIN DASHBOARD
+========================================================= */
+
+.coordinator-dashboard {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 32px;
+
+    background:
+        radial-gradient(
+            circle at 85% 0%,
+            rgba(37, 99, 235, 0.055),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 10% 45%,
+            rgba(59, 130, 246, 0.035),
+            transparent 25%
+        ),
+        var(--background);
+
+    color: var(--text);
+
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   WELCOME CARD
+========================================================= */
+
+.welcome-card {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 34px 38px;
+
+    margin-bottom: 28px;
+
+    min-height: 155px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border-radius: 22px;
+
+    color: #ffffff;
+
+    background:
+        radial-gradient(
+            circle at 90% 15%,
+            rgba(255, 255, 255, 0.14),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 10% 100%,
+            rgba(255, 255, 255, 0.06),
+            transparent 30%
+        ),
+        linear-gradient(
+            135deg,
+            #2563eb 0%,
+            #1d4ed8 48%,
+            #1e3a8a 100%
+        );
+
+    border: 1px solid rgba(255, 255, 255, 0.12);
+
+    box-shadow:
+        0 18px 40px rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   WELCOME CARD DECORATION
+========================================================= */
+
+.welcome-card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 260px;
+    height: 260px;
+
+    right: -90px;
+    top: -150px;
+
+    border-radius: 50%;
+
+    border: 1px solid rgba(255, 255, 255, 0.10);
+
+    box-shadow:
+        0 0 0 35px rgba(255, 255, 255, 0.025),
+        0 0 0 70px rgba(255, 255, 255, 0.018);
+
+    pointer-events: none;
+}
+
+
+.welcome-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 110px;
+    height: 110px;
+
+    right: 130px;
+    bottom: -65px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.05);
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   WELCOME TITLE
+========================================================= */
+
+.welcome-card h1 {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0 0 10px;
+
+    font-family:
+        "Plus Jakarta Sans",
+        "Inter",
+        sans-serif;
+
+    font-size: 31px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -0.035em;
+}
+
+
+/* =========================================================
+   WELCOME DESCRIPTION
+========================================================= */
+
+.welcome-card p {
+    position: relative;
+
+    z-index: 2;
+
+    max-width: 700px;
+
+    margin: 0;
+
+    color: rgba(255, 255, 255, 0.84);
+
+    font-size: 14px;
+
+    line-height: 1.7;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 18px;
+
+    margin-bottom: 30px;
+}
+
+
+/* =========================================================
+   STAT CARD
+========================================================= */
+
+.stat-card {
+    position: relative;
+
+    overflow: hidden;
+
+    padding: 24px;
+
+    min-height: 145px;
+
+    box-sizing: border-box;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.96);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform 0.35s var(--ease),
+        box-shadow 0.35s var(--ease),
+        border-color 0.35s var(--ease);
+}
+
+
+.stat-card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    right: -55px;
+    top: -55px;
+
+    border-radius: 50%;
+
+    background: rgba(37, 99, 235, 0.035);
+
+    pointer-events: none;
+}
+
+
+.stat-card:hover {
+    transform: translateY(-6px);
+
+    border-color: rgba(37, 99, 235, 0.15);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   ICON BOX
+========================================================= */
+
+.icon-box {
+    position: relative;
+
+    z-index: 2;
+
+    width: 52px;
+    height: 52px;
+
+    margin: 0 0 18px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    color: #ffffff;
+
+    font-size: 23px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-deep)
+        );
+
+    box-shadow:
+        0 8px 18px rgba(37, 99, 235, 0.20);
+}
+
+
+/* =========================================================
+   STAT NUMBER
+========================================================= */
+
+.stat-card h2 {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0;
+
+    color: var(--navy);
+
+    font-family:
+        "Plus Jakarta Sans",
+        "Inter",
+        sans-serif;
+
+    font-size: 30px;
+
+    line-height: 1.1;
+
+    font-weight: 800;
+
+    letter-spacing: -0.035em;
+}
+
+
+/* =========================================================
+   STAT LABEL
+========================================================= */
+
+.stat-card p {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 7px 0 0;
+
+    color: var(--text-secondary);
+
+    font-size: 12px;
+
+    line-height: 1.4;
+
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   DASHBOARD SECTION
+========================================================= */
+
+.dashboard-section {
+    position: relative;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 26px;
+
+    margin-bottom: 28px;
+
+    border: 1px solid var(--border);
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.98);
+
+    box-shadow: var(--shadow-sm);
+}
+
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+
+.dashboard-section h2 {
+    margin: 0 0 21px;
+
+    color: var(--navy);
+
+    font-family:
+        "Plus Jakarta Sans",
+        "Inter",
+        sans-serif;
+
+    font-size: 18px;
+
+    line-height: 1.3;
+
+    font-weight: 750;
+
+    letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   QUICK ACTION GRID
+========================================================= */
+
+.quick-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   QUICK ACTION BUTTON
+========================================================= */
+
+.quick-grid button {
+    position: relative;
+
+    overflow: hidden;
+
+    min-height: 58px;
+
+    border: 1px solid rgba(37, 99, 235, 0.12);
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #2563eb,
+            #1d4ed8
+        );
+
+    color: #ffffff;
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 650;
+
+    letter-spacing: 0.01em;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 17px rgba(37, 99, 235, 0.16);
+
+    transition:
+        transform 0.3s var(--ease),
+        box-shadow 0.3s var(--ease),
+        background 0.3s var(--ease);
+}
+
+
+.quick-grid button::before {
+    content: "";
+
+    position: absolute;
+
+    width: 80px;
+    height: 160px;
+
+    left: -80px;
+    top: -50px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    transform: rotate(25deg);
+
+    transition: left 0.55s ease;
+
+    pointer-events: none;
+}
+
+
+.quick-grid button:hover::before {
+    left: 110%;
+}
+
+
+.quick-grid button:hover {
+    transform: translateY(-4px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #1d4ed8,
+            #1e40af
+        );
+
+    box-shadow:
+        0 13px 28px rgba(37, 99, 235, 0.23);
+}
+
+
+.quick-grid button:active {
+    transform:
+        translateY(-1px)
+        scale(0.99);
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.coordinator-dashboard table {
+    width: 100%;
+
+    border-collapse: separate;
+
+    border-spacing: 0;
+
+    overflow: hidden;
+
+    border: 1px solid var(--border);
+
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.coordinator-dashboard thead {
+    background:
+        linear-gradient(
+            135deg,
+            #f8fafc,
+            #f1f5f9
+        );
+}
+
+
+.coordinator-dashboard th {
+    padding: 14px 16px;
+
+    border-bottom: 1px solid var(--border);
+
+    color: #64748b;
+
+    font-size: 10px;
+
+    font-weight: 750;
+
+    letter-spacing: 0.07em;
+
+    text-align: left;
+
+    text-transform: uppercase;
+
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE DATA
+========================================================= */
+
+.coordinator-dashboard td {
+    padding: 15px 16px;
+
+    border-bottom: 1px solid #eef2f7;
+
+    color: #334155;
+
+    font-size: 12px;
+
+    font-weight: 500;
+
+    vertical-align: middle;
+}
+
+
+.coordinator-dashboard tbody tr:last-child td {
+    border-bottom: none;
+}
+
+
+/* =========================================================
+   TABLE ROW HOVER
+========================================================= */
+
+.coordinator-dashboard tbody tr {
+    transition: background 0.2s ease;
+}
+
+
+.coordinator-dashboard tbody tr:hover {
+    background: #f8fbff;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+========================================================= */
+
+.table-container {
+    width: 100%;
+
+    overflow-x: auto;
+
+    border-radius: 13px;
+}
+
+
+/* =========================================================
+   TABLE SCROLLBAR
+========================================================= */
+
+.table-container::-webkit-scrollbar {
+    height: 5px;
+}
+
+
+.table-container::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+
+    border-radius: 20px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    min-width: 70px;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+}
+
+
+.status.approved {
+    color: #15803d;
+
+    background: #dcfce7;
+}
+
+
+.status.pending {
+    color: #a16207;
+
+    background: #fef3c7;
+}
+
+
+.status.rejected {
+    color: #b91c1c;
+
+    background: #fee2e2;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .coordinator-dashboard {
+        padding: 25px;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .quick-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .coordinator-dashboard {
+        padding: 18px;
+    }
+
+    .welcome-card {
+        padding: 26px 22px;
+
+        min-height: auto;
+
+        border-radius: 18px;
+    }
+
+    .welcome-card h1 {
+        font-size: 24px;
+    }
+
+    .welcome-card p {
+        font-size: 12px;
+
+        line-height: 1.65;
+    }
+
+    .stats-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+
+        margin-bottom: 22px;
+    }
+
+    .stat-card {
+        padding: 18px;
+
+        min-height: 125px;
+
+        border-radius: 15px;
+    }
+
+    .icon-box {
+        width: 46px;
+        height: 46px;
+
+        margin-bottom: 13px;
+
+        border-radius: 12px;
+
+        font-size: 20px;
+    }
+
+    .stat-card h2 {
+        font-size: 24px;
+    }
+
+    .stat-card p {
+        font-size: 10px;
+    }
+
+    .dashboard-section {
+        padding: 19px;
+
+        margin-bottom: 20px;
+
+        border-radius: 16px;
+    }
+
+    .dashboard-section h2 {
+        font-size: 16px;
+
+        margin-bottom: 17px;
+    }
+
+    .quick-grid {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .quick-grid button {
+        min-height: 50px;
+
+        font-size: 11px;
+    }
+
+    .coordinator-dashboard table {
+        min-width: 650px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .coordinator-dashboard {
+        padding: 14px;
+    }
+
+    .welcome-card {
+        padding: 22px 18px;
+
+        border-radius: 16px;
+    }
+
+    .welcome-card h1 {
+        font-size: 21px;
+    }
+
+    .welcome-card p {
+        font-size: 11px;
+    }
+
+    .stats-grid {
+        gap: 9px;
+    }
+
+    .stat-card {
+        padding: 15px;
+
+        min-height: 115px;
+    }
+
+    .icon-box {
+        width: 42px;
+        height: 42px;
+
+        margin-bottom: 11px;
+
+        font-size: 18px;
+    }
+
+    .stat-card h2 {
+        font-size: 21px;
+    }
+
+    .stat-card p {
+        font-size: 9px;
+    }
+
+    .dashboard-section {
+        padding: 15px;
+
+        border-radius: 14px;
+    }
+
+    .dashboard-section h2 {
+        font-size: 15px;
+    }
+
+    .quick-grid button {
+        min-height: 48px;
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.quick-grid button:focus-visible {
+    outline:
+        3px solid rgba(37, 99, 235, 0.25);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .stat-card,
+    .quick-grid button,
+    .quick-grid button::before,
+    .coordinator-dashboard tbody tr {
+        transition: none !important;
+    }
+}

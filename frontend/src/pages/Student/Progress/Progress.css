@@ -1,0 +1,1632 @@
+/* =========================================================
+   PREMIUM INTERNSHIP PROGRESS
+   Aditya University — Student Internship Management System
+   FINAL COMPLETE CSS
+========================================================= */
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap'
+);
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+  --progress-navy: #071a3a;
+  --progress-navy-light: #0d2b5c;
+
+  --progress-blue: #1557b0;
+  --progress-blue-light: #2875d0;
+  --progress-blue-soft: #3b82df;
+
+  --progress-gold: #d5a32a;
+  --progress-gold-light: #f1d78a;
+
+  --progress-text: #101828;
+  --progress-muted: #667085;
+  --progress-muted-light: #98a2b3;
+
+  --progress-border: #e4e7ec;
+  --progress-border-dark: #d0d5dd;
+
+  --progress-white: #ffffff;
+  --progress-bg: #f7faff;
+
+  --progress-green: #16845b;
+  --progress-orange: #c77b08;
+  --progress-red: #c43232;
+
+  --progress-heading: "Plus Jakarta Sans", sans-serif;
+  --progress-body: "Inter", sans-serif;
+
+  --progress-ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   BOX SIZING
+========================================================= */
+
+.progress-page,
+.progress-page *,
+.progress-page *::before,
+.progress-page *::after {
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.progress-page {
+  position: relative;
+
+  width: 100%;
+  min-height: calc(100vh - 100px);
+
+  padding: 38px 42px;
+
+  overflow-x: hidden;
+
+  font-family: var(--progress-body);
+  color: var(--progress-text);
+
+  background:
+    radial-gradient(
+      circle at 92% 8%,
+      rgba(21, 87, 176, .055),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 4% 92%,
+      rgba(213, 163, 42, .04),
+      transparent 25%
+    ),
+    linear-gradient(
+      135deg,
+      #f7faff 0%,
+      #ffffff 50%,
+      #f6f9fd 100%
+    );
+
+  animation:
+    progressPageIn
+    .6s
+    var(--progress-ease)
+    both;
+}
+
+
+/* =========================================================
+   SUBTLE GRID
+========================================================= */
+
+.progress-page::before {
+  content: "";
+
+  position: absolute;
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: .30;
+
+  background-image:
+    linear-gradient(
+      rgba(7, 26, 58, .018) 1px,
+      transparent 1px
+    ),
+    linear-gradient(
+      90deg,
+      rgba(7, 26, 58, .018) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 90%
+    );
+}
+
+
+/* =========================================================
+   DECORATIVE ORB
+========================================================= */
+
+.progress-page::after {
+  content: "";
+
+  position: absolute;
+
+  width: 340px;
+  height: 340px;
+
+  right: -170px;
+  bottom: -170px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(21, 87, 176, .055),
+      transparent 70%
+    );
+
+  filter: blur(5px);
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTENT LAYER
+========================================================= */
+
+.progress-page > * {
+  position: relative;
+  z-index: 2;
+}
+
+
+/* =========================================================
+   PAGE HEADING
+========================================================= */
+
+.progress-page h1 {
+  position: relative;
+
+  margin: 0 0 12px;
+
+  color: var(--progress-navy);
+
+  font-family: var(--progress-heading);
+
+  font-size: clamp(32px, 3vw, 44px);
+
+  line-height: 1.1;
+
+  font-weight: 800;
+
+  letter-spacing: -.045em;
+
+  -webkit-font-smoothing: antialiased;
+
+  animation:
+    progressHeaderIn
+    .65s
+    var(--progress-ease)
+    both;
+}
+
+
+/* =========================================================
+   GOLD HEADING ACCENT
+========================================================= */
+
+.progress-page h1::after {
+  content: "";
+
+  display: block;
+
+  width: 50px;
+  height: 3px;
+
+  margin-top: 14px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--progress-gold),
+      var(--progress-gold-light)
+    );
+
+  transform-origin: left;
+
+  animation:
+    progressAccent
+    .7s
+    var(--progress-ease)
+    .15s
+    both;
+}
+
+
+/* =========================================================
+   PAGE DESCRIPTION
+========================================================= */
+
+.progress-page > p {
+  max-width: 680px;
+
+  margin: 0 0 31px;
+
+  color: var(--progress-muted);
+
+  font-size: 13px;
+
+  line-height: 1.75;
+
+  animation:
+    progressHeaderIn
+    .65s
+    var(--progress-ease)
+    .05s
+    both;
+}
+
+
+/* =========================================================
+   PREMIUM CARD
+========================================================= */
+
+.progress-card {
+  position: relative;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  margin-bottom: 22px;
+
+  padding: 28px 30px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(228, 231, 236, .95);
+
+  border-radius: 17px;
+
+  background:
+    linear-gradient(
+      145deg,
+      rgba(255, 255, 255, .97),
+      rgba(249, 251, 255, .94)
+    );
+
+  box-shadow:
+    0 20px 50px
+    rgba(16, 24, 40, .065),
+
+    0 4px 12px
+    rgba(16, 24, 40, .025),
+
+    inset 0 1px 0
+    rgba(255, 255, 255, .95);
+
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  transition:
+    transform .35s var(--progress-ease),
+    box-shadow .35s var(--progress-ease),
+    border-color .35s var(--progress-ease);
+
+  animation:
+    progressCardIn
+    .7s
+    var(--progress-ease)
+    both;
+}
+
+
+/* =========================================================
+   CARD TOP ACCENT
+========================================================= */
+
+.progress-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--progress-gold),
+      var(--progress-blue) 50%,
+      var(--progress-navy)
+    );
+}
+
+
+/* =========================================================
+   CARD SOFT GLOW
+========================================================= */
+
+.progress-card::after {
+  content: "";
+
+  position: absolute;
+
+  width: 220px;
+  height: 220px;
+
+  top: -120px;
+  right: -100px;
+
+  border-radius: 50%;
+
+  background:
+    radial-gradient(
+      circle,
+      rgba(21, 87, 176, .055),
+      transparent 68%
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CARD HOVER
+========================================================= */
+
+.progress-card:hover {
+  transform: translateY(-3px);
+
+  border-color:
+    rgba(21, 87, 176, .13);
+
+  box-shadow:
+    0 28px 65px
+    rgba(16, 24, 40, .09),
+
+    0 8px 20px
+    rgba(21, 87, 176, .025);
+}
+
+
+/* =========================================================
+   CARD HEADINGS
+========================================================= */
+
+.progress-card h2 {
+  position: relative;
+
+  margin: 0 0 24px;
+
+  color: var(--progress-navy);
+
+  font-family: var(--progress-heading);
+
+  font-size: 16px;
+
+  line-height: 1.3;
+
+  font-weight: 800;
+
+  letter-spacing: -.025em;
+}
+
+
+/* =========================================================
+   CARD HEADING ACCENT
+========================================================= */
+
+.progress-card h2::after {
+  content: "";
+
+  display: block;
+
+  width: 27px;
+  height: 2px;
+
+  margin-top: 9px;
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--progress-gold),
+      var(--progress-gold-light)
+    );
+}
+
+
+/* =========================================================
+   INTERNSHIP DETAILS GRID
+========================================================= */
+
+.details-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, minmax(0, 1fr));
+
+  gap: 15px;
+}
+
+
+/* =========================================================
+   DETAIL ITEM
+========================================================= */
+
+.details-grid > div {
+  position: relative;
+
+  min-width: 0;
+
+  padding: 17px 18px;
+
+  border:
+    1px solid
+    var(--progress-border);
+
+  border-radius: 11px;
+
+  background: #fcfdff;
+
+  transition:
+    transform .3s var(--progress-ease),
+    border-color .3s var(--progress-ease),
+    background .3s var(--progress-ease),
+    box-shadow .3s var(--progress-ease);
+}
+
+
+/* =========================================================
+   DETAIL HOVER
+========================================================= */
+
+.details-grid > div:hover {
+  transform: translateY(-2px);
+
+  border-color:
+    rgba(21, 87, 176, .18);
+
+  background: #ffffff;
+
+  box-shadow:
+    0 10px 24px
+    rgba(16, 24, 40, .05);
+}
+
+
+/* =========================================================
+   DETAIL LABEL
+========================================================= */
+
+.details-grid span {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: var(--progress-muted-light);
+
+  font-size: 9px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   DETAIL VALUE
+========================================================= */
+
+.details-grid h3 {
+  margin: 0;
+
+  color: var(--progress-navy);
+
+  font-family: var(--progress-heading);
+
+  font-size: 13px;
+
+  line-height: 1.45;
+
+  font-weight: 700;
+
+  letter-spacing: -.015em;
+
+  overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   OVERALL PROGRESS CARD
+========================================================= */
+
+.progress-card:nth-of-type(2) {
+  overflow: visible;
+}
+
+
+/* =========================================================
+   PROGRESS HEADER ROW
+========================================================= */
+
+.progress-header-row {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   PREMIUM PROGRESS BAR
+========================================================= */
+
+.progress-bar {
+  position: relative;
+
+  width: 100%;
+
+  height: 16px;
+
+  margin: 8px 0 14px;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(21, 87, 176, .08);
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #eef3f9,
+      #e5ebf4
+    );
+
+  box-shadow:
+    inset 0 2px 4px
+    rgba(7, 26, 58, .07),
+
+    inset 0 -1px 1px
+    rgba(255, 255, 255, .9);
+}
+
+
+/* =========================================================
+   PROGRESS FILL
+========================================================= */
+
+.progress-fill {
+  position: relative;
+
+  height: 100%;
+
+  min-width: 8px;
+
+  overflow: hidden;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      90deg,
+      #0d47a1 0%,
+      #1557b0 45%,
+      #2875d0 75%,
+      #3b82df 100%
+    );
+
+  box-shadow:
+    0 3px 10px
+    rgba(21, 87, 176, .28),
+
+    0 0 14px
+    rgba(21, 87, 176, .12);
+
+  animation:
+    progressFillPremium
+    1.2s
+    var(--progress-ease)
+    .2s
+    both;
+}
+
+
+/* =========================================================
+   PROGRESS INNER LIGHT
+========================================================= */
+
+.progress-fill::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 1px 0 auto;
+
+  height: 45%;
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, .32),
+      rgba(255, 255, 255, 0)
+    );
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   MOVING SHINE
+========================================================= */
+
+.progress-fill::after {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: -35%;
+
+  width: 25%;
+  height: 100%;
+
+  transform: skewX(-20deg);
+
+  background:
+    linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, .45),
+      transparent
+    );
+
+  animation:
+    premiumProgressShine
+    2.8s
+    ease-in-out
+    1.2s
+    infinite;
+}
+
+
+/* =========================================================
+   PROGRESS PERCENTAGE
+========================================================= */
+
+.progress-card:nth-of-type(2) h3 {
+  position: relative;
+
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 54px;
+
+  padding: 7px 11px;
+
+  margin: 0;
+
+  border:
+    1px solid
+    rgba(21, 87, 176, .12);
+
+  border-radius: 999px;
+
+  background:
+    linear-gradient(
+      135deg,
+      rgba(21, 87, 176, .10),
+      rgba(21, 87, 176, .045)
+    );
+
+  color: var(--progress-blue);
+
+  font-family: var(--progress-heading);
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: -.01em;
+
+  box-shadow:
+    0 4px 12px
+    rgba(21, 87, 176, .08);
+}
+
+
+/* =========================================================
+   PROGRESS BAR HOVER
+========================================================= */
+
+.progress-bar:hover .progress-fill {
+  box-shadow:
+    0 4px 14px
+    rgba(21, 87, 176, .34),
+
+    0 0 18px
+    rgba(21, 87, 176, .16);
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 8px;
+}
+
+
+/* =========================================================
+   TIMELINE ITEM
+========================================================= */
+
+.timeline-item {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  min-height: 55px;
+
+  padding: 10px 13px;
+
+  border:
+    1px solid
+    var(--progress-border);
+
+  border-radius: 10px;
+
+  background: #fcfdff;
+
+  transition:
+    transform .3s var(--progress-ease),
+    border-color .3s var(--progress-ease),
+    background .3s var(--progress-ease),
+    box-shadow .3s var(--progress-ease);
+}
+
+
+/* =========================================================
+   TIMELINE HOVER
+========================================================= */
+
+.timeline-item:hover {
+  transform: translateX(3px);
+
+  border-color:
+    rgba(21, 87, 176, .15);
+
+  background: #ffffff;
+
+  box-shadow:
+    0 7px 18px
+    rgba(16, 24, 40, .045);
+}
+
+
+/* =========================================================
+   TIMELINE TITLE
+========================================================= */
+
+.timeline-title {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 0;
+
+  color: #344054;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TIMELINE DOT
+========================================================= */
+
+.timeline-title::before {
+  content: "";
+
+  width: 7px;
+  height: 7px;
+
+  flex: 0 0 7px;
+
+  border-radius: 50%;
+
+  background: #d0d5dd;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(208, 213, 221, .18);
+
+  transition:
+    background .3s var(--progress-ease),
+    box-shadow .3s var(--progress-ease);
+}
+
+
+/* =========================================================
+   APPROVED DOT
+========================================================= */
+
+.timeline-item:has(.approved) .timeline-title::before {
+  background: var(--progress-green);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(34, 160, 107, .09);
+}
+
+
+/* =========================================================
+   PENDING DOT
+========================================================= */
+
+.timeline-item:has(.pending) .timeline-title::before {
+  background: var(--progress-orange);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(245, 158, 11, .09);
+}
+
+
+/* =========================================================
+   REJECTED DOT
+========================================================= */
+
+.timeline-item:has(.rejected) .timeline-title::before {
+  background: var(--progress-red);
+
+  box-shadow:
+    0 0 0 4px
+    rgba(220, 38, 38, .08);
+}
+
+
+/* =========================================================
+   STATUS BADGES
+========================================================= */
+
+.status {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-width: 88px;
+
+  padding: 6px 10px;
+
+  border:
+    1px solid
+    transparent;
+
+  border-radius: 20px;
+
+  font-size: 8px;
+
+  line-height: 1.3;
+
+  font-weight: 700;
+
+  letter-spacing: .015em;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   APPROVED
+========================================================= */
+
+.approved {
+  color: #16794f;
+
+  background:
+    rgba(34, 160, 107, .07);
+
+  border-color:
+    rgba(34, 160, 107, .12);
+}
+
+
+/* =========================================================
+   PENDING
+========================================================= */
+
+.pending {
+  color: #a15f00;
+
+  background:
+    rgba(245, 158, 11, .08);
+
+  border-color:
+    rgba(245, 158, 11, .14);
+}
+
+
+/* =========================================================
+   NOT SUBMITTED
+========================================================= */
+
+.not-submitted {
+  color: #667085;
+
+  background: #f2f4f7;
+
+  border-color: #e4e7ec;
+}
+
+
+/* =========================================================
+   NOT UPLOADED
+========================================================= */
+
+.not-uploaded {
+  color: #667085;
+
+  background: #f2f4f7;
+
+  border-color: #e4e7ec;
+}
+
+
+/* =========================================================
+   REJECTED
+========================================================= */
+
+.rejected {
+  color: #b42318;
+
+  background:
+    rgba(220, 38, 38, .06);
+
+  border-color:
+    rgba(220, 38, 38, .12);
+}
+
+
+/* =========================================================
+   COORDINATOR REMARKS
+========================================================= */
+
+.remarks {
+  position: relative;
+
+  box-sizing: border-box;
+
+  margin: 0;
+
+  padding: 16px 18px 16px 20px;
+
+  border:
+    1px solid
+    rgba(21, 87, 176, .10);
+
+  border-left:
+    3px solid
+    var(--progress-blue);
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(21, 87, 176, .045),
+      rgba(21, 87, 176, .018)
+    );
+
+  color: #475467;
+
+  font-size: 11px;
+
+  line-height: 1.75;
+}
+
+
+/* =========================================================
+   REMARKS LABEL
+========================================================= */
+
+.remarks::before {
+  content: "COORDINATOR NOTE";
+
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: var(--progress-blue);
+
+  font-size: 8px;
+
+  font-weight: 800;
+
+  letter-spacing: .13em;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.progress-empty {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  min-height: 120px;
+
+  padding: 25px;
+
+  border:
+    1px dashed
+    var(--progress-border-dark);
+
+  border-radius: 12px;
+
+  background:
+    rgba(248, 250, 252, .7);
+
+  color: var(--progress-muted);
+
+  font-size: 11px;
+
+  text-align: center;
+}
+
+
+/* =========================================================
+   ERROR STATE
+========================================================= */
+
+.progress-error {
+  padding: 14px 17px;
+
+  border:
+    1px solid
+    rgba(220, 38, 38, .12);
+
+  border-left:
+    3px solid
+    var(--progress-red);
+
+  border-radius: 10px;
+
+  background:
+    rgba(220, 38, 38, .045);
+
+  color:
+    #b42318;
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.progress-page button:focus-visible,
+.progress-page input:focus-visible,
+.progress-page a:focus-visible,
+.progress-page [tabindex]:focus-visible {
+  outline:
+    3px solid
+    rgba(21, 87, 176, .16);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   PAGE ANIMATION
+========================================================= */
+
+@keyframes progressPageIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   HEADER ANIMATION
+========================================================= */
+
+@keyframes progressHeaderIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+/* =========================================================
+   CARD ANIMATION
+========================================================= */
+
+@keyframes progressCardIn {
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(18px)
+      scale(.99);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   GOLD ACCENT ANIMATION
+========================================================= */
+
+@keyframes progressAccent {
+  from {
+    opacity: 0;
+
+    transform:
+      scaleX(0);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      scaleX(1);
+  }
+}
+
+
+/* =========================================================
+   PROGRESS FILL ANIMATION
+========================================================= */
+
+@keyframes progressFillPremium {
+  from {
+    width: 0 !important;
+
+    opacity: .5;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+/* =========================================================
+   PROGRESS SHINE
+========================================================= */
+
+@keyframes premiumProgressShine {
+  0% {
+    left: -35%;
+  }
+
+  45%,
+  100% {
+    left: 130%;
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 992px) {
+
+  .progress-page {
+    padding:
+      30px 25px 45px;
+  }
+
+
+  .progress-page h1 {
+    font-size:
+      38px;
+  }
+
+
+  .details-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+
+  .progress-card {
+    padding:
+      26px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .progress-page {
+    min-height:
+      calc(100vh - 70px);
+
+    padding:
+      25px 18px 40px;
+  }
+
+
+  .progress-page h1 {
+    font-size:
+      32px;
+
+    letter-spacing:
+      -.04em;
+  }
+
+
+  .progress-page h1::after {
+    width:
+      43px;
+
+    height:
+      2px;
+
+    margin-top:
+      11px;
+  }
+
+
+  .progress-page > p {
+    font-size:
+      12px;
+
+    line-height:
+      1.7;
+
+    margin-bottom:
+      25px;
+  }
+
+
+  .progress-card {
+    padding:
+      21px;
+
+    border-radius:
+      14px;
+
+    margin-bottom:
+      17px;
+  }
+
+
+  .progress-card h2 {
+    font-size:
+      15px;
+
+    margin-bottom:
+      20px;
+  }
+
+
+  .details-grid {
+    grid-template-columns:
+      1fr;
+
+    gap:
+      10px;
+  }
+
+
+  .details-grid > div {
+    padding:
+      14px 15px;
+  }
+
+
+  .details-grid span {
+    font-size:
+      8px;
+  }
+
+
+  .details-grid h3 {
+    font-size:
+      12px;
+  }
+
+
+  /* =====================================================
+     MOBILE PROGRESS
+  ===================================================== */
+
+  .progress-header-row {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      10px;
+  }
+
+
+  .progress-bar {
+    height:
+      14px;
+
+    margin-top:
+      7px;
+
+    margin-bottom:
+      12px;
+  }
+
+
+  .progress-card:nth-of-type(2) h3 {
+    min-width:
+      50px;
+
+    padding:
+      6px 9px;
+
+    font-size:
+      10px;
+  }
+
+
+  /* =====================================================
+     MOBILE TIMELINE
+  ===================================================== */
+
+  .timeline {
+    gap:
+      7px;
+  }
+
+
+  .timeline-item {
+    align-items:
+      flex-start;
+
+    flex-direction:
+      column;
+
+    gap:
+      9px;
+
+    padding:
+      13px;
+  }
+
+
+  .timeline-title {
+    width:
+      100%;
+
+    font-size:
+      10px;
+  }
+
+
+  .status {
+    min-width:
+      auto;
+
+    padding:
+      5px 10px;
+
+    font-size:
+      8px;
+  }
+
+
+  .remarks {
+    padding:
+      14px 15px 14px 17px;
+
+    font-size:
+      10px;
+
+    line-height:
+      1.7;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 420px) {
+
+  .progress-page {
+    padding:
+      20px 14px 35px;
+  }
+
+
+  .progress-page h1 {
+    font-size:
+      28px;
+  }
+
+
+  .progress-page > p {
+    font-size:
+      11px;
+  }
+
+
+  .progress-card {
+    padding:
+      18px;
+
+    border-radius:
+      13px;
+  }
+
+
+  .progress-card h2 {
+    font-size:
+      14px;
+  }
+
+
+  .progress-bar {
+    height:
+      13px;
+  }
+
+
+  .details-grid h3 {
+    font-size:
+      12px;
+  }
+
+
+  .timeline-title {
+    font-size:
+      10px;
+  }
+
+
+  .remarks {
+    font-size:
+      10px;
+  }
+
+
+  .remarks::before {
+    font-size:
+      7px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 340px) {
+
+  .progress-page {
+    padding:
+      18px 11px 30px;
+  }
+
+
+  .progress-page h1 {
+    font-size:
+      25px;
+  }
+
+
+  .progress-card {
+    padding:
+      16px;
+  }
+
+
+  .timeline-item {
+    padding:
+      11px;
+  }
+
+
+  .status {
+    font-size:
+      7px;
+
+    padding:
+      5px 8px;
+  }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .progress-page,
+  .progress-page *,
+  .progress-page *::before,
+  .progress-page *::after {
+
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+  }
+}

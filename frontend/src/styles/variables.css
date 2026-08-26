@@ -1,0 +1,30 @@
+:root {
+  /* ==========================
+     Colors
+  ========================== */
+  --primary-color: #2563eb;
+  --secondary-color: #4f46e5;
+
+  --background-color: #f8fafc;
+  --card-color: #ffffff;
+
+  --text-color: #1e293b;
+  --subtext-color: #64748b;
+
+  --border-color: #e2e8f0;
+
+  /* ==========================
+     Shadow
+  ========================== */
+  --shadow: 0px 4px 15px rgba(0, 0, 0, 0.08);
+
+  /* ==========================
+     Border Radius
+  ========================== */
+  --radius: 12px;
+
+  /* ==========================
+     Font
+  ========================== */
+  --font-family: "Poppins", sans-serif;
+}

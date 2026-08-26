@@ -1,0 +1,1016 @@
+/* =========================================================
+   PREMIUM DOCUMENT VERIFICATION PAGE
+   Aditya University
+   Student Internship Management System
+========================================================= */
+
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --primary-deep: #1e3a8a;
+
+    --success: #16a34a;
+    --success-dark: #15803d;
+
+    --danger: #dc2626;
+    --danger-dark: #b91c1c;
+
+    --navy: #0f172a;
+    --text: #1e293b;
+    --secondary: #64748b;
+    --muted: #94a3b8;
+
+    --background: #f5f7fb;
+    --surface: #ffffff;
+    --border: #e8edf5;
+
+    --shadow-sm:
+        0 4px 14px rgba(15, 23, 42, 0.05);
+
+    --shadow-md:
+        0 10px 28px rgba(15, 23, 42, 0.08);
+
+    --shadow-lg:
+        0 18px 45px rgba(15, 23, 42, 0.11);
+
+    --ease:
+        cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.verification-page {
+    position: relative;
+
+    width: 100%;
+    min-height: 100vh;
+
+    box-sizing: border-box;
+
+    padding: 32px;
+
+    background:
+        radial-gradient(
+            circle at 90% 0%,
+            rgba(37, 99, 235, 0.055),
+            transparent 25%
+        ),
+        radial-gradient(
+            circle at 5% 50%,
+            rgba(59, 130, 246, 0.035),
+            transparent 25%
+        ),
+        var(--background);
+
+    color: var(--text);
+
+    font-family:
+        "Inter",
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    overflow-x: hidden;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.page-header {
+    position: relative;
+
+    margin-bottom: 26px;
+
+    padding-bottom: 20px;
+
+    border-bottom: 1px solid var(--border);
+}
+
+
+.page-header::before {
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+    bottom: -1px;
+
+    width: 65px;
+    height: 3px;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            #60a5fa
+        );
+}
+
+
+/* =========================================================
+   PAGE TITLE
+========================================================= */
+
+.page-header h1 {
+    margin: 0;
+
+    color: var(--navy);
+
+    font-family:
+        "Plus Jakarta Sans",
+        "Inter",
+        sans-serif;
+
+    font-size: 30px;
+
+    line-height: 1.2;
+
+    font-weight: 800;
+
+    letter-spacing: -0.035em;
+}
+
+
+/* =========================================================
+   PAGE DESCRIPTION
+========================================================= */
+
+.page-header p {
+    max-width: 700px;
+
+    margin: 9px 0 0;
+
+    color: var(--secondary);
+
+    font-size: 13px;
+
+    line-height: 1.65;
+
+    font-weight: 400;
+}
+
+
+/* =========================================================
+   COMMON CARD
+========================================================= */
+
+.card {
+    position: relative;
+
+    overflow: hidden;
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    padding: 26px;
+
+    margin-bottom: 22px;
+
+    border:
+        1px solid
+        var(--border);
+
+    border-radius: 18px;
+
+    background:
+        rgba(255, 255, 255, 0.98);
+
+    box-shadow:
+        var(--shadow-sm);
+
+    transition:
+        box-shadow 0.3s var(--ease),
+        border-color 0.3s var(--ease);
+}
+
+
+.card:hover {
+    border-color:
+        rgba(37, 99, 235, 0.12);
+
+    box-shadow:
+        var(--shadow-md);
+}
+
+
+/* =========================================================
+   CARD TOP ACCENT
+========================================================= */
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 3px;
+
+    background:
+        linear-gradient(
+            90deg,
+            var(--primary),
+            #60a5fa,
+            transparent
+        );
+
+    opacity: 0.85;
+}
+
+
+/* =========================================================
+   CARD HEADING
+========================================================= */
+
+.card h2 {
+    margin: 0 0 22px;
+
+    color: var(--navy);
+
+    font-family:
+        "Plus Jakarta Sans",
+        "Inter",
+        sans-serif;
+
+    font-size: 17px;
+
+    line-height: 1.3;
+
+    font-weight: 750;
+
+    letter-spacing: -0.02em;
+}
+
+
+/* =========================================================
+   STUDENT INFORMATION GRID
+========================================================= */
+
+.student-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* =========================================================
+   STUDENT INFORMATION ITEM
+========================================================= */
+
+.student-grid > div {
+    position: relative;
+
+    min-height: 62px;
+
+    box-sizing: border-box;
+
+    padding: 13px 15px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    border:
+        1px solid
+        #edf1f6;
+
+    border-radius: 11px;
+
+    background:
+        #f8fafc;
+
+    transition:
+        background 0.25s ease,
+        border-color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.student-grid > div:hover {
+    background: #f5f9ff;
+
+    border-color:
+        rgba(37, 99, 235, 0.15);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   STUDENT LABEL
+========================================================= */
+
+.student-grid span {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: var(--secondary);
+
+    font-size: 10px;
+
+    line-height: 1.3;
+
+    font-weight: 700;
+
+    letter-spacing: 0.07em;
+
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   STUDENT VALUE
+========================================================= */
+
+.student-grid strong,
+.student-grid b {
+    color: var(--navy);
+
+    font-size: 13px;
+
+    font-weight: 650;
+}
+
+
+/* =========================================================
+   DOCUMENT PREVIEW
+========================================================= */
+
+.document-preview {
+    position: relative;
+
+    overflow: hidden;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 220px;
+
+    box-sizing: border-box;
+
+    padding: 42px 25px;
+
+    border:
+        1.5px dashed
+        rgba(37, 99, 235, 0.35);
+
+    border-radius: 15px;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            145deg,
+            #f8fbff,
+            #f3f7ff
+        );
+
+    transition:
+        border-color 0.3s ease,
+        background 0.3s ease,
+        transform 0.3s ease;
+}
+
+
+.document-preview::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -80px;
+    top: -80px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(37, 99, 235, 0.045);
+
+    pointer-events: none;
+}
+
+
+.document-preview::after {
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    left: -60px;
+    bottom: -60px;
+
+    border-radius: 50%;
+
+    background:
+        rgba(37, 99, 235, 0.035);
+
+    pointer-events: none;
+}
+
+
+.document-preview:hover {
+    border-color:
+        rgba(37, 99, 235, 0.65);
+
+    background:
+        linear-gradient(
+            145deg,
+            #f7faff,
+            #eef5ff
+        );
+}
+
+
+/* =========================================================
+   PDF ICON
+========================================================= */
+
+.pdf-icon {
+    position: relative;
+
+    z-index: 2;
+
+    width: 70px;
+    height: 70px;
+
+    margin-bottom: 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 18px;
+
+    font-size: 34px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #dbeafe
+        );
+
+    box-shadow:
+        0 8px 20px
+        rgba(37, 99, 235, 0.10);
+}
+
+
+/* =========================================================
+   DOCUMENT TEXT
+========================================================= */
+
+.document-preview h3 {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0 0 6px;
+
+    color: var(--navy);
+
+    font-size: 15px;
+
+    font-weight: 700;
+}
+
+
+.document-preview p {
+    position: relative;
+
+    z-index: 2;
+
+    margin: 0;
+
+    color: var(--secondary);
+
+    font-size: 11px;
+}
+
+
+/* =========================================================
+   VIEW DOCUMENT BUTTON
+========================================================= */
+
+.view-btn {
+    position: relative;
+
+    z-index: 2;
+
+    margin-top: 19px;
+
+    padding: 11px 22px;
+
+    border:
+        1px solid
+        rgba(37, 99, 235, 0.15);
+
+    border-radius: 9px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary),
+            var(--primary-dark)
+        );
+
+    color: #ffffff;
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size: 11px;
+
+    font-weight: 650;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 7px 16px
+        rgba(37, 99, 235, 0.18);
+
+    transition:
+        transform 0.28s var(--ease),
+        box-shadow 0.28s var(--ease),
+        background 0.28s var(--ease);
+}
+
+
+.view-btn:hover {
+    transform: translateY(-2px);
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--primary-dark),
+            var(--primary-deep)
+        );
+
+    box-shadow:
+        0 11px 24px
+        rgba(37, 99, 235, 0.24);
+}
+
+
+.view-btn:active {
+    transform:
+        translateY(0)
+        scale(0.98);
+}
+
+
+/* =========================================================
+   TEXTAREA
+========================================================= */
+
+.verification-page textarea {
+    display: block;
+
+    width: 100%;
+
+    min-height: 125px;
+
+    box-sizing: border-box;
+
+    padding: 14px 15px;
+
+    border:
+        1px solid
+        #dce3ed;
+
+    border-radius: 11px;
+
+    outline: none;
+
+    resize: vertical;
+
+    background:
+        #fbfcfe;
+
+    color: var(--navy);
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    transition:
+        border-color 0.25s ease,
+        box-shadow 0.25s ease,
+        background 0.25s ease;
+}
+
+
+.verification-page textarea::placeholder {
+    color: var(--muted);
+}
+
+
+.verification-page textarea:hover {
+    border-color:
+        #cbd5e1;
+}
+
+
+.verification-page textarea:focus {
+    border-color:
+        var(--primary);
+
+    background:
+        #ffffff;
+
+    box-shadow:
+        0 0 0 4px
+        rgba(37, 99, 235, 0.08);
+}
+
+
+/* =========================================================
+   ACTION AREA
+========================================================= */
+
+.actions {
+    display: flex;
+
+    gap: 14px;
+
+    width: 100%;
+}
+
+
+/* =========================================================
+   APPROVE / REJECT BUTTONS
+========================================================= */
+
+.approve-btn,
+.reject-btn {
+    position: relative;
+
+    overflow: hidden;
+
+    flex: 1;
+
+    min-height: 52px;
+
+    border: none;
+
+    border-radius: 11px;
+
+    color: #ffffff;
+
+    font-family:
+        "Inter",
+        sans-serif;
+
+    font-size: 12px;
+
+    font-weight: 700;
+
+    letter-spacing: 0.01em;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.3s var(--ease),
+        box-shadow 0.3s var(--ease),
+        background 0.3s var(--ease);
+}
+
+
+/* =========================================================
+   BUTTON SHINE
+========================================================= */
+
+.approve-btn::before,
+.reject-btn::before {
+    content: "";
+
+    position: absolute;
+
+    width: 70px;
+    height: 150px;
+
+    left: -80px;
+    top: -50px;
+
+    background:
+        rgba(255, 255, 255, 0.12);
+
+    transform: rotate(25deg);
+
+    transition:
+        left 0.55s ease;
+}
+
+
+.approve-btn:hover::before,
+.reject-btn:hover::before {
+    left: 110%;
+}
+
+
+/* =========================================================
+   APPROVE
+========================================================= */
+
+.approve-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #16a34a,
+            #15803d
+        );
+
+    box-shadow:
+        0 8px 18px
+        rgba(22, 163, 74, 0.18);
+}
+
+
+.approve-btn:hover {
+    transform: translateY(-3px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #15803d,
+            #166534
+        );
+
+    box-shadow:
+        0 13px 26px
+        rgba(22, 163, 74, 0.24);
+}
+
+
+/* =========================================================
+   REJECT
+========================================================= */
+
+.reject-btn {
+    background:
+        linear-gradient(
+            135deg,
+            #dc2626,
+            #b91c1c
+        );
+
+    box-shadow:
+        0 8px 18px
+        rgba(220, 38, 38, 0.17);
+}
+
+
+.reject-btn:hover {
+    transform: translateY(-3px);
+
+    background:
+        linear-gradient(
+            135deg,
+            #b91c1c,
+            #991b1b
+        );
+
+    box-shadow:
+        0 13px 26px
+        rgba(220, 38, 38, 0.23);
+}
+
+
+/* =========================================================
+   BUTTON ACTIVE
+========================================================= */
+
+.approve-btn:active,
+.reject-btn:active {
+    transform:
+        translateY(-1px)
+        scale(0.99);
+}
+
+
+/* =========================================================
+   FOCUS
+========================================================= */
+
+.view-btn:focus-visible,
+.approve-btn:focus-visible,
+.reject-btn:focus-visible {
+    outline:
+        3px solid
+        rgba(37, 99, 235, 0.22);
+
+    outline-offset: 3px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .verification-page {
+        padding: 25px;
+    }
+
+    .student-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .verification-page {
+        padding: 18px;
+    }
+
+    .page-header {
+        margin-bottom: 20px;
+
+        padding-bottom: 17px;
+    }
+
+    .page-header h1 {
+        font-size: 24px;
+    }
+
+    .page-header p {
+        font-size: 11px;
+    }
+
+    .card {
+        padding: 19px;
+
+        margin-bottom: 17px;
+
+        border-radius: 15px;
+    }
+
+    .card h2 {
+        font-size: 15px;
+
+        margin-bottom: 17px;
+    }
+
+    .student-grid {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+    .student-grid > div {
+        min-height: 57px;
+
+        padding: 12px 13px;
+    }
+
+    .document-preview {
+        min-height: 190px;
+
+        padding: 30px 18px;
+    }
+
+    .pdf-icon {
+        width: 60px;
+        height: 60px;
+
+        border-radius: 15px;
+
+        font-size: 29px;
+    }
+
+    .verification-page textarea {
+        min-height: 110px;
+    }
+
+    .actions {
+        flex-direction: column;
+
+        gap: 10px;
+    }
+
+    .approve-btn,
+    .reject-btn {
+        flex: none;
+
+        width: 100%;
+
+        min-height: 48px;
+    }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+    .verification-page {
+        padding: 14px;
+    }
+
+    .page-header h1 {
+        font-size: 21px;
+    }
+
+    .page-header p {
+        font-size: 10px;
+    }
+
+    .card {
+        padding: 15px;
+
+        border-radius: 13px;
+    }
+
+    .card h2 {
+        font-size: 14px;
+    }
+
+    .student-grid span {
+        font-size: 9px;
+    }
+
+    .student-grid strong,
+    .student-grid b {
+        font-size: 12px;
+    }
+
+    .document-preview {
+        min-height: 175px;
+
+        padding: 25px 14px;
+    }
+
+    .pdf-icon {
+        width: 54px;
+        height: 54px;
+
+        margin-bottom: 12px;
+
+        font-size: 26px;
+    }
+
+    .view-btn {
+        padding: 10px 18px;
+
+        font-size: 10px;
+    }
+
+    .approve-btn,
+    .reject-btn {
+        font-size: 11px;
+    }
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .card,
+    .student-grid > div,
+    .document-preview,
+    .view-btn,
+    .approve-btn,
+    .reject-btn,
+    .approve-btn::before,
+    .reject-btn::before {
+        transition: none !important;
+    }
+}

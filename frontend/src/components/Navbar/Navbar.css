@@ -1,0 +1,1042 @@
+/* =========================================================
+   PREMIUM NAVBAR
+   Aditya University Internship Management Portal
+========================================================= */
+
+:root {
+  --nav-height: 78px;
+
+  --nav-bg: rgba(255, 255, 255, 0.88);
+  --nav-surface: rgba(255, 255, 255, 0.97);
+
+  --nav-text: #172033;
+  --nav-text-muted: #667085;
+
+  --nav-primary: #2563eb;
+  --nav-primary-dark: #1d4ed8;
+
+  --nav-accent: #f97316;
+
+  --nav-border: rgba(15, 23, 42, 0.08);
+
+  --nav-shadow:
+    0 10px 30px rgba(15, 23, 42, 0.06),
+    0 2px 8px rgba(15, 23, 42, 0.035);
+
+  --nav-radius: 13px;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+  position: fixed;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: var(--nav-height);
+
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+
+  background: var(--nav-bg);
+
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+
+  border-bottom: 1px solid var(--nav-border);
+
+  box-shadow: var(--nav-shadow);
+
+  transition:
+    background 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+
+/* =========================================================
+   PREMIUM BOTTOM COLOR LINE
+========================================================= */
+
+.navbar::after {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  bottom: 0;
+
+  width: 100%;
+  height: 2px;
+
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #f97316 30%,
+    #2563eb 70%,
+    transparent
+  );
+
+  opacity: 0.7;
+
+  pointer-events: none;
+}
+
+
+/* =========================================================
+   CONTAINER
+========================================================= */
+
+.navbar .container {
+  width: 100%;
+  max-width: 1600px;
+
+  margin: 0 auto;
+
+  padding: 0 28px;
+}
+
+
+/* =========================================================
+   NAVBAR CONTENT
+========================================================= */
+
+.navbar-content {
+  width: 100%;
+  min-height: var(--nav-height);
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+}
+
+
+/* =========================================================
+   LOGO SECTION
+========================================================= */
+
+.logo-section {
+  display: flex;
+  align-items: center;
+
+  gap: 16px;
+
+  min-width: 0;
+
+  flex-shrink: 1;
+}
+
+
+/* =========================================================
+   LOGO LINK
+========================================================= */
+
+.logo-link {
+  display: flex;
+  align-items: center;
+
+  text-decoration: none;
+
+  border-radius: 10px;
+
+  outline: none;
+}
+
+
+/* =========================================================
+   UNIVERSITY LOGO
+========================================================= */
+
+.logo-image {
+  width: 150px;
+  height: 58px;
+
+  object-fit: contain;
+  object-position: center;
+
+  display: block;
+
+  flex-shrink: 0;
+
+  transition:
+    transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+    filter 0.3s ease;
+}
+
+
+.logo-image:hover {
+  transform: scale(1.035);
+
+  filter:
+    drop-shadow(
+      0 5px 12px rgba(37, 99, 235, 0.14)
+    );
+}
+
+
+/* =========================================================
+   LOGO DIVIDER
+========================================================= */
+
+.logo-divider {
+  width: 1px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  background: linear-gradient(
+    to bottom,
+    rgba(249, 115, 22, 0.8),
+    rgba(37, 99, 235, 0.85)
+  );
+
+  border-radius: 999px;
+
+  opacity: 0.8;
+}
+
+
+/* =========================================================
+   PORTAL LOGO
+========================================================= */
+
+.portal-text {
+  display: flex;
+  align-items: center;
+
+  min-width: 0;
+}
+
+
+.SIMSSVG {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 0;
+}
+
+
+.SIMSSVG img {
+  width: 330px;
+  max-width: 100%;
+  height: auto;
+
+  display: block;
+
+  transition:
+    transform 0.3s ease,
+    filter 0.3s ease;
+}
+
+
+.SIMSSVG img:hover {
+  transform: translateY(-1px);
+
+  filter:
+    drop-shadow(
+      0 4px 10px rgba(37, 99, 235, 0.11)
+    );
+}
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+
+  gap: 6px;
+
+  margin: 0;
+  padding: 0;
+
+  list-style: none;
+}
+
+
+.nav-links li {
+  list-style: none;
+}
+
+
+/* =========================================================
+   NAVIGATION LINK
+========================================================= */
+
+.nav-links a {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-width: 84px;
+  height: 44px;
+
+  padding: 0 16px;
+
+  color: var(--nav-text-muted);
+
+  text-decoration: none;
+
+  font-size: 14px;
+  font-weight: 650;
+
+  letter-spacing: 0.005em;
+
+  border: 1px solid transparent;
+
+  border-radius: var(--nav-radius);
+
+  background: transparent;
+
+  transition:
+    color 0.25s ease,
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =========================================================
+   LINK TEXT
+========================================================= */
+
+.nav-links a span {
+  position: relative;
+
+  z-index: 2;
+}
+
+
+/* =========================================================
+   NORMAL HOVER EFFECT
+========================================================= */
+
+.nav-links a:hover {
+  color: var(--nav-primary);
+
+  background: rgba(37, 99, 235, 0.045);
+
+  border-color: transparent;
+
+  transform: translateY(-1px);
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   NORMAL HOVER BOTTOM INDICATOR
+========================================================= */
+
+.nav-links a::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 5px;
+
+  width: 0;
+  height: 2.5px;
+
+  transform: translateX(-50%);
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    var(--nav-primary),
+    var(--nav-primary-dark)
+  );
+
+  opacity: 0;
+
+  transition:
+    width 0.25s ease,
+    opacity 0.25s ease;
+}
+
+
+.nav-links a:hover::after {
+  width: 22px;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   ACTIVE PAGE — PREMIUM STYLE
+========================================================= */
+
+.nav-links a.nav-active {
+  color: #111827;
+
+  background: rgba(37, 99, 235, 0.035);
+
+  border-color: transparent;
+
+  box-shadow: none;
+
+  font-weight: 750;
+
+  letter-spacing: 0.01em;
+}
+
+
+/* =========================================================
+   ACTIVE PAGE — PREMIUM UNDERLINE
+========================================================= */
+
+.nav-links a.nav-active::after {
+  content: "";
+
+  position: absolute;
+
+  left: 50%;
+  bottom: 4px;
+
+  width: 32px;
+  height: 3px;
+
+  transform: translateX(-50%);
+
+  border-radius: 999px;
+
+  background: linear-gradient(
+    90deg,
+    #2563eb,
+    #3b82f6
+  );
+
+  opacity: 1;
+
+  box-shadow:
+    0 2px 8px rgba(37, 99, 235, 0.30);
+
+  transition:
+    width 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+
+/* =========================================================
+   REMOVE ACTIVE TOP DOT
+========================================================= */
+
+.nav-links a.nav-active::before {
+  display: none;
+}
+
+
+/* =========================================================
+   ACTIVE PAGE + HOVER
+========================================================= */
+
+.nav-links a.nav-active:hover {
+  color: #0f172a;
+
+  background: rgba(37, 99, 235, 0.055);
+
+  border-color: transparent;
+
+  transform: translateY(-1px);
+
+  box-shadow: none;
+}
+
+
+.nav-links a.nav-active:hover::after {
+  width: 42px;
+
+  box-shadow:
+    0 3px 12px rgba(37, 99, 235, 0.38);
+}
+
+
+/* =========================================================
+   CLICK EFFECT
+========================================================= */
+
+.nav-links a:active {
+  transform: scale(0.96);
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   MOBILE MENU BUTTON
+========================================================= */
+
+.menu-icon {
+  display: none;
+
+  width: 42px;
+  height: 42px;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-direction: column;
+
+  gap: 5px;
+
+  margin: 0;
+  padding: 0;
+
+  cursor: pointer;
+
+  color: var(--nav-text);
+
+  background: transparent;
+
+  border: 1px solid transparent;
+
+  border-radius: 11px;
+
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.2s ease;
+}
+
+
+/* =========================================================
+   HAMBURGER LINES
+========================================================= */
+
+.menu-icon span {
+  width: 20px;
+  height: 2px;
+
+  border-radius: 999px;
+
+  background: var(--nav-text);
+
+  transition:
+    transform 0.3s ease,
+    opacity 0.25s ease,
+    width 0.3s ease;
+}
+
+
+.menu-icon:hover {
+  background: rgba(37, 99, 235, 0.07);
+
+  border-color: rgba(37, 99, 235, 0.09);
+}
+
+
+.menu-icon:hover span {
+  background: var(--nav-primary);
+}
+
+
+/* =========================================================
+   MOBILE MENU OPEN
+========================================================= */
+
+.menu-icon.menu-open span:nth-child(1) {
+  transform:
+    translateY(7px)
+    rotate(45deg);
+}
+
+
+.menu-icon.menu-open span:nth-child(2) {
+  opacity: 0;
+
+  width: 0;
+}
+
+
+.menu-icon.menu-open span:nth-child(3) {
+  transform:
+    translateY(-7px)
+    rotate(-45deg);
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1100px) {
+
+  :root {
+    --nav-height: 74px;
+  }
+
+
+  .navbar {
+    height: var(--nav-height);
+  }
+
+
+  .navbar .container {
+    padding: 0 20px;
+  }
+
+
+  .navbar-content {
+    min-height: var(--nav-height);
+  }
+
+
+  .logo-section {
+    gap: 12px;
+  }
+
+
+  .logo-image {
+    width: 120px;
+    height: 52px;
+  }
+
+
+  .SIMSSVG img {
+    width: 260px;
+  }
+
+
+  .logo-divider {
+    height: 38px;
+  }
+
+
+  /* =======================================================
+     MOBILE MENU BUTTON
+  ======================================================= */
+
+  .menu-icon {
+    display: flex;
+  }
+
+
+  /* =======================================================
+     NAV DROPDOWN
+  ======================================================= */
+
+  .nav-links {
+
+    position: absolute;
+
+    top: calc(100% + 10px);
+
+    left: 16px;
+    right: 16px;
+
+    width: auto;
+
+    display: none;
+
+    flex-direction: column;
+
+    align-items: stretch;
+
+    gap: 5px;
+
+    padding: 9px;
+
+    background: rgba(255, 255, 255, 0.97);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    border:
+      1px solid var(--nav-border);
+
+    border-radius: 16px;
+
+    box-shadow:
+      0 20px 45px rgba(15, 23, 42, 0.13),
+      0 4px 12px rgba(15, 23, 42, 0.05);
+  }
+
+
+  /* =======================================================
+     OPEN MENU
+  ======================================================= */
+
+  .nav-links.active {
+    display: flex;
+
+    animation:
+      menuSlideDown
+      0.25s
+      cubic-bezier(0.2, 0.8, 0.2, 1)
+      forwards;
+  }
+
+
+  /* =======================================================
+     MOBILE NAV LINKS
+  ======================================================= */
+
+  .nav-links a {
+
+    width: 100%;
+
+    min-width: unset;
+
+    height: 47px;
+
+    justify-content: flex-start;
+
+    padding: 0 16px;
+
+    border-radius: 11px;
+
+    font-size: 14px;
+  }
+
+
+  .nav-links a:hover {
+
+    transform:
+      translateX(3px);
+
+    box-shadow: none;
+  }
+
+
+  /* =======================================================
+     MOBILE NORMAL LINKS
+  ======================================================= */
+
+  .nav-links a::after {
+    display: none;
+  }
+
+
+  /* =======================================================
+     ACTIVE MOBILE
+  ======================================================= */
+
+  .nav-links a.nav-active {
+
+    color: #111827;
+
+    background:
+      rgba(37, 99, 235, 0.055);
+
+    border-color: transparent;
+
+    box-shadow: none;
+
+    font-weight: 750;
+
+    transform: none;
+  }
+
+
+  /* =======================================================
+     ACTIVE MOBILE UNDERLINE
+  ======================================================= */
+
+  .nav-links a.nav-active::after {
+
+    display: block;
+
+    left: 16px;
+
+    bottom: 6px;
+
+    width: 32px;
+
+    height: 3px;
+
+    transform: none;
+
+    background:
+      linear-gradient(
+        90deg,
+        #2563eb,
+        #3b82f6
+      );
+
+    border-radius: 999px;
+
+    box-shadow:
+      0 2px 8px rgba(37, 99, 235, 0.30);
+
+    opacity: 1;
+  }
+
+
+  /* =======================================================
+     ACTIVE MOBILE HOVER
+  ======================================================= */
+
+  .nav-links a.nav-active:hover {
+
+    color: #0f172a;
+
+    background:
+      rgba(37, 99, 235, 0.075);
+
+    transform:
+      translateX(3px);
+
+    box-shadow: none;
+  }
+
+
+  .nav-links a.nav-active:hover::after {
+
+    width: 42px;
+
+    box-shadow:
+      0 3px 12px rgba(37, 99, 235, 0.35);
+  }
+
+
+  /* =======================================================
+     REMOVE ACTIVE DOT
+  ======================================================= */
+
+  .nav-links a.nav-active::before {
+    display: none;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  :root {
+    --nav-height: 68px;
+  }
+
+
+  .navbar {
+    height: var(--nav-height);
+  }
+
+
+  .navbar .container {
+    padding: 0 14px;
+  }
+
+
+  .navbar-content {
+
+    min-height: var(--nav-height);
+
+    gap: 12px;
+  }
+
+
+  .logo-section {
+
+    gap: 9px;
+
+    flex: 1;
+  }
+
+
+  .logo-image {
+
+    width: 92px;
+    height: 44px;
+  }
+
+
+  .SIMSSVG img {
+
+    width: 205px;
+  }
+
+
+  .logo-divider {
+
+    height: 32px;
+  }
+
+
+  .portal-text {
+
+    display: none;
+  }
+
+
+  .menu-icon {
+
+    width: 40px;
+    height: 40px;
+
+    flex-shrink: 0;
+  }
+
+
+  .nav-links {
+
+    top: calc(100% + 8px);
+
+    left: 10px;
+    right: 10px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 400px) {
+
+  .navbar .container {
+    padding: 0 10px;
+  }
+
+
+  .logo-section {
+    gap: 7px;
+  }
+
+
+  .logo-image {
+
+    width: 78px;
+    height: 40px;
+  }
+
+
+  .SIMSSVG img {
+
+    width: 175px;
+  }
+
+
+  .logo-divider {
+    display: none;
+  }
+
+
+  .menu-icon {
+
+    width: 38px;
+    height: 38px;
+  }
+
+}
+
+
+/* =========================================================
+   MENU ANIMATION
+========================================================= */
+
+@keyframes menuSlideDown {
+
+  from {
+
+    opacity: 0;
+
+    transform:
+      translateY(-8px)
+      scale(0.98);
+  }
+
+
+  to {
+
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+.nav-links a:focus-visible,
+.menu-icon:focus-visible,
+.logo-link:focus-visible {
+
+  outline:
+    3px solid rgba(37, 99, 235, 0.22);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .navbar,
+  .navbar::after,
+  .nav-links a,
+  .nav-links a::after,
+  .nav-links a::before,
+  .menu-icon,
+  .menu-icon span,
+  .logo-image,
+  .SIMSSVG img {
+
+    transition: none;
+  }
+
+
+  .nav-links.active {
+    animation: none;
+  }
+
+}
+
+
+/* =========================================================
+   PAGE OFFSET
+========================================================= */
+
+body {
+
+  margin: 0;
+
+  padding-top:
+    var(--nav-height);
+}
+
+
+@media (max-width: 1100px) {
+
+  body {
+    padding-top: 74px;
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  body {
+    padding-top: 68px;
+  }
+
+}

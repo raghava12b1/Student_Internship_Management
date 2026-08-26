@@ -1,0 +1,176 @@
+/* =========================================================
+   PREMIUM DASHBOARD LAYOUT
+   Aditya University — Student Internship Management System
+========================================================= */
+
+
+/* =========================================================
+   DASHBOARD LAYOUT
+========================================================= */
+
+.dashboard-layout {
+  width: 100%;
+  min-height: 100vh;
+
+  box-sizing: border-box;
+
+  background:
+    #f5f8ff;
+}
+
+
+/* =========================================================
+   DASHBOARD CONTENT
+   ---------------------------------------------------------
+   Sidebar is fixed, so it doesn't occupy normal document
+   space. We reserve sidebar width here for ALL dashboard
+   pages automatically.
+========================================================= */
+
+.dashboard-content {
+  width:
+    calc(100% - var(--sidebar-width));
+
+  min-height:
+    calc(100vh - var(--nav-height));
+
+  margin-left:
+    var(--sidebar-width);
+
+  box-sizing:
+    border-box;
+
+  padding:
+    30px;
+
+  overflow-x:
+    hidden;
+
+  overflow-y:
+    visible;
+}
+
+
+/* =========================================================
+   SIDEBAR OVERLAY
+   ---------------------------------------------------------
+   Hidden on desktop.
+========================================================= */
+
+.sidebar-overlay {
+  display:
+    none;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1024px) {
+
+  .dashboard-content {
+    width:
+      calc(100% - var(--sidebar-width));
+
+    margin-left:
+      var(--sidebar-width);
+
+    padding:
+      20px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  /*
+    Mobile sidebar becomes an overlay.
+    Therefore dashboard content uses full width.
+  */
+
+  .dashboard-layout {
+    width:
+      100%;
+
+    min-height:
+      100vh;
+  }
+
+
+  .dashboard-content {
+    width:
+      100%;
+
+    margin-left:
+      0;
+
+    min-height:
+      100vh;
+
+    padding:
+      15px;
+
+    box-sizing:
+      border-box;
+
+    overflow-x:
+      hidden;
+  }
+
+
+  /* =======================================================
+     MOBILE SIDEBAR OVERLAY
+  ======================================================= */
+
+  .sidebar-overlay {
+    display:
+      block;
+
+    position:
+      fixed;
+
+    inset:
+      0;
+
+    background:
+      rgba(0, 0, 0, .4);
+
+    z-index:
+      1100;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .dashboard-content {
+    padding:
+      12px;
+  }
+
+}
+
+
+/* =========================================================
+   VERY SMALL DEVICES
+========================================================= */
+
+@media (max-width: 360px) {
+
+  .dashboard-content {
+    padding:
+      10px;
+  }
+
+}

@@ -1,0 +1,65 @@
+.admin-coordinators{
+    padding:30px;
+}
+
+.page-header{
+    margin-bottom:25px;
+}
+
+.page-header h1{
+    font-size:32px;
+    color:#1e293b;
+}
+
+.page-header p{
+    color:#64748b;
+    margin-top:6px;
+}
+
+.table-card{
+    background:#fff;
+    border-radius:18px;
+    padding:25px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    overflow-x:auto;
+}
+
+.table-card table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.table-card th{
+    background:#2563eb;
+    color:white;
+    padding:15px;
+    text-align:left;
+}
+
+.table-card td{
+    padding:15px;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.table-card tr:hover{
+    background:#f8fafc;
+}
+
+.view-btn,
+.edit-btn{
+    border:none;
+    padding:8px 16px;
+    border-radius:8px;
+    color:white;
+    cursor:pointer;
+    margin-right:8px;
+    font-weight:600;
+}
+
+.view-btn{
+    background:#2563eb;
+}
+
+.edit-btn{
+    background:#10b981;
+}

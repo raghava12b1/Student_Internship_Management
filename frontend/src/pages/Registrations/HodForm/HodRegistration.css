@@ -1,0 +1,644 @@
+/* =========================================================
+   HOD REGISTRATION
+   ADITYA UNIVERSITY — PREMIUM ACADEMIC THEME
+========================================================= */
+
+.hod-registration-page {
+  min-height: 100vh;
+  padding: 32px 6%;
+  background:
+    radial-gradient(
+      circle at 90% 90%,
+      rgba(37, 99, 235, 0.08),
+      transparent 30%
+    ),
+    #f7f9fc;
+  color: #172033;
+}
+
+/* =========================================================
+   TOP BAR
+========================================================= */
+
+.hod-topbar {
+  max-width: 1250px;
+  margin: 0 auto 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.hod-back-button {
+  border: none;
+  background: transparent;
+  color: #172033;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  cursor: pointer;
+}
+
+.hod-back-button span {
+  font-size: 20px;
+  transition: 0.25s ease;
+}
+
+.hod-back-button:hover span {
+  transform: translateX(-4px);
+}
+
+/* =========================================================
+   CLOSE BUTTON
+========================================================= */
+
+.hod-close-button {
+  width: 42px;
+  height: 42px;
+  border: none;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #172033;
+  font-family: inherit;
+  font-size: 25px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+  transition: 0.25s ease;
+}
+
+.hod-close-button:hover {
+  background: #172033;
+  color: #ffffff;
+  transform: rotate(90deg);
+}
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.hod-header {
+  max-width: 1250px;
+  margin: 0 auto 38px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* =========================================================
+   UNIVERSITY BRAND MARK
+========================================================= */
+
+.hod-brand-mark {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 17px;
+  background: #172033;
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 900;
+  box-shadow: 0 15px 30px rgba(23, 32, 51, 0.18);
+}
+
+/* =========================================================
+   UNIVERSITY NAME
+========================================================= */
+
+.hod-header > div:last-child > span {
+  color: #2563eb;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+/* =========================================================
+   HEADER TITLE
+========================================================= */
+
+.hod-header h1 {
+  margin: 5px 0;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.1;
+  letter-spacing: -1.5px;
+  color: #172033;
+}
+
+/* =========================================================
+   HEADER DESCRIPTION
+========================================================= */
+
+.hod-header p {
+  margin: 0;
+  color: #738095;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   MAIN REGISTRATION WRAPPER
+========================================================= */
+
+.hod-registration-wrapper {
+  max-width: 1250px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 0.78fr 1.5fr;
+  background: #ffffff;
+  border-radius: 28px;
+  overflow: hidden;
+  box-shadow: 0 25px 70px rgba(15, 23, 42, 0.1);
+}
+
+/* =========================================================
+   LEFT INFORMATION PANEL
+========================================================= */
+
+.hod-info {
+  background: #172033;
+  color: #ffffff;
+  padding: 52px 44px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hod-info::after {
+  content: "";
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  right: -100px;
+  bottom: -100px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(37, 99, 235, 0.28),
+    transparent 70%
+  );
+  pointer-events: none;
+}
+
+/* =========================================================
+   SECTION NUMBER
+========================================================= */
+
+.hod-number {
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 3px;
+}
+
+/* =========================================================
+   KICKER
+========================================================= */
+
+.hod-label {
+  display: block;
+  margin-top: 45px;
+  color: #93c5fd;
+  font-size: 11px;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+/* =========================================================
+   LEFT HEADING
+========================================================= */
+
+.hod-info h2 {
+  margin: 14px 0 20px;
+  font-size: 38px;
+  line-height: 1.08;
+  letter-spacing: -1px;
+  color: #ffffff;
+}
+
+.hod-info h2 span {
+  display: block;
+  color: #60a5fa;
+}
+
+/* =========================================================
+   LEFT DESCRIPTION
+========================================================= */
+
+.hod-info > p {
+  margin: 0;
+  color: #b8c2d1;
+  line-height: 1.8;
+  font-size: 14px;
+  max-width: 330px;
+}
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.hod-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+  margin: 35px 0;
+}
+
+/* =========================================================
+   FEATURE ITEMS
+========================================================= */
+
+.hod-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.hod-feature > span {
+  width: 25px;
+  height: 25px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(96, 165, 250, 0.13);
+  color: #60a5fa;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.hod-feature strong,
+.hod-feature small {
+  display: block;
+}
+
+.hod-feature strong {
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.hod-feature small {
+  margin-top: 5px;
+  color: #8e9aaf;
+  font-size: 11px;
+  line-height: 1.4;
+}
+
+/* =========================================================
+   FORM AREA
+========================================================= */
+
+.hod-form-card {
+  padding: 52px;
+}
+
+.hod-form-heading {
+  margin-bottom: 32px;
+}
+
+.hod-form-heading > span {
+  color: #2563eb;
+  font-size: 10px;
+  letter-spacing: 2px;
+  font-weight: 900;
+}
+
+.hod-form-heading h2 {
+  margin: 7px 0;
+  color: #172033;
+  font-size: 27px;
+  line-height: 1.2;
+}
+
+.hod-form-heading p {
+  margin: 0;
+  color: #7c8799;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   FORM GRID
+========================================================= */
+
+.hod-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  margin-bottom: 22px;
+}
+
+.hod-form-field {
+  min-width: 0;
+}
+
+.hod-form-field label {
+  display: block;
+  margin-bottom: 8px;
+  color: #172033;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+/* =========================================================
+   INPUT + SELECT
+========================================================= */
+
+.hod-form-field input,
+.hod-form-field select {
+  width: 100%;
+  height: 50px;
+  box-sizing: border-box;
+  border: 1px solid #e1e7ef;
+  border-radius: 12px;
+  padding: 0 15px;
+  background: #fbfcfe;
+  outline: none;
+  color: #172033;
+  font-family: inherit;
+  font-size: 13px;
+  transition:
+    border-color 0.25s ease,
+    background 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+.hod-form-field input::placeholder {
+  color: #a1aaba;
+}
+
+.hod-form-field input:hover,
+.hod-form-field select:hover {
+  border-color: #bfcee2;
+}
+
+.hod-form-field input:focus,
+.hod-form-field select:focus {
+  border-color: #2563eb;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.08);
+}
+
+.hod-form-field input[readonly] {
+  background: #f1f5f9;
+  color: #1e3a8a;
+  font-weight: 700;
+  cursor: not-allowed;
+  border-color: #d9e2ef;
+}
+
+.hod-field-hint {
+  display: block;
+  margin-top: 6px;
+  color: #94a3b8;
+  font-size: 10px;
+}
+
+/* =========================================================
+   PASSWORD WRAPPER
+========================================================= */
+
+.hod-password-wrapper {
+  position: relative;
+}
+
+.hod-password-wrapper input {
+  padding-right: 65px;
+}
+
+.hod-password-wrapper button {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: none;
+  background: transparent;
+  color: #2563eb;
+  font-family: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.2s ease;
+}
+
+.hod-password-wrapper button:hover {
+  color: #1d4ed8;
+}
+
+/* =========================================================
+   AUTHORIZATION NOTICE
+========================================================= */
+
+.hod-notice {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 13px 15px;
+  margin-bottom: 20px;
+  background: #eff6ff;
+  border: 1px solid #dbeafe;
+  border-radius: 11px;
+}
+
+.hod-notice > span {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #2563eb;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+}
+
+.hod-notice p {
+  margin: 0;
+  color: #53657d;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+/* =========================================================
+   REGISTER BUTTON
+========================================================= */
+
+.hod-register-button {
+  width: 100%;
+  height: 54px;
+  border: none;
+  border-radius: 13px;
+  background: #172033;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 800;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  transition:
+    background 0.3s ease,
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.hod-register-button span {
+  font-size: 20px;
+  transition: 0.3s ease;
+}
+
+.hod-register-button:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(37, 99, 235, 0.22);
+}
+
+.hod-register-button:hover span {
+  transform: translateX(5px);
+}
+
+.hod-register-button:active {
+  transform: translateY(0);
+}
+
+/* =========================================================
+   RESPONSIVE BREAKPOINTS
+========================================================= */
+
+@media (max-width: 950px) {
+  .hod-registration-wrapper {
+    grid-template-columns: 1fr;
+  }
+
+  .hod-info {
+    display: none;
+  }
+}
+
+@media (max-width: 650px) {
+  .hod-registration-page {
+    padding: 22px 16px;
+  }
+
+  .hod-header {
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+
+  .hod-brand-mark {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    font-size: 14px;
+  }
+
+  .hod-header h1 {
+    font-size: 30px;
+  }
+
+  .hod-header p {
+    font-size: 12px;
+  }
+
+  .hod-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hod-form-card {
+    padding: 30px 22px;
+  }
+
+  .hod-registration-wrapper {
+    border-radius: 20px;
+  }
+}
+
+@media (max-width: 450px) {
+  .hod-registration-page {
+    padding: 18px 12px;
+  }
+
+  .hod-topbar {
+    margin-bottom: 22px;
+  }
+
+  .hod-back-button {
+    font-size: 13px;
+  }
+
+  .hod-close-button {
+    width: 38px;
+    height: 38px;
+    font-size: 22px;
+  }
+
+  .hod-header {
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .hod-brand-mark {
+    width: 48px;
+    height: 48px;
+    border-radius: 13px;
+    font-size: 13px;
+  }
+
+  .hod-header > div:last-child > span {
+    font-size: 9px;
+    letter-spacing: 1.5px;
+  }
+
+  .hod-header h1 {
+    font-size: 25px;
+    letter-spacing: -0.8px;
+  }
+
+  .hod-header p {
+    font-size: 11px;
+    line-height: 1.5;
+  }
+
+  .hod-form-card {
+    padding: 26px 18px;
+  }
+
+  .hod-form-heading {
+    margin-bottom: 26px;
+  }
+
+  .hod-form-heading h2 {
+    font-size: 23px;
+  }
+
+  .hod-form-heading p {
+    font-size: 12px;
+  }
+
+  .hod-form-grid {
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .hod-notice {
+    align-items: flex-start;
+  }
+
+  .hod-register-button {
+    height: 52px;
+    font-size: 13px;
+  }
+}

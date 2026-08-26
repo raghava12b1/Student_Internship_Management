@@ -1,0 +1,868 @@
+/* =========================================================
+   PREMIUM STUDENT SETTINGS
+   Aditya University — Internship Management System
+========================================================= */
+
+@import url(
+  'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap'
+);
+
+
+/* =========================================================
+   DESIGN TOKENS
+========================================================= */
+
+:root {
+  --settings-navy: #071a3a;
+  --settings-navy-light: #0d2b5c;
+
+  --settings-blue: #1557b0;
+  --settings-blue-light: #2469c7;
+
+  --settings-gold: #d5a32a;
+  --settings-gold-light: #f1d78a;
+
+  --settings-text: #101828;
+  --settings-muted: #667085;
+  --settings-muted-light: #98a2b3;
+
+  --settings-border: #e4e7ec;
+  --settings-border-dark: #d0d5dd;
+
+  --settings-white: #ffffff;
+
+  --settings-heading:
+    "Plus Jakarta Sans",
+    sans-serif;
+
+  --settings-body:
+    "Inter",
+    sans-serif;
+
+  --settings-ease:
+    cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.student-settings {
+  position: relative;
+
+  min-height: 100%;
+
+  padding: 35px;
+
+  font-family: var(--settings-body);
+
+  color: var(--settings-text);
+
+  background:
+    radial-gradient(
+      circle at 92% 10%,
+      rgba(21, 87, 176, .055),
+      transparent 25%
+    ),
+
+    radial-gradient(
+      circle at 5% 90%,
+      rgba(213, 163, 42, .035),
+      transparent 22%
+    );
+}
+
+
+/* =========================================================
+   SUBTLE BACKGROUND GRID
+========================================================= */
+
+.student-settings::before {
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  pointer-events: none;
+
+  opacity: .25;
+
+  background-image:
+    linear-gradient(
+      rgba(7, 26, 58, .018) 1px,
+      transparent 1px
+    ),
+
+    linear-gradient(
+      90deg,
+      rgba(7, 26, 58, .018) 1px,
+      transparent 1px
+    );
+
+  background-size: 55px 55px;
+
+  mask-image:
+    linear-gradient(
+      to bottom,
+      black,
+      transparent 90%
+    );
+}
+
+
+/* =========================================================
+   HEADER
+========================================================= */
+
+.settings-header {
+  position: relative;
+
+  z-index: 2;
+
+  margin-bottom: 28px;
+
+  animation:
+    settingsHeaderIn
+    .65s
+    var(--settings-ease)
+    both;
+}
+
+
+/* =========================================================
+   HEADER EYEBROW
+========================================================= */
+
+.settings-header::before {
+  content: "ACCOUNT PREFERENCES";
+
+  display: inline-block;
+
+  margin-bottom: 10px;
+
+  color: var(--settings-blue);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: .16em;
+
+  text-transform: uppercase;
+}
+
+
+/* =========================================================
+   GOLD ACCENT
+========================================================= */
+
+.settings-header::after {
+  content: "";
+
+  display: block;
+
+  width: 42px;
+
+  height: 3px;
+
+  margin-top: 14px;
+
+  border-radius: 20px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--settings-gold),
+      var(--settings-blue)
+    );
+}
+
+
+.settings-header h2 {
+  margin: 0;
+
+  color: var(--settings-navy);
+
+  font-family: var(--settings-heading);
+
+  font-size:
+    clamp(30px, 3vw, 40px);
+
+  font-weight: 800;
+
+  line-height: 1.1;
+
+  letter-spacing: -.045em;
+}
+
+
+.settings-header p {
+  max-width: 520px;
+
+  margin: 9px 0 0;
+
+  color: var(--settings-muted);
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   SETTINGS CARD
+========================================================= */
+
+.settings-card {
+  position: relative;
+
+  z-index: 2;
+
+  width: 100%;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  padding: 8px 30px;
+
+  border:
+    1px solid
+    rgba(228, 231, 236, .9);
+
+  border-radius: 20px;
+
+  background:
+    rgba(255, 255, 255, .94);
+
+  box-shadow:
+    0 20px 55px
+    rgba(7, 26, 58, .075);
+
+  backdrop-filter:
+    blur(14px);
+
+  animation:
+    settingsCardIn
+    .7s
+    var(--settings-ease)
+    .08s
+    both;
+}
+
+
+/* =========================================================
+   GOLD TOP ACCENT
+========================================================= */
+
+.settings-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 30px;
+
+  width: 58px;
+
+  height: 3px;
+
+  border-radius:
+    0 0 10px 10px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--settings-gold),
+      var(--settings-gold-light)
+    );
+}
+
+
+/* =========================================================
+   SETTING ITEM
+========================================================= */
+
+.setting-item {
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  gap: 30px;
+
+  min-height: 95px;
+
+  padding: 20px 4px;
+
+  border-bottom:
+    1px solid
+    var(--settings-border);
+
+  transition:
+    background .3s var(--settings-ease);
+}
+
+
+.setting-item:last-child {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   ITEM HOVER
+========================================================= */
+
+.setting-item:hover {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(21, 87, 176, .018),
+      transparent
+    );
+}
+
+
+/* =========================================================
+   LEFT CONTENT
+========================================================= */
+
+.setting-item > div {
+  position: relative;
+
+  padding-left: 18px;
+}
+
+
+/* Blue vertical accent */
+
+.setting-item > div::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+
+  top: 3px;
+
+  width: 2px;
+
+  height: 38px;
+
+  border-radius: 10px;
+
+  background:
+    var(--settings-blue);
+
+  opacity: .55;
+
+  transition:
+    height .3s var(--settings-ease),
+    opacity .3s var(--settings-ease);
+}
+
+
+.setting-item:hover > div::before {
+  height: 48px;
+
+  opacity: 1;
+}
+
+
+/* =========================================================
+   SETTING TITLE
+========================================================= */
+
+.setting-item h4 {
+  margin: 0 0 6px;
+
+  color:
+    var(--settings-navy);
+
+  font-family:
+    var(--settings-heading);
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: -.01em;
+}
+
+
+/* =========================================================
+   SETTING DESCRIPTION
+========================================================= */
+
+.setting-item p {
+  margin: 0;
+
+  color:
+    var(--settings-muted);
+
+  font-size: 11px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   CHANGE BUTTON
+========================================================= */
+
+.setting-item button {
+  position: relative;
+
+  flex-shrink: 0;
+
+  min-width: 88px;
+
+  height: 38px;
+
+  padding: 0 17px;
+
+  border: none;
+
+  border-radius: 8px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--settings-blue),
+      var(--settings-navy-light)
+    );
+
+  color:
+    #ffffff;
+
+  font-family:
+    var(--settings-body);
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 18px
+    rgba(21, 87, 176, .16);
+
+  transition:
+    transform .3s var(--settings-ease),
+    box-shadow .3s var(--settings-ease);
+}
+
+
+.setting-item button:hover {
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 13px 25px
+    rgba(21, 87, 176, .23);
+}
+
+
+.setting-item button:active {
+  transform:
+    translateY(-1px)
+    scale(.98);
+}
+
+
+/* =========================================================
+   PREMIUM CHECKBOX
+========================================================= */
+
+.setting-item input[type="checkbox"] {
+  position: relative;
+
+  appearance: none;
+
+  -webkit-appearance: none;
+
+  width: 42px;
+
+  height: 23px;
+
+  flex-shrink: 0;
+
+  margin: 0;
+
+  border: none;
+
+  border-radius: 50px;
+
+  background:
+    #d0d5dd;
+
+  cursor: pointer;
+
+  transition:
+    background .3s var(--settings-ease),
+    box-shadow .3s var(--settings-ease);
+}
+
+
+/* Toggle circle */
+
+.setting-item input[type="checkbox"]::before {
+  content: "";
+
+  position: absolute;
+
+  top: 3px;
+
+  left: 3px;
+
+  width: 17px;
+
+  height: 17px;
+
+  border-radius: 50%;
+
+  background:
+    #ffffff;
+
+  box-shadow:
+    0 2px 5px
+    rgba(16, 24, 40, .18);
+
+  transition:
+    transform .3s var(--settings-ease);
+}
+
+
+/* Checked */
+
+.setting-item input[type="checkbox"]:checked {
+  background:
+    linear-gradient(
+      135deg,
+      var(--settings-blue),
+      var(--settings-navy)
+    );
+
+  box-shadow:
+    0 5px 14px
+    rgba(21, 87, 176, .18);
+}
+
+
+.setting-item input[type="checkbox"]:checked::before {
+  transform:
+    translateX(19px);
+}
+
+
+/* =========================================================
+   DISABLED TOGGLE
+========================================================= */
+
+.setting-item input[type="checkbox"]:disabled {
+  background:
+    #e4e7ec;
+
+  cursor:
+    not-allowed;
+
+  opacity: .75;
+}
+
+
+.setting-item input[type="checkbox"]:disabled::before {
+  background:
+    #f8fafc;
+
+  box-shadow:
+    none;
+}
+
+
+/* =========================================================
+   SETTING ROW ICON-LIKE NUMBER
+========================================================= */
+
+.setting-item:nth-child(1)::after,
+.setting-item:nth-child(2)::after,
+.setting-item:nth-child(3)::after {
+  position: absolute;
+
+  left: -2px;
+
+  color:
+    rgba(21, 87, 176, .06);
+
+  font-family:
+    var(--settings-heading);
+
+  font-size:
+    36px;
+
+  font-weight:
+    800;
+
+  pointer-events:
+    none;
+}
+
+
+.setting-item:nth-child(1)::after {
+  content: "01";
+}
+
+
+.setting-item:nth-child(2)::after {
+  content: "02";
+}
+
+
+.setting-item:nth-child(3)::after {
+  content: "03";
+}
+
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes settingsHeaderIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(15px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0);
+  }
+}
+
+
+@keyframes settingsCardIn {
+
+  from {
+    opacity: 0;
+
+    transform:
+      translateY(22px)
+      scale(.985);
+  }
+
+  to {
+    opacity: 1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .student-settings {
+    padding: 28px;
+  }
+
+
+  .settings-card {
+    padding-left: 24px;
+
+    padding-right: 24px;
+  }
+
+
+  .setting-item {
+    min-height: 90px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .student-settings {
+    padding: 22px 18px;
+  }
+
+
+  .settings-header {
+    margin-bottom: 22px;
+  }
+
+
+  .settings-header h2 {
+    font-size: 30px;
+  }
+
+
+  .settings-header p {
+    font-size: 12px;
+  }
+
+
+  .settings-card {
+    padding:
+      8px 20px;
+
+    border-radius:
+      17px;
+  }
+
+
+  .settings-card::before {
+    left: 20px;
+  }
+
+
+  .setting-item {
+    align-items:
+      flex-start;
+
+    min-height:
+      auto;
+
+    padding:
+      22px 0;
+
+    gap:
+      18px;
+  }
+
+
+  .setting-item > div {
+    flex:
+      1;
+  }
+
+
+  .setting-item button {
+    min-width:
+      80px;
+
+    height:
+      36px;
+  }
+
+
+  .setting-item p {
+    max-width:
+      240px;
+  }
+
+
+  .setting-item:nth-child(1)::after,
+  .setting-item:nth-child(2)::after,
+  .setting-item:nth-child(3)::after {
+    font-size:
+      28px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 430px) {
+
+  .student-settings {
+    padding:
+      18px 14px;
+  }
+
+
+  .settings-header h2 {
+    font-size:
+      27px;
+  }
+
+
+  .settings-card {
+    padding:
+      6px 16px;
+  }
+
+
+  .setting-item {
+    gap:
+      12px;
+  }
+
+
+  .setting-item h4 {
+    font-size:
+      12px;
+  }
+
+
+  .setting-item p {
+    font-size:
+      10px;
+  }
+
+
+  .setting-item button {
+    min-width:
+      72px;
+
+    padding:
+      0 13px;
+
+    font-size:
+      9px;
+  }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+
+  outline:
+    3px solid
+    rgba(21, 87, 176, .18);
+
+  outline-offset:
+    3px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  * {
+    animation:
+      none !important;
+
+    transition:
+      none !important;
+  }
+}

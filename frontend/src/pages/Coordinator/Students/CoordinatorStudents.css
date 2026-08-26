@@ -1,0 +1,365 @@
+/* =========================================================
+   COORDINATOR STUDENTS PAGE
+   ========================================================= */
+
+.students-page {
+  width: 100%;
+  padding: 0;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.students-page .page-header {
+  position: relative;
+  margin: 35px 0 30px;
+  padding: 0 20px 25px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.students-page .page-header::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 6px;
+  height: 76px;
+  border-radius: 3px;
+  background: linear-gradient(
+    to bottom,
+    #f2c230,
+    #f5d76e
+  );
+}
+
+.students-page .page-header h1 {
+  margin: 0;
+  padding-left: 20px;
+  font-size: 42px;
+  font-weight: 700;
+  color: #17233b;
+  line-height: 1.2;
+}
+
+.students-page .page-header p {
+  margin: 12px 0 0;
+  padding-left: 20px;
+  color: #718096;
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   SEARCH + FILTER
+   ========================================================= */
+
+.student-controls {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin: 0 0 28px;
+}
+
+
+/* Search */
+
+.search-box {
+  flex: 1;
+  height: 54px;
+
+  display: flex;
+  align-items: center;
+
+  background: #ffffff;
+
+  border: 1px solid #dfe5ee;
+  border-radius: 14px;
+
+  padding: 0 18px;
+
+  box-sizing: border-box;
+
+  transition: 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
+}
+
+.search-box span {
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+.search-box input {
+  width: 100%;
+  height: 100%;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.search-box input::placeholder {
+  color: #8a94a6;
+}
+
+
+/* Department */
+
+.student-controls select {
+  width: 180px;
+  height: 54px;
+
+  padding: 0 16px;
+
+  border: 1px solid #dfe5ee;
+  border-radius: 14px;
+
+  background: #ffffff;
+
+  font-size: 16px;
+  color: #1f2937;
+
+  outline: none;
+
+  cursor: pointer;
+}
+
+.student-controls select:focus {
+  border-color: #2563eb;
+}
+
+
+/* =========================================================
+   TABLE CARD
+   ========================================================= */
+
+.students-page .table-card {
+  width: 100%;
+
+  background: #ffffff;
+
+  border-radius: 20px;
+
+  padding: 28px;
+
+  box-sizing: border-box;
+
+  border-top: 4px solid #2563eb;
+
+  box-shadow:
+    0 15px 40px rgba(15, 35, 70, 0.08);
+
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.students-page .table-card table {
+  width: 100%;
+  min-width: 950px;
+
+  border-collapse: collapse;
+}
+
+
+/* Header */
+
+.students-page .table-card thead tr {
+  background: #2563eb;
+}
+
+.students-page .table-card th {
+  padding: 17px 16px;
+
+  color: #ffffff;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+.students-page .table-card th:first-child {
+  border-radius: 12px 0 0 12px;
+}
+
+.students-page .table-card th:last-child {
+  border-radius: 0 12px 12px 0;
+}
+
+
+/* Body */
+
+.students-page .table-card td {
+  padding: 22px 16px;
+
+  border-bottom: 1px solid #e5e9f0;
+
+  color: #52627a;
+
+  font-size: 15px;
+
+  vertical-align: middle;
+}
+
+.students-page .table-card tbody tr {
+  transition: background 0.2s ease;
+}
+
+.students-page .table-card tbody tr:hover {
+  background: #f8faff;
+}
+
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.students-page .view-btn {
+  border: none;
+
+  background: #2563eb;
+  color: #ffffff;
+
+  padding: 11px 22px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+
+  box-shadow:
+    0 5px 12px rgba(37, 99, 235, 0.18);
+}
+
+.students-page .view-btn:hover {
+  background: #1d4ed8;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 18px rgba(37, 99, 235, 0.25);
+}
+
+
+/* =========================================================
+   LOADING / ERROR / EMPTY
+   ========================================================= */
+
+.students-message {
+  width: 100%;
+
+  padding: 45px 20px;
+
+  text-align: center;
+
+  color: #52627a;
+
+  font-size: 17px;
+
+  box-sizing: border-box;
+}
+
+.students-message.error {
+  color: #dc2626;
+
+  background: #fff7f7;
+
+  border-radius: 12px;
+}
+
+.no-students {
+  text-align: center !important;
+
+  padding: 45px !important;
+
+  color: #7b8798 !important;
+
+  font-size: 16px !important;
+}
+
+
+/* =========================================================
+   STUDENT COUNT
+   ========================================================= */
+
+.student-count {
+  margin-top: 15px;
+
+  padding-left: 5px;
+
+  color: #718096;
+
+  font-size: 14px;
+}
+
+.student-count strong {
+  color: #1f2937;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .student-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .student-controls select {
+    width: 100%;
+  }
+
+  .students-page .page-header h1 {
+    font-size: 34px;
+  }
+
+  .students-page .table-card {
+    padding: 18px;
+  }
+
+}
+
+
+@media (max-width: 600px) {
+
+  .students-page .page-header {
+    margin-top: 20px;
+  }
+
+  .students-page .page-header h1 {
+    font-size: 30px;
+  }
+
+  .students-page .page-header p {
+    font-size: 14px;
+  }
+
+  .search-box,
+  .student-controls select {
+    height: 50px;
+  }
+
+}

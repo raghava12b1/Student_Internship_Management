@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="150" viewBox="0 0 720 150" role="img" aria-labelledby="title desc">
+  <title id="title">Aditya University Student Internship Management System</title>
+  <desc id="desc">Professional academic internship management system wordmark.</desc>
+
+  <!-- Academic emblem -->
+  <g transform="translate(10 14)">
+    <circle cx="61" cy="61" r="55" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="2"/>
+    <circle cx="61" cy="61" r="47" fill="#F8FAFC" stroke="#1F2937" stroke-width="2"/>
+
+    <!-- Stylized open book -->
+    <path d="M27 69 C38 63 49 65 61 73 C73 65 84 63 95 69"
+          fill="none" stroke="#111827" stroke-width="5" stroke-linecap="round"/>
+    <path d="M29 69 V88 C40 82 50 84 61 92 C72 84 82 82 93 88 V69"
+          fill="none" stroke="#111827" stroke-width="4" stroke-linejoin="round"/>
+
+    <!-- Graduation cap -->
+    <path d="M27 45 L61 27 L95 45 L61 62 Z" fill="#111827"/>
+    <path d="M39 51 V62 C39 68 49 73 61 73 C73 73 83 68 83 62 V51"
+          fill="none" stroke="#111827" stroke-width="4" stroke-linecap="round"/>
+    <path d="M95 45 V62" stroke="#F97316" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="95" cy="66" r="4" fill="#F97316"/>
+
+    <!-- Aditya-inspired accent -->
+    <path d="M34 101 H88" stroke="#F97316" stroke-width="5" stroke-linecap="round"/>
+    <path d="M45 101 H77" stroke="#2563EB" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- Wordmark -->
+  <g transform="translate(145 34)">
+    <text x="0" y="31"
+      font-family="Inter, Segoe UI, Arial, sans-serif"
+      font-size="27"
+      font-weight="800"
+      letter-spacing="0.3"
+      fill="#111827">STUDENT INTERNSHIP</text>
+
+    <text x="0" y="67"
+      font-family="Inter, Segoe UI, Arial, sans-serif"
+      font-size="27"
+      font-weight="800"
+      letter-spacing="0.3"
+      fill="#111827">MANAGEMENT SYSTEM</text>
+
+    <!-- Brand accent line -->
+    <rect x="1" y="83" width="55" height="4" rx="2" fill="#F97316"/>
+    <rect x="63" y="83" width="145" height="4" rx="2" fill="#2563EB"/>
+
+    <text x="1" y="108"
+      font-family="Inter, Segoe UI, Arial, sans-serif"
+      font-size="11"
+      font-weight="600"
+      letter-spacing="2.1"
+      fill="#6B7280">ADITYA UNIVERSITY</text>
+  </g>
+</svg>

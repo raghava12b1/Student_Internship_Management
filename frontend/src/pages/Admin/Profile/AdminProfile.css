@@ -1,0 +1,69 @@
+.admin-profile{
+    padding:30px;
+    display:flex;
+    justify-content:center;
+}
+
+.profile-card{
+    width:100%;
+    max-width:700px;
+    background:#fff;
+    padding:40px;
+    border-radius:20px;
+    box-shadow:0 10px 30px rgba(0,0,0,.08);
+    text-align:center;
+}
+
+.profile-avatar{
+    width:120px;
+    height:120px;
+    margin:auto;
+    border-radius:50%;
+    background:#2563eb;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.profile-card h2{
+    color:#1e293b;
+}
+
+.profile-card p{
+    color:#64748b;
+    margin-bottom:30px;
+}
+
+.profile-info{
+    text-align:left;
+    margin-bottom:30px;
+}
+
+.info-row{
+    display:flex;
+    justify-content:space-between;
+    padding:15px 0;
+    border-bottom:1px solid #e5e7eb;
+}
+
+.info-row span{
+    color:#64748b;
+}
+
+.info-row strong{
+    color:#1e293b;
+}
+
+.edit-btn{
+    background:#2563eb;
+    color:white;
+    border:none;
+    padding:12px 30px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    font-weight:600;
+}

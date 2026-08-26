@@ -1,0 +1,980 @@
+/* =========================================================
+   PREMIUM HOD PROFILE
+   Aditya University
+   Student Internship Management System
+========================================================= */
+
+:root {
+  --hod-primary: #2563eb;
+  --hod-primary-dark: #1d4ed8;
+  --hod-navy: #0f172a;
+
+  --hod-text: #1e293b;
+  --hod-muted: #64748b;
+  --hod-light: #94a3b8;
+
+  --hod-bg: #f5f8fc;
+  --hod-white: #ffffff;
+
+  --hod-border: #e5eaf2;
+
+  --hod-green: #16a34a;
+
+  --hod-radius: 20px;
+
+  --hod-shadow:
+    0 18px 50px rgba(15, 23, 42, 0.07);
+
+  --hod-shadow-hover:
+    0 24px 65px rgba(15, 23, 42, 0.11);
+
+  --hod-ease:
+    cubic-bezier(.22, 1, .36, 1);
+}
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.hod-profile-page {
+  position: relative;
+
+  min-height: 100vh;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  background:
+    radial-gradient(
+      circle at 90% 0%,
+      rgba(37, 99, 235, 0.07),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 5% 90%,
+      rgba(30, 64, 175, 0.045),
+      transparent 25%
+    ),
+    linear-gradient(
+      180deg,
+      #f9fbff 0%,
+      #f4f7fc 100%
+    );
+
+  color: var(--hod-text);
+
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+========================================================= */
+
+.hod-profile-page-header {
+  position: relative;
+
+  max-width: 1100px;
+
+  margin:
+    22px auto 28px;
+
+  padding-left: 17px;
+}
+
+
+.hod-profile-page-header::before {
+  content: "";
+
+  position: absolute;
+
+  left: 0;
+  top: 3px;
+
+  width: 4px;
+  height: 64px;
+
+  border-radius:
+    0 8px 8px 0;
+
+  background:
+    linear-gradient(
+      180deg,
+      var(--hod-primary),
+      #60a5fa
+    );
+}
+
+
+.profile-eyebrow {
+  display: inline-block;
+
+  margin-bottom: 7px;
+
+  color: var(--hod-primary);
+
+  font-size: 10px;
+
+  font-weight: 800;
+
+  letter-spacing: .12em;
+}
+
+
+.hod-profile-page-header h1 {
+  margin: 0;
+
+  color: var(--hod-navy);
+
+  font-family:
+    "Plus Jakarta Sans",
+    "Inter",
+    sans-serif;
+
+  font-size: 30px;
+
+  line-height: 1.2;
+
+  font-weight: 800;
+
+  letter-spacing: -.035em;
+}
+
+
+.hod-profile-page-header p {
+  margin: 8px 0 0;
+
+  color: var(--hod-muted);
+
+  font-size: 13px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   MAIN CARD
+========================================================= */
+
+.hod-profile-card {
+  position: relative;
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 30px;
+
+  box-sizing: border-box;
+
+  overflow: hidden;
+
+  border:
+    1px solid
+    rgba(229, 234, 242, .95);
+
+  border-radius:
+    var(--hod-radius);
+
+  background:
+    rgba(255, 255, 255, .97);
+
+  box-shadow:
+    var(--hod-shadow);
+
+  transition:
+    box-shadow .35s var(--hod-ease),
+    border-color .35s ease;
+}
+
+
+.hod-profile-card:hover {
+  border-color:
+    rgba(37, 99, 235, .12);
+
+  box-shadow:
+    var(--hod-shadow-hover);
+}
+
+
+/* Top accent */
+
+.hod-profile-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+
+  width: 100%;
+  height: 3px;
+
+  background:
+    linear-gradient(
+      90deg,
+      var(--hod-primary),
+      #60a5fa,
+      transparent
+    );
+}
+
+
+/* =========================================================
+   PROFILE HERO
+========================================================= */
+
+.hod-profile-hero {
+  display: flex;
+
+  align-items: center;
+
+  gap: 24px;
+
+  padding: 5px 2px 10px;
+}
+
+
+/* =========================================================
+   AVATAR
+========================================================= */
+
+.hod-profile-avatar {
+  position: relative;
+
+  flex-shrink: 0;
+
+  width: 105px;
+  height: 105px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border:
+    1px solid
+    rgba(37, 99, 235, .14);
+
+  border-radius: 50%;
+
+  background:
+    linear-gradient(
+      145deg,
+      #eff6ff,
+      #dbeafe
+    );
+
+  font-size: 47px;
+
+  box-shadow:
+    0 12px 28px
+    rgba(37, 99, 235, .12);
+}
+
+
+.avatar-status {
+  position: absolute;
+
+  right: 5px;
+  bottom: 8px;
+
+  width: 16px;
+  height: 16px;
+
+  border:
+    3px solid
+    #ffffff;
+
+  border-radius: 50%;
+
+  background:
+    var(--hod-green);
+
+  box-shadow:
+    0 3px 8px
+    rgba(22, 163, 74, .25);
+}
+
+
+/* =========================================================
+   IDENTITY
+========================================================= */
+
+.hod-profile-identity {
+  min-width: 0;
+
+  flex: 1;
+}
+
+
+.identity-top {
+  display: flex;
+
+  align-items: center;
+
+  flex-wrap: wrap;
+
+  gap: 10px;
+}
+
+
+.identity-top h2 {
+  margin: 0;
+
+  color: var(--hod-navy);
+
+  font-family:
+    "Plus Jakarta Sans",
+    "Inter",
+    sans-serif;
+
+  font-size: 25px;
+
+  font-weight: 800;
+
+  letter-spacing: -.03em;
+}
+
+
+.role-badge {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding:
+    5px 9px;
+
+  border:
+    1px solid
+    rgba(37, 99, 235, .12);
+
+  border-radius: 7px;
+
+  background:
+    #eff6ff;
+
+  color:
+    var(--hod-primary);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: .06em;
+}
+
+
+.designation {
+  margin: 6px 0 2px;
+
+  color: var(--hod-text);
+
+  font-size: 14px;
+
+  font-weight: 650;
+}
+
+
+.department {
+  margin: 0;
+
+  color: var(--hod-muted);
+
+  font-size: 12px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   PROFILE META
+========================================================= */
+
+.profile-meta {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 18px;
+
+  margin-top: 14px;
+}
+
+
+.profile-meta span {
+  color: var(--hod-light);
+
+  font-size: 10px;
+
+  font-weight: 650;
+}
+
+
+/* =========================================================
+   DIVIDER
+========================================================= */
+
+.profile-divider {
+  height: 1px;
+
+  margin:
+    25px 0;
+
+  background:
+    var(--hod-border);
+}
+
+
+/* =========================================================
+   PROFILE SECTION
+========================================================= */
+
+.profile-section {
+  margin-bottom: 28px;
+}
+
+
+.section-heading {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  margin-bottom: 17px;
+}
+
+
+.section-icon {
+  width: 38px;
+  height: 38px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background:
+    #eff6ff;
+
+  color:
+    var(--hod-primary);
+
+  font-size: 16px;
+
+  border:
+    1px solid
+    rgba(37, 99, 235, .08);
+}
+
+
+.section-heading h3 {
+  margin: 0;
+
+  color: var(--hod-navy);
+
+  font-size: 14px;
+
+  font-weight: 800;
+}
+
+
+.section-heading p {
+  margin: 3px 0 0;
+
+  color: var(--hod-light);
+
+  font-size: 10px;
+
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   INFORMATION GRID
+========================================================= */
+
+.profile-info-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 12px;
+}
+
+
+.profile-info-item {
+  min-height: 70px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  justify-content: center;
+
+  box-sizing: border-box;
+
+  padding:
+    13px 15px;
+
+  border:
+    1px solid
+    #edf1f6;
+
+  border-radius: 11px;
+
+  background:
+    #f8fafc;
+
+  transition:
+    transform .25s var(--hod-ease),
+    border-color .25s ease,
+    background .25s ease,
+    box-shadow .25s ease;
+}
+
+
+.profile-info-item:hover {
+  transform:
+    translateY(-2px);
+
+  border-color:
+    rgba(37, 99, 235, .14);
+
+  background:
+    #f7faff;
+
+  box-shadow:
+    0 7px 18px
+    rgba(15, 23, 42, .045);
+}
+
+
+.info-label {
+  margin-bottom: 6px;
+
+  color: var(--hod-light);
+
+  font-size: 9px;
+
+  font-weight: 800;
+
+  letter-spacing: .08em;
+
+  text-transform: uppercase;
+}
+
+
+.profile-info-item strong {
+  color: var(--hod-text);
+
+  font-size: 12px;
+
+  line-height: 1.45;
+
+  font-weight: 700;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   ACCOUNT STATUS
+========================================================= */
+
+.profile-status-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-top: 5px;
+
+  padding:
+    15px 17px;
+
+  border:
+    1px solid
+    rgba(22, 163, 74, .12);
+
+  border-radius: 12px;
+
+  background:
+    linear-gradient(
+      90deg,
+      rgba(240, 253, 244, .9),
+      rgba(255,255,255,.9)
+    );
+}
+
+
+.status-icon {
+  width: 36px;
+  height: 36px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  flex-shrink: 0;
+
+  border-radius: 10px;
+
+  background:
+    rgba(22, 163, 74, .10);
+
+  color:
+    var(--hod-green);
+
+  font-size: 16px;
+
+  font-weight: 800;
+}
+
+
+.profile-status-card > div:nth-child(2) {
+  flex: 1;
+}
+
+
+.profile-status-card strong {
+  color: #166534;
+
+  font-size: 12px;
+
+  font-weight: 800;
+}
+
+
+.profile-status-card p {
+  margin: 3px 0 0;
+
+  color: #64748b;
+
+  font-size: 10px;
+
+  line-height: 1.5;
+}
+
+
+.active-badge {
+  padding:
+    5px 9px;
+
+  border-radius: 999px;
+
+  background:
+    #dcfce7;
+
+  color:
+    #15803d;
+
+  font-size: 9px;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.profile-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 25px;
+}
+
+
+.edit-profile-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  gap: 8px;
+
+  min-height: 43px;
+
+  padding:
+    0 18px;
+
+  border:
+    1px solid
+    rgba(37, 99, 235, .12);
+
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--hod-primary),
+      var(--hod-primary-dark)
+    );
+
+  color:
+    #ffffff;
+
+  font-family:
+    "Inter",
+    sans-serif;
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 18px
+    rgba(37, 99, 235, .17);
+
+  transition:
+    transform .28s var(--hod-ease),
+    box-shadow .28s var(--hod-ease),
+    background .28s ease;
+}
+
+
+.edit-profile-btn:hover {
+  transform:
+    translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      var(--hod-primary-dark),
+      #1e3a8a
+    );
+
+  box-shadow:
+    0 12px 25px
+    rgba(37, 99, 235, .24);
+}
+
+
+.edit-profile-btn:active {
+  transform:
+    translateY(0)
+    scale(.98);
+}
+
+
+.edit-profile-btn:focus-visible {
+  outline:
+    3px solid
+    rgba(37, 99, 235, .18);
+
+  outline-offset: 3px;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .hod-profile-page {
+    padding: 25px;
+  }
+
+  .hod-profile-card {
+    padding: 25px;
+  }
+
+  .hod-profile-hero {
+    gap: 20px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .hod-profile-page {
+    padding: 18px;
+  }
+
+  .hod-profile-page-header {
+    margin-top: 18px;
+    margin-bottom: 22px;
+  }
+
+  .hod-profile-page-header h1 {
+    font-size: 25px;
+  }
+
+  .hod-profile-page-header p {
+    font-size: 11px;
+  }
+
+  .hod-profile-card {
+    padding: 20px;
+    border-radius: 16px;
+  }
+
+  .hod-profile-hero {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .hod-profile-avatar {
+    width: 82px;
+    height: 82px;
+    font-size: 37px;
+  }
+
+  .avatar-status {
+    right: 2px;
+    bottom: 4px;
+
+    width: 14px;
+    height: 14px;
+  }
+
+  .identity-top h2 {
+    font-size: 21px;
+  }
+
+  .profile-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .profile-divider {
+    margin: 22px 0;
+  }
+
+  .profile-status-card {
+    align-items: flex-start;
+  }
+
+  .active-badge {
+    margin-left: auto;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 480px) {
+
+  .hod-profile-page {
+    padding: 14px;
+  }
+
+  .hod-profile-page-header {
+    padding-left: 13px;
+  }
+
+  .hod-profile-page-header::before {
+    height: 56px;
+  }
+
+  .hod-profile-page-header h1 {
+    font-size: 22px;
+  }
+
+  .hod-profile-card {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .hod-profile-avatar {
+    width: 72px;
+    height: 72px;
+    font-size: 32px;
+  }
+
+  .identity-top h2 {
+    font-size: 19px;
+  }
+
+  .designation {
+    font-size: 12px;
+  }
+
+  .department {
+    font-size: 11px;
+  }
+
+  .profile-meta {
+    gap: 10px;
+  }
+
+  .section-heading {
+    align-items: flex-start;
+  }
+
+  .section-icon {
+    width: 34px;
+    height: 34px;
+    font-size: 14px;
+  }
+
+  .section-heading h3 {
+    font-size: 13px;
+  }
+
+  .profile-status-card {
+    padding: 13px;
+  }
+
+  .profile-status-card p {
+    font-size: 9px;
+  }
+
+  .active-badge {
+    display: none;
+  }
+
+  .profile-actions {
+    justify-content: stretch;
+  }
+
+  .edit-profile-btn {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hod-profile-card,
+  .profile-info-item,
+  .edit-profile-btn {
+    transition: none !important;
+  }
+
+}
