@@ -37,9 +37,37 @@ class StudentProfile(models.Model):
     )
 
     department = models.CharField(max_length=100)
+
     year = models.PositiveIntegerField()
+
     semester = models.PositiveIntegerField()
+
     mobile_number = models.CharField(max_length=15)
 
     def __str__(self):
         return f"{self.student_name} - {self.roll_number}"
+
+
+class CoordinatorProfile(models.Model):
+
+    user = models.OneToOneField(
+        User,
+        on_delete=models.CASCADE,
+        related_name="coordinator_profile"
+    )
+
+    full_name = models.CharField(max_length=150)
+
+    employee_id = models.CharField(
+        max_length=50,
+        unique=True
+    )
+
+    mobile_number = models.CharField(max_length=15)
+
+    department = models.CharField(max_length=100)
+
+    designation = models.CharField(max_length=100)
+
+    def __str__(self):
+        return f"{self.full_name} - {self.employee_id}"

@@ -1,4 +1,5 @@
 import "./QuickActions.css";
+
 import { useNavigate } from "react-router-dom";
 
 import {
@@ -7,10 +8,14 @@ import {
   FaChartLine,
 } from "react-icons/fa";
 
+
 const QuickActions = () => {
+
   const navigate = useNavigate();
 
+
   const actions = [
+
     {
       icon: <FaFileAlt />,
       title: "Upload Offer Letter",
@@ -34,12 +39,18 @@ const QuickActions = () => {
       title: "View Progress",
       path: "/student/progress",
     },
+
   ];
 
+
   return (
+
     <div className="quick-actions">
 
-      <h2>Quick Actions</h2>
+      <h2>
+        Quick Actions
+      </h2>
+
 
       <div className="actions-grid">
 
@@ -66,7 +77,9 @@ const QuickActions = () => {
       </div>
 
     </div>
+
   );
 };
+
 
 export default QuickActions;

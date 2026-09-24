@@ -47,7 +47,7 @@ const CoordinatorReports = () => {
         }
 
         const response = await fetch(
-          `${API_BASE_URL}/documents/`,
+          `${API_BASE_URL}/documents/review/`,
           {
             method: "GET",
             headers: {

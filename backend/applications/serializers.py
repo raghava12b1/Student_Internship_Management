@@ -22,7 +22,5 @@ class ApplicationSerializer(serializers.ModelSerializer):
         ]
         read_only_fields = [
             "id",
-            "status",
-            "remarks",
             "applied_at",
         ]

@@ -1,67 +1,55 @@
 import "./WelcomeCard.css";
 
-const WelcomeCard = () => {
+const WelcomeCard = ({ dashboardData }) => {
 
-  /*
-   * =====================================================
-   * CURRENT USER
-   * =====================================================
-   *
-   * Later this information will come from Django.
-   *
-   * Expected structure:
-   *
-   * {
-   *   name: "Bala",
-   *   role: "Student",
-   *   progress: 70
-   * }
-   *
-   */
+  // ============================================================
+  // STUDENT INFORMATION FROM DJANGO
+  // ============================================================
 
-  let currentUser = null;
-
-  try {
-    const storedUser = localStorage.getItem("currentUser");
-
-    if (storedUser) {
-      currentUser = JSON.parse(storedUser);
-    }
-  } catch (error) {
-    console.error("Unable to read current user:", error);
-  }
-
-  /*
-   * User name
-   */
+  const student = dashboardData?.student || {};
 
   const userName =
-    currentUser?.name ||
-    currentUser?.full_name ||
+    student.name ||
+    student.username ||
     localStorage.getItem("userName") ||
     "User";
 
-  /*
-   * Internship progress
-   */
 
-  const progress = Number(
-    currentUser?.progress ?? 0
-  );
+  // ============================================================
+  // INTERNSHIP INFORMATION
+  // ============================================================
 
-  /*
-   * Prevent invalid progress values
-   */
+  const internshipCount =
+    Number(
+      dashboardData?.statistics?.internships || 0
+    );
 
-  const safeProgress = Math.min(
-    100,
-    Math.max(0, progress)
-  );
+
+  // ============================================================
+  // CURRENT INTERNSHIP STATUS
+  // ============================================================
+
+  const internshipStatus =
+    internshipCount > 0
+      ? "Internship Assigned"
+      : "No Internship Assigned";
+
+
+  // ============================================================
+  // OFFER LETTER STATUS
+  // ============================================================
+
+  const offerLetterUploaded =
+    dashboardData?.documents?.offer_letter_uploaded || false;
+
 
   return (
+
     <section className="welcome-card">
 
-      {/* Decorative background */}
+      {/* =====================================================
+          DECORATIVE BACKGROUND
+      ===================================================== */}
 
       <div className="welcome-glow welcome-glow-one"></div>
 
@@ -86,14 +74,20 @@ const WelcomeCard = () => {
 
 
         <h2>
+
           Good Morning, <span>{userName}</span> 👋
+
         </h2>
 
 
         <p>
+
           Welcome back to the Student Internship Management System.
+
           Track your internship progress, submit reports, manage
+
           documents and stay updated with your academic requirements.
+
         </p>
 
 
@@ -110,7 +104,11 @@ const WelcomeCard = () => {
             </strong>
 
             <span>
-              <i></i> Active
+
+              <i></i>
+
+              {internshipStatus}
+
             </span>
 
           </div>
@@ -126,7 +124,7 @@ const WelcomeCard = () => {
             </strong>
 
             <span>
-              {safeProgress}% Completed
+              Progress will appear here
             </span>
 
           </div>
@@ -171,7 +169,11 @@ const WelcomeCard = () => {
             </strong>
 
             <small>
-              Up to date
+
+              {offerLetterUploaded
+                ? "Offer letter uploaded"
+                : "No offer letter"}
+
             </small>
 
           </div>
@@ -180,7 +182,7 @@ const WelcomeCard = () => {
 
 
         {/* =====================================================
-            PROGRESS CARD
+            INTERNSHIP CARD
         ===================================================== */}
 
         <div className="floating-card floating-card-bottom">
@@ -190,11 +192,11 @@ const WelcomeCard = () => {
           <div>
 
             <strong>
-              {safeProgress}%
+              {internshipCount}
             </strong>
 
             <small>
-              Progress
+              Internship
             </small>
 
           </div>
@@ -204,7 +206,9 @@ const WelcomeCard = () => {
       </div>
 
     </section>
+
   );
+
 };
 
 export default WelcomeCard;

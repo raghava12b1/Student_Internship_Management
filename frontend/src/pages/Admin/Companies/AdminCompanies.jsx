@@ -1,42 +1,31 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminCompanies.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
-const companies = [
-  {
-    id: 1,
-    name: "Infosys",
-    location: "Hyderabad",
-    students: 42,
-    coordinator: "Dr. Ramesh",
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "TCS",
-    location: "Bengaluru",
-    students: 35,
-    coordinator: "Dr. Suresh",
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Wipro",
-    location: "Chennai",
-    students: 28,
-    coordinator: "Dr. Priya",
-    status: "Inactive",
-  },
-  {
-    id: 4,
-    name: "Accenture",
-    location: "Pune",
-    students: 51,
-    coordinator: "Dr. Kumar",
-    status: "Active",
-  },
-];
+import { useEffect, useState } from "react";
+import { getCompanies, updateCompany } from "../../../services/api";
 
 const AdminCompanies = () => {
+  const [companies, setCompanies] = useState([]);
+
+  useEffect(() => {
+    getCompanies()
+      .then(setCompanies)
+      .catch(() => setCompanies([]));
+  }, []);
+
+  const toggleCompany = async (company) => {
+    try {
+      const updated = await updateCompany(company.id, {
+        is_active: company.status !== "Active",
+      });
+      setCompanies((current) => current.map((item) => (
+        item.id === company.id ? { ...item, ...updated } : item
+      )));
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
+
   return (
     <DashboardLayout>
        <BackButton />
@@ -67,22 +56,22 @@ const AdminCompanies = () => {
 
               {companies.map((company) => (
 
-                <tr key={company.id}>
+                <tr key={company.name}>
 
-                  <td>{company.id}</td>
+                  <td>--</td>
                   <td>{company.name}</td>
-                  <td>{company.location}</td>
+                  <td>{company.location || "--"}</td>
                   <td>{company.students}</td>
-                  <td>{company.coordinator}</td>
+                  <td>{company.coordinator || "--"}</td>
                   <td>{company.status}</td>
 
                   <td>
 
-                    <button className="view-btn">
+                    <button className="view-btn" onClick={() => window.alert(`${company.name}: ${company.students} student(s)`)}>
                       View
                     </button>
 
-                    <button className="edit-btn">
+                    <button className="edit-btn" onClick={() => toggleCompany(company)}>
                       Edit
                     </button>
 

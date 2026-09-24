@@ -1,8 +1,10 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminReports.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+import { useEffect, useState } from "react";
+import { getAdminDashboard } from "../../../services/api";
 
-const reports = [
+const initialReports = [
   {
     id: 1,
     report: "CSE Internship Report",
@@ -38,6 +40,14 @@ const reports = [
 ];
 
 const AdminReports = () => {
+  const [reports, setReports] = useState(initialReports);
+
+  useEffect(() => {
+    getAdminDashboard()
+      .then((data) => setReports(data.reports || []))
+      .catch(() => setReports([]));
+  }, []);
+
   return (
     <DashboardLayout>
       <BackButton />
@@ -82,20 +92,18 @@ const AdminReports = () => {
                     {report.id}
                   </td>
 
+                  <td>{report.report}</td>
+
                   <td>
-                    {report.report}
+                    {report.student || report.department || "--"}
                   </td>
 
                   <td>
-                    {report.department}
+                    {report.generatedBy || "System"}
                   </td>
 
                   <td>
-                    {report.generatedBy}
-                  </td>
-
-                  <td>
-                    {report.date}
+                    {report.date ? new Date(report.date).toLocaleDateString() : "--"}
                   </td>
 
                   <td>
@@ -104,11 +112,11 @@ const AdminReports = () => {
 
                   <td>
 
-                    <button className="view-btn">
+                    <button className="view-btn" onClick={() => report.file ? window.open(report.file, "_blank", "noopener,noreferrer") : window.alert("No report file is available.")}>
                       View
                     </button>
 
-                    <button className="download-btn">
+                    <button className="download-btn" onClick={() => report.file ? window.open(report.file, "_blank", "noopener,noreferrer") : window.alert("No report file is available.")}>
                       Download
                     </button>
 

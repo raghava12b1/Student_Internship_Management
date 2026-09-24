@@ -1,38 +1,29 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminCoordinators.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
-
-const coordinators = [
-  {
-    id: 1,
-    name: "Dr. Ramesh",
-    employeeId: "COORD001",
-    department: "CSE",
-    email: "ramesh@aditya.edu.in",
-    students: 52,
-    status: "Active",
-  },
-  {
-    id: 2,
-    name: "Dr. Suresh",
-    employeeId: "COORD002",
-    department: "ECE",
-    email: "suresh@aditya.edu.in",
-    students: 48,
-    status: "Active",
-  },
-  {
-    id: 3,
-    name: "Dr. Priya",
-    employeeId: "COORD003",
-    department: "IT",
-    email: "priya@aditya.edu.in",
-    students: 45,
-    status: "On Leave",
-  },
-];
+import { useEffect, useState } from "react";
+import { getAdminDashboard, updateCoordinator } from "../../../services/api";
 
 const AdminCoordinators = () => {
+  const [coordinators, setCoordinators] = useState([]);
+
+  useEffect(() => {
+    getAdminDashboard()
+      .then((data) => setCoordinators(data.coordinators || []))
+      .catch(() => setCoordinators([]));
+  }, []);
+
+  const editCoordinator = async (coordinator) => {
+    const department = window.prompt("Department", coordinator.department || "");
+    if (department === null || department.trim() === "") return;
+    try {
+      const updated = await updateCoordinator(coordinator.id, { department: department.trim() });
+      setCoordinators((current) => current.map((item) => item.id === coordinator.id ? { ...item, ...updated } : item));
+    } catch (error) {
+      window.alert(error.message);
+    }
+  };
+
   return (
     <DashboardLayout>
        <BackButton />
@@ -80,7 +71,7 @@ const AdminCoordinators = () => {
 
                   <td>{coordinator.name}</td>
 
-                  <td>{coordinator.employeeId}</td>
+                  <td>{coordinator.employee_id || "--"}</td>
 
                   <td>{coordinator.department}</td>
 
@@ -92,11 +83,11 @@ const AdminCoordinators = () => {
 
                   <td>
 
-                    <button className="view-btn">
+                    <button className="view-btn" onClick={() => window.alert(`${coordinator.name} - ${coordinator.email || "No email"}`)}>
                       View
                     </button>
 
-                    <button className="edit-btn">
+                    <button className="edit-btn" onClick={() => editCoordinator(coordinator)}>
                       Edit
                     </button>
 

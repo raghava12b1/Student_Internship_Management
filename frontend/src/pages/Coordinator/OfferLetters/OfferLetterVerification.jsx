@@ -12,43 +12,52 @@ const OfferLetterVerification = () => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
 
-  /*
-   * =====================================================
-   * LOAD OFFER LETTERS
-   * =====================================================
-   *
-   * Currently we read from localStorage because Django
-   * backend is not connected yet.
-   *
-   * When your friend gives the backend API, only this
-   * loading section needs to be replaced with fetch().
-   */
+  const getAccessToken = () => {
+    return (
+      localStorage.getItem("accessToken") ||
+      localStorage.getItem("access_token") ||
+      localStorage.getItem("access")
+    );
+  };
 
   useEffect(() => {
-    const loadOfferLetters = () => {
+    const loadOfferLetters = async () => {
       try {
-        const storedOffers = localStorage.getItem(STORAGE_KEY);
+        const accessToken = getAccessToken();
 
-        if (!storedOffers) {
+        if (!accessToken) {
           setOfferLetters([]);
           setSelectedOffer(null);
           setLoading(false);
           return;
         }
 
-        const parsedOffers = JSON.parse(storedOffers);
+        const response = await fetch("http://127.0.0.1:8000/api/documents/review/", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
 
-        if (Array.isArray(parsedOffers)) {
-          setOfferLetters(parsedOffers);
+        if (!response.ok) {
+          throw new Error(`Server returned ${response.status}`);
+        }
 
-          if (parsedOffers.length > 0) {
-            setSelectedOffer(parsedOffers[0]);
-            setRemarks(parsedOffers[0].remarks || "");
-          } else {
-            setSelectedOffer(null);
-          }
+        const data = await response.json();
+        const items = Array.isArray(data) ? data : Array.isArray(data.results) ? data.results : [];
+
+        const filtered = items.filter((item) => {
+          const type = String(item.document_type || "").toLowerCase();
+          return type.includes("offer") || type === "offer_letter";
+        });
+
+        setOfferLetters(filtered);
+
+        if (filtered.length > 0) {
+          setSelectedOffer(filtered[0]);
+          setRemarks(filtered[0].remarks || "");
         } else {
-          setOfferLetters([]);
           setSelectedOffer(null);
         }
       } catch (error) {
@@ -81,41 +90,64 @@ const OfferLetterVerification = () => {
    * =====================================================
    */
 
-  const updateOfferStatus = (newStatus) => {
+  const updateOfferStatus = async (newStatus) => {
     if (!selectedOffer) {
       return;
     }
 
-    const updatedOffers = offerLetters.map((offer) => {
-      if (offer.id === selectedOffer.id) {
-        return {
-          ...offer,
-          status: newStatus,
-          remarks: remarks.trim(),
-        };
+    const accessToken = getAccessToken();
+
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:8000/api/documents/${selectedOffer.id}/review/`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${accessToken}`,
+          },
+          body: JSON.stringify({
+            status: newStatus === "Approved" ? "APPROVED" : "REJECTED",
+            remarks: remarks.trim(),
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errText = await response.text();
+        throw new Error(errText || "Unable to update offer letter status.");
       }
 
-      return offer;
-    });
+      const updatedOffers = offerLetters.map((offer) => {
+        if (offer.id === selectedOffer.id) {
+          return {
+            ...offer,
+            status: newStatus,
+            remarks: remarks.trim(),
+          };
+        }
 
-    setOfferLetters(updatedOffers);
+        return offer;
+      });
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(updatedOffers)
-    );
+      setOfferLetters(updatedOffers);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedOffers));
 
-    const updatedSelectedOffer = updatedOffers.find(
-      (offer) => offer.id === selectedOffer.id
-    );
+      const updatedSelectedOffer = updatedOffers.find(
+        (offer) => offer.id === selectedOffer.id
+      );
 
-    setSelectedOffer(updatedSelectedOffer);
+      setSelectedOffer(updatedSelectedOffer);
 
-    setMessage(
-      newStatus === "Approved"
-        ? "Offer letter approved successfully."
-        : "Offer letter rejected successfully."
-    );
+      setMessage(
+        newStatus === "Approved"
+          ? "Offer letter approved successfully."
+          : "Offer letter rejected successfully."
+      );
+    } catch (error) {
+      console.error("Offer review update failed:", error);
+      setMessage("Failed to update offer letter. Please check Django and try again.");
+    }
   };
 
   /*

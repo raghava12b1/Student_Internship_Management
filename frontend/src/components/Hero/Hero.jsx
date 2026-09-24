@@ -1,7 +1,8 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import "./Hero.css";
 
 import heroImage from "../../assets/images/hero.png";
+import { login } from "../../services/api";
 
 import {
   Link,
@@ -9,12 +10,9 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-
 function Hero() {
-
   const location = useLocation();
   const navigate = useNavigate();
-
 
   // ============================================================
   // ROLE
@@ -22,7 +20,6 @@ function Hero() {
 
   const initialRole =
     location.state?.selectedRole || "Student";
-
 
   // ============================================================
   // LOGIN STATE
@@ -36,7 +33,6 @@ function Hero() {
       location.state?.showLogin === true
     );
 
-
   // ============================================================
   // LOGIN FORM
   // ============================================================
@@ -47,34 +43,11 @@ function Hero() {
   const [password, setPassword] =
     useState("");
 
-
-  // ============================================================
-  // HANDLE ROUTER STATE
-  // ============================================================
-
-  useEffect(() => {
-
-    if (location.state?.showLogin === true) {
-
-      setShowLogin(true);
-
-      setSelectedRole(
-        location.state?.selectedRole || "Student"
-      );
-
-    }
-
-  }, [
-    location.state
-  ]);
-
-
   // ============================================================
   // LOGIN
   // ============================================================
 
   const handleLogin = async () => {
-
     // ----------------------------------------------------------
     // EMPTY FIELD VALIDATION
     // ----------------------------------------------------------
@@ -83,74 +56,16 @@ function Hero() {
       username.trim() === "" ||
       password.trim() === ""
     ) {
-
       alert("Please enter Username and Password");
       return;
-
     }
 
-
     try {
-
       // --------------------------------------------------------
       // LOGIN API
       // --------------------------------------------------------
 
-      const response = await fetch(
-        "http://127.0.0.1:8000/api/accounts/login/",
-        {
-          method: "POST",
-
-          headers: {
-            "Content-Type": "application/json",
-          },
-
-          body: JSON.stringify({
-            username: username.trim(),
-            password: password,
-          }),
-        }
-      );
-
-
-      // --------------------------------------------------------
-      // READ RESPONSE
-      // --------------------------------------------------------
-
-      const data = await response.json();
-
-
-      // --------------------------------------------------------
-      // LOGIN FAILED
-      // --------------------------------------------------------
-
-      if (!response.ok) {
-
-        const errorMessage =
-          data?.detail ||
-          data?.message ||
-          data?.error ||
-          "Invalid username or password.";
-
-        alert(errorMessage);
-
-        return;
-      }
-
-
-      // --------------------------------------------------------
-      // CHECK ACCESS TOKEN
-      // --------------------------------------------------------
-
-      if (!data.access) {
-
-        alert(
-          "Login successful, but access token was not received."
-        );
-
-        return;
-      }
-
+      const data = await login(username.trim(), password);
 
       // --------------------------------------------------------
       // SAVE AUTHENTICATION DATA
@@ -171,7 +86,6 @@ function Hero() {
         data.username
       );
 
-
       // --------------------------------------------------------
       // CONVERT DJANGO ROLE
       // --------------------------------------------------------
@@ -179,38 +93,27 @@ function Hero() {
       let frontendRole = "";
 
       switch (data.role) {
-
         case "STUDENT":
-
           frontendRole = "Student";
           break;
 
-
         case "COORDINATOR":
-
           frontendRole = "Internship Coordinator";
           break;
 
-
         case "ADMIN":
-
           frontendRole = "Administrator";
           break;
 
-
         default:
-
           frontendRole =
             data.role || selectedRole;
-
       }
-
 
       localStorage.setItem(
         "userRole",
         frontendRole
       );
-
 
       // --------------------------------------------------------
       // STORE BASIC CURRENT USER INFORMATION
@@ -221,51 +124,34 @@ function Hero() {
         role: frontendRole,
       };
 
-
       localStorage.setItem(
         "currentUser",
         JSON.stringify(currentUser)
       );
-
 
       // --------------------------------------------------------
       // REDIRECT BASED ON BACKEND ROLE
       // --------------------------------------------------------
 
       switch (data.role) {
-
         case "STUDENT":
-
           navigate("/student/dashboard");
-
           break;
-
 
         case "COORDINATOR":
-
           navigate("/coordinator/dashboard");
-
           break;
-
 
         case "ADMIN":
-
           navigate("/admin/dashboard");
-
           break;
 
-
         default:
-
           alert(
             "Login successful, but the user role is not recognized."
           );
-
       }
-
-
     } catch (error) {
-
       console.error(
         "Login error:",
         error
@@ -274,52 +160,35 @@ function Hero() {
       alert(
         "Unable to connect to the server. Please make sure Django is running."
       );
-
     }
-
   };
-
 
   // ============================================================
   // REGISTRATION PATH
   // ============================================================
 
   const getRegistrationPath = () => {
-
     switch (selectedRole) {
-
       case "Student":
-
         return "/register/student";
-
 
       case "Coordinator":
-
         return "/register/coordinator";
 
-
       case "Admin":
-
         return "/register/admin";
 
-
       default:
-
         return "/register/student";
-
     }
-
   };
-
 
   // ============================================================
   // OPEN LOGIN
   // ============================================================
 
   const openLogin = () => {
-
     setShowLogin(true);
-
     setSelectedRole("Student");
 
     navigate("/", {
@@ -329,47 +198,37 @@ function Hero() {
         selectedRole: "Student",
       },
     });
-
   };
-
 
   // ============================================================
   // BACK TO HOME
   // ============================================================
 
   const goToHome = () => {
-
     setShowLogin(false);
 
     setUsername("");
-
     setPassword("");
 
     navigate("/", {
       replace: true,
       state: {},
     });
-
   };
-
 
   // ============================================================
   // ROLE SELECTION
   // ============================================================
 
   const handleRoleChange = (role) => {
-
     setSelectedRole(role);
-
   };
-
 
   // ============================================================
   // UI
   // ============================================================
 
   return (
-
     <section
       className={`hero ${
         showLogin
@@ -383,11 +242,8 @@ function Hero() {
       ====================================================== */}
 
       {!showLogin && (
-
         <div className="hero-page">
-
           <div className="hero-container">
-
             <div className="hero-content">
 
               {/* ==================================================
@@ -399,26 +255,20 @@ function Hero() {
                 {/* UNIVERSITY */}
 
                 <div className="hero-eyebrow">
-
                   <span className="eyebrow-line"></span>
 
                   ADITYA UNIVERSITY
-
                 </div>
-
 
                 {/* PORTAL BADGE */}
 
                 <div className="hero-badge">
-
                   <span className="hero-badge-dot"></span>
 
                   <span>
                     Student Internship Management Portal
                   </span>
-
                 </div>
-
 
                 {/* MAIN HEADING */}
 
@@ -426,19 +276,15 @@ function Hero() {
                   Student Internship Management System
                 </h1>
 
-
                 {/* DESCRIPTION */}
 
                 <p>
-
                   A centralized digital platform for
                   managing internships, tracking student
                   progress, coordinating faculty activities,
                   and connecting students with industry
                   opportunities.
-
                 </p>
-
 
                 {/* ACTIONS */}
 
@@ -451,7 +297,6 @@ function Hero() {
                     className="btn-get-started"
                     onClick={openLogin}
                   >
-
                     <span>
                       Get Started
                     </span>
@@ -459,24 +304,18 @@ function Hero() {
                     <span className="btn-arrow">
                       →
                     </span>
-
                   </button>
-
 
                   {/* STATUS */}
 
                   <div className="hero-status">
-
                     <span className="status-dot"></span>
 
                     University Digital Platform
-
                   </div>
 
                 </div>
-
               </div>
-
 
               {/* ==================================================
                   RIGHT SIDE IMAGE
@@ -486,27 +325,21 @@ function Hero() {
 
                 <div className="image-backdrop"></div>
 
-
                 <div className="image-frame">
-
                   <img
                     src={heroImage}
                     alt="Student Internship Management System"
                   />
-
                 </div>
-
 
                 {/* FLOATING CARD 1 */}
 
                 <div className="floating-card card-one">
-
                   <span className="floating-icon">
                     🎓
                   </span>
 
                   <div>
-
                     <strong>
                       Student
                     </strong>
@@ -514,22 +347,17 @@ function Hero() {
                     <small>
                       Internship Tracking
                     </small>
-
                   </div>
-
                 </div>
-
 
                 {/* FLOATING CARD 2 */}
 
                 <div className="floating-card card-two">
-
                   <span className="floating-icon">
                     ✓
                   </span>
 
                   <div>
-
                     <strong>
                       Digital
                     </strong>
@@ -537,32 +365,22 @@ function Hero() {
                     <small>
                       Process Management
                     </small>
-
                   </div>
-
                 </div>
 
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       )}
-
 
       {/* ======================================================
           LOGIN VIEW
       ====================================================== */}
 
       {showLogin && (
-
         <div className="login-page">
-
           <div className="login-container">
-
 
             {/* ==================================================
                 BACK BUTTON
@@ -573,15 +391,12 @@ function Hero() {
               className="back-button"
               onClick={goToHome}
             >
-
               <span>
                 ←
               </span>
 
               Back
-
             </button>
-
 
             {/* ==================================================
                 LOGIN HEADER
@@ -595,11 +410,9 @@ function Hero() {
                 AU
               </div>
 
-
               {/* HEADING */}
 
               <div className="login-heading">
-
                 <span>
                   ADITYA UNIVERSITY
                 </span>
@@ -611,18 +424,15 @@ function Hero() {
                 <p>
                   Select your role and access your dashboard
                 </p>
-
               </div>
 
             </div>
-
 
             {/* ==================================================
                 LOGIN PANEL
             ================================================== */}
 
             <div className="login-panel">
-
 
               {/* =================================================
                   LEFT INFORMATION
@@ -639,36 +449,29 @@ function Hero() {
                 </h2>
 
                 <p>
-
                   Access the Student Internship Management
                   System using your university credentials.
-
                 </p>
 
                 <div className="login-info-divider"></div>
 
                 <div className="login-security">
-
                   <span>
                     ✓
                   </span>
 
                   Secure University Access
-
                 </div>
 
                 <div className="login-security">
-
                   <span>
                     ✓
                   </span>
 
                   Role Based Dashboard
-
                 </div>
 
               </div>
-
 
               {/* =================================================
                   RIGHT LOGIN CONTENT
@@ -676,20 +479,17 @@ function Hero() {
 
               <div className="login-content">
 
-
                 {/* SECTION LABEL */}
 
                 <div className="section-label">
                   SELECT YOUR ROLE
                 </div>
 
-
                 {/* =================================================
                     ROLE BUTTONS
                 ================================================= */}
 
                 <div className="role-buttons">
-
 
                   {/* STUDENT */}
 
@@ -704,7 +504,6 @@ function Hero() {
                       handleRoleChange("Student")
                     }
                   >
-
                     <span className="role-icon">
                       👨‍🎓
                     </span>
@@ -712,9 +511,7 @@ function Hero() {
                     <span>
                       Student
                     </span>
-
                   </button>
-
 
                   {/* COORDINATOR */}
 
@@ -729,7 +526,6 @@ function Hero() {
                       handleRoleChange("Coordinator")
                     }
                   >
-
                     <span className="role-icon">
                       👨‍🏫
                     </span>
@@ -737,9 +533,7 @@ function Hero() {
                     <span>
                       Coordinator
                     </span>
-
                   </button>
-
 
                   {/* ADMIN */}
 
@@ -754,7 +548,6 @@ function Hero() {
                       handleRoleChange("Admin")
                     }
                   >
-
                     <span className="role-icon">
                       🔐
                     </span>
@@ -762,23 +555,19 @@ function Hero() {
                     <span>
                       Admin
                     </span>
-
                   </button>
 
                 </div>
 
-
                 {/* =================================================
                     LOGIN FORM
-                ================================================= */}
+                ================================================== */}
 
                 <div className="login-form">
-
 
                   {/* USERNAME */}
 
                   <div className="form-field">
-
                     <label>
                       Username
                     </label>
@@ -793,14 +582,11 @@ function Hero() {
                         )
                       }
                     />
-
                   </div>
-
 
                   {/* PASSWORD */}
 
                   <div className="form-field">
-
                     <label>
                       Password
                     </label>
@@ -815,14 +601,11 @@ function Hero() {
                         )
                       }
                     />
-
                   </div>
-
 
                   {/* FORGOT PASSWORD */}
 
                   <div className="form-footer">
-
                     <a
                       href="#"
                       className="forgot-link"
@@ -832,16 +615,13 @@ function Hero() {
                     >
                       Forgot Password?
                     </a>
-
                   </div>
-
 
                   {/* =================================================
                       AUTH BUTTONS
-                  ================================================= */}
+                  ================================================== */}
 
                   <div className="auth-buttons">
-
 
                     {/* LOGIN */}
 
@@ -850,15 +630,12 @@ function Hero() {
                       className="login-btn"
                       onClick={handleLogin}
                     >
-
                       Login
 
                       <span>
                         →
                       </span>
-
                     </button>
-
 
                     {/* REGISTER */}
 
@@ -871,30 +648,19 @@ function Hero() {
                       }}
                       className="register-link-btn"
                     >
-
                       Register
-
                     </Link>
 
                   </div>
-
                 </div>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
       )}
 
     </section>
-
   );
-
 }
-
 
 export default Hero;

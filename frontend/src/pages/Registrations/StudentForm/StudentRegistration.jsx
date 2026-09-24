@@ -13,12 +13,14 @@ function StudentRegistration() {
     department: "",
     year: "",
     section: "",
+    semester: "",
     password: "",
     confirmPassword: "",
   });
 
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ============================================================
   // BACK TO LOGIN
@@ -50,7 +52,7 @@ function StudentRegistration() {
   // SUBMIT REGISTRATION
   // ============================================================
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const {
@@ -60,7 +62,7 @@ function StudentRegistration() {
       mobileNumber,
       department,
       year,
-      section,
+      semester,
       password,
       confirmPassword,
     } = formData;
@@ -76,7 +78,7 @@ function StudentRegistration() {
       !mobileNumber ||
       !department ||
       !year ||
-      !section ||
+      !semester ||
       !password ||
       !confirmPassword
     ) {
@@ -121,15 +123,106 @@ function StudentRegistration() {
     }
 
     // ----------------------------------------------------------
-    // REGISTRATION
+    // PREVENT DOUBLE SUBMISSION
     // ----------------------------------------------------------
 
-    console.log("Student Registration:", formData);
+    if (isSubmitting) {
+      return;
+    }
 
-    alert("Student registration successful!");
+    setIsSubmitting(true);
 
-    // Go directly to Login to Continue
-    goToLogin();
+    try {
+      // --------------------------------------------------------
+      // SEND REGISTRATION DATA TO DJANGO
+      // --------------------------------------------------------
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/accounts/register/",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify({
+            student_name: fullName.trim(),
+            roll_number: rollNumber.trim(),
+            department: department,
+            year: Number(year),
+            semester: Number(semester),
+            mobile_number: mobileNumber.trim(),
+            email: collegeEmail.trim(),
+            password: password,
+            confirm_password: confirmPassword,
+          }),
+        }
+      );
+
+      // --------------------------------------------------------
+      // READ DJANGO RESPONSE
+      // --------------------------------------------------------
+
+      const data = await response.json();
+
+      console.log("Registration response:", data);
+
+      // --------------------------------------------------------
+      // REGISTRATION FAILED
+      // --------------------------------------------------------
+
+      if (!response.ok) {
+        let errorMessage = "Registration failed.";
+
+        if (typeof data === "object" && data !== null) {
+          const messages = [];
+
+          Object.entries(data).forEach(([field, errors]) => {
+            if (Array.isArray(errors)) {
+              messages.push(`${field}: ${errors.join(", ")}`);
+            } else {
+              messages.push(`${field}: ${errors}`);
+            }
+          });
+
+          if (messages.length > 0) {
+            errorMessage = messages.join("\n");
+          }
+        }
+
+        alert(errorMessage);
+        return;
+      }
+
+      // --------------------------------------------------------
+      // REGISTRATION SUCCESS
+      // --------------------------------------------------------
+
+      alert(
+        "Student registration successful!\n\n" +
+        `Username: ${rollNumber.trim()}\n` +
+        "You can now login."
+      );
+
+      // --------------------------------------------------------
+      // GO TO LOGIN
+      // --------------------------------------------------------
+
+      goToLogin();
+
+    } catch (error) {
+      console.error("Registration error:", error);
+
+      alert(
+        "Unable to connect to the server.\n\n" +
+        "Please make sure Django is running at:\n" +
+        "http://127.0.0.1:8000/"
+      );
+
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -161,7 +254,6 @@ function StudentRegistration() {
 
       </div>
 
-
       {/* ======================================================
           HEADER
       ====================================================== */}
@@ -191,13 +283,11 @@ function StudentRegistration() {
 
       </div>
 
-
       {/* ======================================================
           MAIN
       ====================================================== */}
 
       <div className="student-registration-wrapper">
-
 
         {/* ====================================================
             LEFT INFORMATION PANEL
@@ -226,7 +316,6 @@ function StudentRegistration() {
 
           <div className="student-info-divider"></div>
 
-
           {/* FEATURE 1 */}
 
           <div className="student-feature">
@@ -247,7 +336,6 @@ function StudentRegistration() {
 
           </div>
 
-
           {/* FEATURE 2 */}
 
           <div className="student-feature">
@@ -267,7 +355,6 @@ function StudentRegistration() {
             </div>
 
           </div>
-
 
           {/* FEATURE 3 */}
 
@@ -291,7 +378,6 @@ function StudentRegistration() {
 
         </aside>
 
-
         {/* ====================================================
             FORM
         ==================================================== */}
@@ -314,11 +400,9 @@ function StudentRegistration() {
 
           </div>
 
-
           <form onSubmit={handleSubmit}>
 
             <div className="student-form-grid">
-
 
               {/* =================================================
                   FULL NAME
@@ -341,7 +425,6 @@ function StudentRegistration() {
 
               </div>
 
-
               {/* =================================================
                   ROLL NUMBER
               ================================================= */}
@@ -362,7 +445,6 @@ function StudentRegistration() {
                 />
 
               </div>
-
 
               {/* =================================================
                   EMAIL
@@ -385,7 +467,6 @@ function StudentRegistration() {
 
               </div>
 
-
               {/* =================================================
                   MOBILE
               ================================================= */}
@@ -407,7 +488,6 @@ function StudentRegistration() {
                 />
 
               </div>
-
 
               {/* =================================================
                   DEPARTMENT
@@ -462,7 +542,6 @@ function StudentRegistration() {
 
               </div>
 
-
               {/* =================================================
                   YEAR
               ================================================= */}
@@ -504,6 +583,62 @@ function StudentRegistration() {
 
               </div>
 
+              {/* =================================================
+                  SEMESTER
+              ================================================= */}
+
+              <div className="student-form-field">
+
+                <label>
+                  Semester
+                  <span>*</span>
+                </label>
+
+                <select
+                  name="semester"
+                  value={formData.semester}
+                  onChange={handleChange}
+                >
+
+                  <option value="">
+                    Select Semester
+                  </option>
+
+                  <option value="1">
+                    1st Semester
+                  </option>
+
+                  <option value="2">
+                    2nd Semester
+                  </option>
+
+                  <option value="3">
+                    3rd Semester
+                  </option>
+
+                  <option value="4">
+                    4th Semester
+                  </option>
+
+                  <option value="5">
+                    5th Semester
+                  </option>
+
+                  <option value="6">
+                    6th Semester
+                  </option>
+
+                  <option value="7">
+                    7th Semester
+                  </option>
+
+                  <option value="8">
+                    8th Semester
+                  </option>
+
+                </select>
+
+              </div>
 
               {/* =================================================
                   SECTION
@@ -513,7 +648,6 @@ function StudentRegistration() {
 
                 <label>
                   Section
-                  <span>*</span>
                 </label>
 
                 <select
@@ -544,8 +678,11 @@ function StudentRegistration() {
 
                 </select>
 
-              </div>
+                <small>
+                  Section is currently stored only in the frontend.
+                </small>
 
+              </div>
 
               {/* =================================================
                   PASSWORD
@@ -588,7 +725,6 @@ function StudentRegistration() {
                 </small>
 
               </div>
-
 
               {/* =================================================
                   CONFIRM PASSWORD
@@ -636,7 +772,6 @@ function StudentRegistration() {
 
             </div>
 
-
             {/* ==================================================
                 NOTICE
             ================================================== */}
@@ -652,7 +787,6 @@ function StudentRegistration() {
 
             </div>
 
-
             {/* ==================================================
                 SUBMIT
             ================================================== */}
@@ -660,12 +794,17 @@ function StudentRegistration() {
             <button
               type="submit"
               className="student-register-button"
+              disabled={isSubmitting}
             >
-              Create Student Account
+              {isSubmitting
+                ? "Creating Account..."
+                : "Create Student Account"}
 
-              <span>
-                →
-              </span>
+              {!isSubmitting && (
+                <span>
+                  →
+                </span>
+              )}
 
             </button>
 

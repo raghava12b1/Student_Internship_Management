@@ -114,6 +114,18 @@ const CoordinatorStudents = () => {
    * =====================================================
    */
 
+  const normalizeDepartment = (value) => {
+    if (!value) return "";
+    return value
+      .trim()
+      .toLowerCase()
+      .replace(/&/g, "and")
+      .replace(/[^a-z0-9]+/g, "")
+      .replace(/^computer science and engineering$/, "cse")
+      .replace(/^computer science engineering$/, "cse")
+      .replace(/^cse$/, "cse");
+  };
+
   const departments = useMemo(() => {
     const uniqueDepartments = [
       ...new Set(
@@ -150,7 +162,7 @@ const CoordinatorStudents = () => {
 
       const matchesDepartment =
         department === "All Departments" ||
-        student.department === department;
+        normalizeDepartment(student.department) === normalizeDepartment(department);
 
       return matchesSearch && matchesDepartment;
     });

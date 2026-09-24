@@ -3,6 +3,17 @@ from django.db import models
 from accounts.models import StudentProfile
 
 
+class Company(models.Model):
+
+    name = models.CharField(max_length=150, unique=True)
+    location = models.CharField(max_length=150, blank=True)
+    is_active = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.name
+
+
 class Internship(models.Model):
 
     class Status(models.TextChoices):

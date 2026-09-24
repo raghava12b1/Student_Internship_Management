@@ -5,11 +5,14 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from .views import (
     StudentProfileListCreateView,
     StudentRegistrationView,
+    CoordinatorRegistrationView,
     MyProfileView,
     StudentDashboardView,
     CoordinatorDashboardView,
     AdminDashboardView,
     CustomTokenObtainPairView,
+    AdminStudentDetailView,
+    AdminCoordinatorDetailView,
 )
 
 
@@ -22,9 +25,26 @@ urlpatterns = [
     ),
 
     path(
+        "students/<int:pk>/",
+        AdminStudentDetailView.as_view(),
+        name="admin-student-detail",
+    ),
+
+    path(
+        "coordinators/<int:pk>/",
+        AdminCoordinatorDetailView.as_view(),
+        name="admin-coordinator-detail",
+    ),
+
+    path(
         "register/",
         StudentRegistrationView.as_view(),
         name="student-register",
+    ),
+    path(
+        "coordinator/register/",
+        CoordinatorRegistrationView.as_view(),
+        name="coordinator-register",
     ),
 
     path(

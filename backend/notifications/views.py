@@ -10,6 +10,8 @@ class MyNotificationListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
+        if self.request.user.role in ["COORDINATOR", "ADMIN"]:
+            return Notification.objects.all().order_by("-created_at")
         return Notification.objects.filter(
             recipient=self.request.user.student_profile
         ).order_by("-created_at")
@@ -20,6 +22,8 @@ class MarkNotificationReadView(generics.UpdateAPIView):
     http_method_names = ["patch"]
 
     def get_queryset(self):
+        if self.request.user.role in ["COORDINATOR", "ADMIN"]:
+            return Notification.objects.all()
         return Notification.objects.filter(
             recipient=self.request.user.student_profile
         )

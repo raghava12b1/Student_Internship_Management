@@ -29,3 +29,8 @@ class InternshipSerializer(serializers.ModelSerializer):
             "status",
             "created_at",
         ]
+
+
+class AdminInternshipSerializer(InternshipSerializer):
+    class Meta(InternshipSerializer.Meta):
+        read_only_fields = ["id", "created_at"]

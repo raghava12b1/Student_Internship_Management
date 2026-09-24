@@ -5,6 +5,10 @@ import "./CoordinatorRegistration.css";
 function CoordinatorRegistration() {
   const navigate = useNavigate();
 
+  // ============================================================
+  // FORM DATA
+  // ============================================================
+
   const [formData, setFormData] = useState({
     fullName: "",
     employeeId: "",
@@ -16,8 +20,15 @@ function CoordinatorRegistration() {
     confirmPassword: "",
   });
 
+  // ============================================================
+  // UI STATE
+  // ============================================================
+
   const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState(false);
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // ============================================================
   // BACK TO LOGIN
@@ -49,14 +60,26 @@ function CoordinatorRegistration() {
   // SUBMIT REGISTRATION
   // ============================================================
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // ----------------------------------------------------------
+    // PREVENT DOUBLE SUBMISSION
+    // ----------------------------------------------------------
+
+    if (isSubmitting) {
+      return;
+    }
 
     // ----------------------------------------------------------
     // REQUIRED FIELDS
     // ----------------------------------------------------------
 
-    if (Object.values(formData).some((value) => !value)) {
+    if (
+      Object.values(formData).some(
+        (value) => value.trim() === ""
+      )
+    ) {
       alert("Please fill all required fields.");
       return;
     }
@@ -74,7 +97,10 @@ function CoordinatorRegistration() {
     // CONFIRM PASSWORD
     // ----------------------------------------------------------
 
-    if (formData.password !== formData.confirmPassword) {
+    if (
+      formData.password !==
+      formData.confirmPassword
+    ) {
       alert("Passwords do not match.");
       return;
     }
@@ -83,22 +109,182 @@ function CoordinatorRegistration() {
     // MOBILE VALIDATION
     // ----------------------------------------------------------
 
-    if (!/^[0-9]{10}$/.test(formData.mobileNumber)) {
-      alert("Please enter a valid 10-digit mobile number.");
+    if (
+      !/^[0-9]{10}$/.test(
+        formData.mobileNumber
+      )
+    ) {
+      alert(
+        "Please enter a valid 10-digit mobile number."
+      );
       return;
     }
 
     // ----------------------------------------------------------
-    // REGISTRATION
+    // PREPARE DATA FOR DJANGO
+    //
+    // IMPORTANT:
+    //
+    // React form uses camelCase.
+    //
+    // Django serializer expects snake_case.
+    //
+    // employeeId     -> employee_id
+    // collegeEmail   -> college_email
+    // mobileNumber   -> mobile_number
+    // fullName       -> full_name
+    // confirmPassword -> confirm_password
     // ----------------------------------------------------------
 
-    console.log("Coordinator Registration:", formData);
+    const registrationData = {
+      full_name: formData.fullName.trim(),
 
-    alert("Coordinator registration successful!");
+      // IMPORTANT:
+      // Employee ID becomes the Django username.
+      employee_id: formData.employeeId.trim(),
 
-    // Directly return to Login to Continue
-    goToLogin();
+      college_email: formData.collegeEmail.trim(),
+
+      mobile_number: formData.mobileNumber.trim(),
+
+      department: formData.department,
+
+      designation: formData.designation,
+
+      password: formData.password,
+
+      confirm_password: formData.confirmPassword,
+    };
+
+    console.log(
+      "Coordinator Registration Data Sent To Django:",
+      registrationData
+    );
+
+    // ----------------------------------------------------------
+    // SEND REGISTRATION TO BACKEND
+    // ----------------------------------------------------------
+
+    try {
+      setIsSubmitting(true);
+
+      const response = await fetch(
+        "http://127.0.0.1:8000/api/accounts/coordinator/register/",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json",
+          },
+
+          body: JSON.stringify(
+            registrationData
+          ),
+        }
+      );
+
+      // --------------------------------------------------------
+      // READ DJANGO RESPONSE
+      // --------------------------------------------------------
+
+      const data = await response.json();
+
+      console.log(
+        "COORDINATOR REGISTRATION RESPONSE:",
+        data
+      );
+
+      // --------------------------------------------------------
+      // REGISTRATION FAILED
+      // --------------------------------------------------------
+
+      if (!response.ok) {
+        console.error(
+          "Coordinator registration failed:",
+          data
+        );
+
+        // Django REST Framework validation errors
+        if (
+          typeof data === "object" &&
+          data !== null
+        ) {
+          const errorMessages = Object.entries(
+            data
+          )
+            .map(
+              ([field, messages]) => {
+                const message = Array.isArray(
+                  messages
+                )
+                  ? messages.join(", ")
+                  : messages;
+
+                return `${field}: ${message}`;
+              }
+            )
+            .join("\n");
+
+          alert(
+            errorMessages ||
+              "Coordinator registration failed."
+          );
+        } else {
+          alert(
+            "Coordinator registration failed."
+          );
+        }
+
+        return;
+      }
+
+      // --------------------------------------------------------
+      // REGISTRATION SUCCESSFUL
+      // --------------------------------------------------------
+
+      alert(
+        "Coordinator registration successful!"
+      );
+
+      // --------------------------------------------------------
+      // CLEAR FORM
+      // --------------------------------------------------------
+
+      setFormData({
+        fullName: "",
+        employeeId: "",
+        collegeEmail: "",
+        mobileNumber: "",
+        department: "",
+        designation: "",
+        password: "",
+        confirmPassword: "",
+      });
+
+      // --------------------------------------------------------
+      // RETURN TO LOGIN
+      // --------------------------------------------------------
+
+      goToLogin();
+
+    } catch (error) {
+      console.error(
+        "Coordinator registration error:",
+        error
+      );
+
+      alert(
+        "Unable to connect to the server. Please make sure Django is running."
+      );
+
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  // ============================================================
+  // UI
+  // ============================================================
 
   return (
     <div className="coordinator-registration-page">
@@ -493,7 +679,9 @@ function CoordinatorRegistration() {
                   <button
                     type="button"
                     onClick={() =>
-                      setShowPassword(!showPassword)
+                      setShowPassword(
+                        !showPassword
+                      )
                     }
                   >
                     {
@@ -528,7 +716,9 @@ function CoordinatorRegistration() {
                     }
                     name="confirmPassword"
                     placeholder="Confirm password"
-                    value={formData.confirmPassword}
+                    value={
+                      formData.confirmPassword
+                    }
                     onChange={handleChange}
                   />
 
@@ -577,12 +767,17 @@ function CoordinatorRegistration() {
             <button
               type="submit"
               className="coordinator-register-button"
+              disabled={isSubmitting}
             >
-              Create Coordinator Account
+              {isSubmitting
+                ? "Creating Account..."
+                : "Create Coordinator Account"}
 
-              <span>
-                →
-              </span>
+              {!isSubmitting && (
+                <span>
+                  →
+                </span>
+              )}
 
             </button>
 

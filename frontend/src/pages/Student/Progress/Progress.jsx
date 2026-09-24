@@ -1,8 +1,15 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./Progress.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+import { useEffect, useState } from "react";
+import { getStudentDashboard } from "../../../services/api";
 
 const Progress = () => {
+  const [dashboardData, setDashboardData] = useState(null);
+
+  useEffect(() => {
+    getStudentDashboard().then(setDashboardData).catch(() => {});
+  }, []);
 
   /*
    * =====================================================
@@ -56,16 +63,16 @@ const Progress = () => {
    */
 
   const companyName =
-    currentUser?.companyName || "--";
+    dashboardData?.internship?.company_name || currentUser?.companyName || "--";
 
   const internshipRole =
-    currentUser?.internshipRole || "--";
+    dashboardData?.internship?.role || currentUser?.internshipRole || "--";
 
   const internshipStartDate =
-    currentUser?.internshipStartDate || "--";
+    dashboardData?.internship?.start_date || currentUser?.internshipStartDate || "--";
 
   const internshipEndDate =
-    currentUser?.internshipEndDate || "--";
+    dashboardData?.internship?.end_date || currentUser?.internshipEndDate || "--";
 
 
   /*
@@ -75,7 +82,7 @@ const Progress = () => {
    */
 
   const progress = Number(
-    currentUser?.progress ?? 0
+    dashboardData?.internship?.progress ?? currentUser?.progress ?? 0
   );
 
   const safeProgress = Math.min(
@@ -90,9 +97,9 @@ const Progress = () => {
    * =====================================================
    */
 
-  const progressData = Array.isArray(
-    currentUser?.submissionTimeline
-  )
+  const progressData = Array.isArray(dashboardData?.recent_submissions)
+    ? dashboardData.recent_submissions
+    : Array.isArray(currentUser?.submissionTimeline)
     ? currentUser.submissionTimeline
     : [];
 

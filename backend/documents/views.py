@@ -1,3 +1,7 @@
+import re
+
+from django.core.mail import send_mail
+
 from rest_framework import generics, serializers, status
 from rest_framework.parsers import MultiPartParser, FormParser
 from rest_framework.permissions import IsAuthenticated
@@ -9,6 +13,21 @@ from internships.models import Internship
 
 from .models import Document, FinalReport
 from .serializers import DocumentSerializer, FinalReportSerializer
+
+
+def normalize_department_value(value):
+    if value is None:
+        return ""
+    normalized = value.strip().lower().replace("&", "and")
+    normalized = re.sub(r"[^a-z0-9]+", "", normalized)
+    aliases = {
+        "cse": "cse",
+        "computerscienceengineering": "cse",
+        "computerscienceandengineering": "cse",
+        "it": "it",
+        "informationtechnology": "it",
+    }
+    return aliases.get(normalized, normalized)
 
 
 # =========================================================
@@ -30,7 +49,23 @@ class MyDocumentListCreateView(generics.ListCreateAPIView):
 
     def perform_create(self, serializer):
 
-        internship = serializer.validated_data["internship"]
+        # The serializer's `internship` field is read_only (nested for output),
+        # so it is never present in validated_data. Resolve it manually from
+        # request.data and validate it here, then pass it into serializer.save().
+        internship_id = self.request.data.get("internship")
+
+        if not internship_id:
+            raise serializers.ValidationError(
+                "Internship is required."
+            )
+
+        try:
+            internship = Internship.objects.get(id=internship_id)
+        except Internship.DoesNotExist:
+            raise serializers.ValidationError(
+                "Invalid internship."
+            )
+
         document_type = serializer.validated_data["document_type"]
 
         # Make sure internship belongs to logged-in student
@@ -52,7 +87,8 @@ class MyDocumentListCreateView(generics.ListCreateAPIView):
             )
 
         serializer.save(
-            student=self.request.user.student_profile
+            student=self.request.user.student_profile,
+            internship=internship,
         )
 
 
@@ -100,6 +136,15 @@ class DocumentReviewView(generics.UpdateAPIView):
                 ),
             )
 
+            if document.student.user.email:
+                send_mail(
+                    "Document Approved",
+                    f"Your {document_name} has been approved.",
+                    "noreply@studentinternship.local",
+                    [document.student.user.email],
+                    fail_silently=True,
+                )
+
         elif document_status == Document.Status.REJECTED:
 
             Notification.objects.create(
@@ -109,6 +154,15 @@ class DocumentReviewView(generics.UpdateAPIView):
                     f"Your {document_name} has been rejected."
                 ),
             )
+
+            if document.student.user.email:
+                send_mail(
+                    "Document Rejected",
+                    f"Your {document_name} has been rejected.",
+                    "noreply@studentinternship.local",
+                    [document.student.user.email],
+                    fail_silently=True,
+                )
 
 
 # =========================================================
@@ -125,7 +179,16 @@ class DocumentReviewListView(generics.ListAPIView):
     ]
 
     def get_queryset(self):
-        return Document.objects.all().order_by("-uploaded_at")
+        queryset = Document.objects.select_related("student", "student__user", "internship").all().order_by("-uploaded_at")
+        if self.request.user.role == "COORDINATOR":
+            if not hasattr(self.request.user, "coordinator_profile"):
+                return Document.objects.none()
+            department = normalize_department_value(self.request.user.coordinator_profile.department)
+            return [
+                document for document in queryset
+                if normalize_department_value(document.student.department) == department
+            ]
+        return queryset
 
 
 # =========================================================

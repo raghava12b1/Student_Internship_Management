@@ -68,7 +68,7 @@ const DocumentVerification = () => {
         }
 
         const response = await fetch(
-          `${API_BASE_URL}/documents/`,
+          `${API_BASE_URL}/documents/review/`,
           {
             method: "GET",
             headers: {
@@ -125,34 +125,34 @@ const DocumentVerification = () => {
          * =================================================
          */
 
-        const filteredDocuments = documentList.filter(
-          (item) => {
+        const normalizeDocumentType = (value) => {
+          return String(value || "")
+            .trim()
+            .toLowerCase()
+            .replace(/&/g, "and")
+            .replace(/[_\s-]+/g, "")
+            .replace(/[^a-z0-9]/g, "");
+        };
 
-            const itemType = String(
-              item.document_type ||
+        const requiredType = normalizeDocumentType(
+          documentConfig.type
+        );
+
+        const filteredDocuments = documentList.filter((item) => {
+          const itemType = normalizeDocumentType(
+            item.document_type ||
               item.type ||
               item.documentType ||
+              item.document_type_display ||
               ""
-            ).toLowerCase();
+          );
 
-            const requiredType =
-              documentConfig.type.toLowerCase();
-
-            /*
-             * If backend does not provide document type,
-             * keep the item instead of hiding it.
-             */
-
-            if (!itemType) {
-              return true;
-            }
-
-            return (
-              itemType.includes(requiredType) ||
-              requiredType.includes(itemType)
-            );
+          if (!itemType) {
+            return true;
           }
-        );
+
+          return itemType.includes(requiredType) || requiredType.includes(itemType);
+        });
 
         setDocuments(filteredDocuments);
       } catch (err) {
@@ -363,20 +363,83 @@ const DocumentVerification = () => {
    * =====================================================
    */
 
-  const handleApprove = (document) => {
-    console.log("Approve document:", document);
+  const handleApprove = async (item) => {
+    const textarea = window.document.querySelector(`#remarks-${item.id || item.pk || item.document_id}`);
+    const remarks = textarea ? textarea.value.trim() : "";
+    const accessToken = getAccessToken();
 
-    alert(
-      "Approve API is not connected yet. Send me the Django approve API endpoint and I will connect it."
-    );
+    try {
+      const response = await fetch(`${API_BASE_URL}/documents/${item.id || item.pk}/review/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          status: "APPROVED",
+          remarks,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.text();
+        throw new Error(errorBody || "Could not approve document.");
+      }
+
+      setDocuments((current) =>
+        current.map((currentItem) =>
+          (currentItem.id || currentItem.pk) === (item.id || item.pk)
+            ? { ...currentItem, status: "APPROVED", remarks }
+            : currentItem
+        )
+      );
+      alert("Document approved successfully.");
+    } catch (err) {
+      console.error("Approve document failed:", err);
+      alert("Approval failed. Please check the backend and try again.");
+    }
   };
 
-  const handleReject = (document) => {
-    console.log("Reject document:", document);
+  const handleReject = async (item) => {
+    const textarea = window.document.querySelector(`#remarks-${item.id || item.pk || item.document_id}`);
+    const remarks = textarea ? textarea.value.trim() : "";
+    if (!remarks) {
+      alert("Please enter remarks before rejecting the document.");
+      return;
+    }
 
-    alert(
-      "Reject API is not connected yet. Send me the Django reject API endpoint and I will connect it."
-    );
+    const accessToken = getAccessToken();
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/documents/${item.id || item.pk}/review/`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({
+          status: "REJECTED",
+          remarks,
+        }),
+      });
+
+      if (!response.ok) {
+        const errorBody = await response.text();
+        throw new Error(errorBody || "Could not reject document.");
+      }
+
+      setDocuments((current) =>
+        current.map((currentItem) =>
+          (currentItem.id || currentItem.pk) === (item.id || item.pk)
+            ? { ...currentItem, status: "REJECTED", remarks }
+            : currentItem
+        )
+      );
+      alert("Document rejected successfully.");
+    } catch (err) {
+      console.error("Reject document failed:", err);
+      alert("Rejection failed. Please check the backend and try again.");
+    }
   };
 
   /*

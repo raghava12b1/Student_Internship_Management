@@ -1,43 +1,36 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminDashboard.css";
 import { useNavigate } from "react-router-dom";
-
-const stats = [
-  {
-    title: "Total Students",
-    value: 248,
-    color: "#2563eb",
-    icon: "🎓",
-  },
-  {
-    title: "Coordinators",
-    value: 8,
-    color: "#10b981",
-    icon: "👨‍🏫",
-  },
-  {
-    title: "Companies",
-    value: 42,
-    color: "#f59e0b",
-    icon: "🏢",
-  },
-  {
-    title: "Completed Internships",
-    value: 181,
-    color: "#ef4444",
-    icon: "🏆",
-  },
-];
+import { useEffect, useState } from "react";
+import { getAdminDashboard } from "../../../services/api";
 
 const AdminDashboard = () => {
 
   const navigate = useNavigate();
+  const [dashboardData, setDashboardData] = useState(null);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    getAdminDashboard()
+      .then(setDashboardData)
+      .catch((err) => setError(err.message || "Unable to load dashboard data."));
+  }, []);
+
+  const statistics = dashboardData?.statistics || {};
+  const stats = [
+    { title: "Total Students", value: statistics.students ?? 0, color: "#2563eb", icon: "🎓" },
+    { title: "Applications", value: statistics.applications ?? 0, color: "#10b981", icon: "📄" },
+    { title: "Internships", value: statistics.internships ?? 0, color: "#f59e0b", icon: "🏢" },
+    { title: "Pending Applications", value: statistics.pending_applications ?? 0, color: "#ef4444", icon: "🏆" },
+  ];
 
   return (
 
     <DashboardLayout>
 
       <div className="coordinator-dashboard">
+
+        {error && <p style={{ color: "#ef4444" }}>{error}</p>}
 
         {/* Welcome */}
 
@@ -192,49 +185,19 @@ const AdminDashboard = () => {
 
             <tbody>
 
-              <tr>
+              {(dashboardData?.recent_applications || []).map((application) => (
+                <tr key={application.id}>
+                  <td>{application.company_name || "Student"}</td>
+                  <td>{application.role || "Internship application"}</td>
+                  <td>{application.status || "Pending"}</td>
+                </tr>
+              ))}
 
-                <td>Bala Krishna</td>
-
-                <td>
-                  Registered for Internship
-                </td>
-
-                <td>
-                  Completed
-                </td>
-
-              </tr>
-
-
-              <tr>
-
-                <td>Rahul</td>
-
-                <td>
-                  Submitted Final Report
-                </td>
-
-                <td>
-                  Pending
-                </td>
-
-              </tr>
-
-
-              <tr>
-
-                <td>Coordinator</td>
-
-                <td>
-                  Approved Offer Letter
-                </td>
-
-                <td>
-                  Approved
-                </td>
-
-              </tr>
+              {!dashboardData?.recent_applications?.length && (
+                <tr>
+                  <td colSpan="3">No recent activities.</td>
+                </tr>
+              )}
 
             </tbody>
 

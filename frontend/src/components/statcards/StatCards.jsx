@@ -6,70 +6,55 @@ import {
   FaCertificate,
 } from "react-icons/fa";
 
-const StatCards = () => {
 
-  /*
-   * =====================================================
-   * CURRENT USER / STUDENT DATA
-   * =====================================================
-   *
-   * Later this information will come from Django.
-   *
-   * Expected structure:
-   *
-   * {
-   *   offerLetterStatus: "Uploaded",
-   *   pendingReviews: 3,
-   *   certificateStatus: "Uploaded"
-   * }
-   */
+const StatCards = ({ dashboardData }) => {
 
-  let currentUser = null;
+  // ============================================================
+  // OFFER LETTER
+  // ============================================================
 
-  try {
-
-    const storedUser =
-      localStorage.getItem("currentUser");
-
-    if (storedUser) {
-      currentUser = JSON.parse(storedUser);
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Unable to read current user:",
-      error
-    );
-
-  }
-
-
-  /*
-   * =====================================================
-   * STUDENT STATISTICS
-   * =====================================================
-   */
+  const offerLetterUploaded =
+    dashboardData?.documents?.offer_letter_uploaded || false;
 
   const offerLetterStatus =
-    currentUser?.offerLetterStatus ||
-    "Not Uploaded";
+    offerLetterUploaded
+      ? "Uploaded"
+      : "Not Uploaded";
+
+
+  // ============================================================
+  // PENDING REVIEWS
+  // ============================================================
 
   const pendingReviews =
     Number(
-      currentUser?.pendingReviews ?? 0
+      dashboardData?.statistics?.pending_reviews || 0
     );
 
-  const certificateStatus =
-    currentUser?.certificateStatus ||
-    "Not Uploaded";
+
+  // ============================================================
+  // CERTIFICATE
+  // ============================================================
+
+  const certificateUploaded =
+    dashboardData?.certificate?.uploaded || false;
+
+  const certificateVerified =
+    dashboardData?.certificate?.verified || false;
 
 
-  /*
-   * =====================================================
-   * CARDS
-   * =====================================================
-   */
+  let certificateStatus = "Not Uploaded";
+
+  if (certificateUploaded && certificateVerified) {
+    certificateStatus = "Verified";
+  } else if (certificateUploaded) {
+    certificateStatus = "Uploaded";
+  }
+
+
+  // ============================================================
+  // CARDS
+  // ============================================================
 
   const cards = [
 
@@ -94,11 +79,9 @@ const StatCards = () => {
   ];
 
 
-  /*
-   * =====================================================
-   * UI
-   * =====================================================
-   */
+  // ============================================================
+  // UI
+  // ============================================================
 
   return (
 
@@ -132,5 +115,6 @@ const StatCards = () => {
   );
 
 };
+
 
 export default StatCards;

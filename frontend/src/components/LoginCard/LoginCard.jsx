@@ -1,6 +1,7 @@
 import "./LoginCard.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../../services/api";
 
 function LoginCard() {
 
@@ -9,13 +10,17 @@ function LoginCard() {
   const [role, setRole] = useState("Student");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
 
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
 
     console.log("Login button clicked");
     console.log("Username:", username);
     console.log("Role:", role);
+
+    setError("");
 
 
     // Check username
@@ -32,39 +37,106 @@ function LoginCard() {
     }
 
 
-    // Save login information
-    localStorage.setItem("userName", username);
-    localStorage.setItem("userRole", role);
+    setIsLoading(true);
+
+    try {
+
+      // ========================================
+      // CALL DJANGO LOGIN API
+      // ========================================
+
+      const response = await apiFetch(
+        "/accounts/login/",
+        {
+          method: "POST",
+          body: JSON.stringify({
+            username: username,
+            password: password,
+          }),
+        }
+      );
 
 
-    console.log(
-      "Saved Name:",
-      localStorage.getItem("userName")
-    );
+      // ========================================
+      // CHECK RESPONSE STATUS
+      // ========================================
 
-    console.log(
-      "Saved Role:",
-      localStorage.getItem("userRole")
-    );
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(
+          errorData.detail || "Login failed. Please check your credentials."
+        );
+      }
 
 
-    // Navigate according to role
+      const data = await response.json();
 
-    if (role === "Student") {
+      console.log("Login response:", data);
 
-      navigate("/student/dashboard");
 
-    }
+      // ========================================
+      // SAVE TOKENS
+      // ========================================
 
-    else if (role === "Coordinator") {
+      localStorage.setItem("accessToken", data.access);
+      localStorage.setItem("refreshToken", data.refresh);
 
-      navigate("/coordinator/dashboard");
 
-    }
+      // ========================================
+      // SAVE USER INFO
+      // ========================================
 
-    else if (role === "Admin") {
+      localStorage.setItem("userName", username);
+      localStorage.setItem("userRole", role);
 
-      navigate("/admin/dashboard");
+
+      console.log(
+        "Saved Name:",
+        localStorage.getItem("userName")
+      );
+
+      console.log(
+        "Saved Role:",
+        localStorage.getItem("userRole")
+      );
+
+      console.log(
+        "Access Token:",
+        localStorage.getItem("accessToken")
+      );
+
+
+      // ========================================
+      // NAVIGATE ACCORDING TO ROLE
+      // ========================================
+
+      if (role === "Student") {
+
+        navigate("/student/dashboard");
+
+      }
+
+      else if (role === "Coordinator") {
+
+        navigate("/coordinator/dashboard");
+
+      }
+
+      else if (role === "Admin") {
+
+        navigate("/admin/dashboard");
+
+      }
+
+    } catch (err) {
+
+      console.error("Login error:", err);
+      setError(err.message);
+      alert("Login Failed: " + err.message);
+
+    } finally {
+
+      setIsLoading(false);
 
     }
 
@@ -181,14 +253,28 @@ function LoginCard() {
             </a>
 
 
+            {/* Error Message */}
+
+            {error && (
+              <div style={{
+                color: "red",
+                fontSize: "14px",
+                marginBottom: "10px",
+                textAlign: "center"
+              }}>
+                {error}
+              </div>
+            )}
+
             {/* Login */}
 
             <button
               type="button"
               className="login-btn"
               onClick={handleLogin}
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? "Logging in..." : "Login"}
             </button>
 
 

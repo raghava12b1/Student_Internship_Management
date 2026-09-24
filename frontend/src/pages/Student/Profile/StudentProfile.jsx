@@ -1,5 +1,7 @@
 import "./StudentProfile.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+import { useEffect, useState } from "react";
+import { getMyProfile } from "../../../services/api";
 
 import {
   FaUserGraduate,
@@ -13,6 +15,11 @@ import {
 } from "react-icons/fa";
 
 const StudentProfile = () => {
+  const [profile, setProfile] = useState(null);
+
+  useEffect(() => {
+    getMyProfile().then(setProfile).catch(() => {});
+  }, []);
 
   /*
    * =====================================================
@@ -46,11 +53,13 @@ const StudentProfile = () => {
 
   const student = {
     name:
+      profile?.student_name ||
       currentUser?.name ||
       currentUser?.full_name ||
       "--",
 
     rollNumber:
+      profile?.roll_number ||
       currentUser?.rollNumber ||
       currentUser?.roll_number ||
       "--",
@@ -60,11 +69,13 @@ const StudentProfile = () => {
       "--",
 
     department:
+      profile?.department ||
       currentUser?.department ||
       "--",
 
     year:
       currentUser?.academicYear ||
+      profile?.year ||
       currentUser?.year ||
       "--",
 

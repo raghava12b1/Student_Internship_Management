@@ -1,41 +1,35 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminAnalytics.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
-const stats = [
-  {
-    title: "Total Students",
-    value: 248,
-    icon: "🎓",
-    color: "#2563eb",
-  },
-  {
-    title: "Companies",
-    value: 42,
-    icon: "🏢",
-    color: "#10b981",
-  },
-  {
-    title: "Active Internships",
-    value: 95,
-    icon: "📄",
-    color: "#f59e0b",
-  },
-  {
-    title: "Completed",
-    value: 181,
-    icon: "🏆",
-    color: "#8b5cf6",
-  },
-];
-
-const departmentStats = [
-  { department: "CSE", students: 80 },
-  { department: "ECE", students: 55 },
-  { department: "IT", students: 48 },
-  { department: "AI & DS", students: 65 },
-];
+import { useEffect, useState } from "react";
+import { getAdminDashboard, getStudents } from "../../../services/api";
 
 const AdminAnalytics = () => {
+  const [dashboardData, setDashboardData] = useState(null);
+  const [departmentStats, setDepartmentStats] = useState([]);
+
+  useEffect(() => {
+    getAdminDashboard().then(setDashboardData).catch(() => {});
+    getStudents().then((students) => {
+      const counts = students.reduce((result, student) => {
+        const department = student.department || "Unknown";
+        result[department] = (result[department] || 0) + 1;
+        return result;
+      }, {});
+      setDepartmentStats(
+        Object.entries(counts).map(([department, students]) => ({ department, students }))
+      );
+    }).catch(() => {});
+  }, []);
+
+  const statistics = dashboardData?.statistics || {};
+  const stats = [
+    { title: "Total Students", value: statistics.students ?? 0, icon: "🎓", color: "#2563eb" },
+    { title: "Applications", value: statistics.applications ?? 0, icon: "🏢", color: "#10b981" },
+    { title: "Internships", value: statistics.internships ?? 0, icon: "📄", color: "#f59e0b" },
+    { title: "Pending Applications", value: statistics.pending_applications ?? 0, icon: "🏆", color: "#8b5cf6" },
+  ];
+
   return (
     <DashboardLayout>
        <BackButton />

@@ -1,90 +1,46 @@
 import "./DashboardWidgets.css";
-import { FaBell, FaCalendarAlt } from "react-icons/fa";
 
-const DashboardWidgets = () => {
-
-  /*
-   * =====================================================
-   * CURRENT USER
-   * =====================================================
-   *
-   * Later this information will come from Django.
-   *
-   * Expected structure:
-   *
-   * {
-   *   companyName: "TCS",
-   *   internshipEndDate: "30 Sep 2026",
-   *
-   *   notifications: [
-   *     {
-   *       sender: "Coordinator",
-   *       message: "Your notification message."
-   *     }
-   *   ]
-   * }
-   *
-   */
-
-  let currentUser = null;
-
-  try {
-
-    const storedUser =
-      localStorage.getItem("currentUser");
-
-    if (storedUser) {
-      currentUser =
-        JSON.parse(storedUser);
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Unable to read current user:",
-      error
-    );
-
-  }
+import {
+  FaBell,
+  FaCalendarAlt,
+} from "react-icons/fa";
 
 
-  /*
-   * =====================================================
-   * INTERNSHIP INFORMATION
-   * =====================================================
-   */
+const DashboardWidgets = ({ dashboardData }) => {
 
-  const companyName =
-    currentUser?.companyName ||
-    "No company assigned";
+  // ============================================================
+  // UPCOMING DEADLINES FROM DJANGO
+  // ============================================================
 
-  const internshipEndDate =
-    currentUser?.internshipEndDate ||
-    "--";
+  const deadlines = Array.isArray(
+    dashboardData?.deadlines
+  )
+    ? dashboardData.deadlines
+    : [];
 
 
-  /*
-   * =====================================================
-   * NOTIFICATIONS
-   * =====================================================
-   */
+  // ============================================================
+  // NOTIFICATIONS FROM DJANGO
+  // ============================================================
 
-  const notifications =
-    Array.isArray(
-      currentUser?.notifications
-    )
-      ? currentUser.notifications
-      : [];
+  const notifications = Array.isArray(
+    dashboardData?.recent_notifications
+  )
+    ? dashboardData.recent_notifications
+    : [];
 
+
+  // ============================================================
+  // UI
+  // ============================================================
 
   return (
 
     <div className="widgets-grid">
 
-
-      {/* =================================================
+      {/* =====================================================
           UPCOMING DEADLINES
-      ================================================= */}
+      ===================================================== */}
 
       <div className="widget-card">
 
@@ -99,24 +55,45 @@ const DashboardWidgets = () => {
         </div>
 
 
-        <div className="widget-item">
+        {deadlines.length > 0 ? (
 
-          <strong>
-            {companyName}
-          </strong>
+          deadlines.map((deadline, index) => (
 
-          <p>
-            Internship End Date - {internshipEndDate}
-          </p>
+            <div
+              className="widget-item"
+              key={deadline.id || index}
+            >
 
-        </div>
+              <strong>
+                {deadline.title || "Internship"}
+              </strong>
+
+              <p>
+                {deadline.description || "--"}
+              </p>
+
+            </div>
+
+          ))
+
+        ) : (
+
+          <div className="widget-item">
+
+            <p>
+              No upcoming deadlines.
+            </p>
+
+          </div>
+
+        )}
 
       </div>
 
 
-      {/* =================================================
+      {/* =====================================================
           NOTIFICATIONS
-      ================================================= */}
+      ===================================================== */}
 
       <div className="widget-card">
 
@@ -133,36 +110,28 @@ const DashboardWidgets = () => {
 
         {notifications.length > 0 ? (
 
-          notifications.map(
-            (notification, index) => (
+          notifications.map((notification, index) => (
 
-              <div
-                className="widget-item"
-                key={
-                  notification.id ||
-                  index
-                }
-              >
+            <div
+              className="widget-item"
+              key={notification.id || index}
+            >
 
-                <strong>
-                  {
-                    notification.sender ||
-                    "Notification"
-                  }
-                </strong>
+              <strong>
+                {notification.sender ||
+                  notification.title ||
+                  "Notification"}
+              </strong>
 
-                <p>
-                  {
-                    notification.message ||
-                    "--"
-                  }
-                </p>
+              <p>
+                {notification.message ||
+                  notification.description ||
+                  "--"}
+              </p>
 
-              </div>
+            </div>
 
-            )
-
-          )
+          ))
 
         ) : (
 
@@ -181,7 +150,7 @@ const DashboardWidgets = () => {
     </div>
 
   );
-
 };
+
 
 export default DashboardWidgets;
