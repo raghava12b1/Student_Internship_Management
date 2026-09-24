@@ -1451,3 +1451,271 @@ tbody td strong {
     }
 
 }
+
+
+/* =========================================================
+   INTERNSHIP REPORT — FILTER BAR
+========================================================= */
+
+.report-filter-bar {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    flex-wrap: wrap;
+
+    gap: 16px;
+
+    margin-bottom: 18px;
+
+    padding: 18px 20px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #f8fbff,
+            #f0f4fa
+        );
+
+    border:
+        1px solid
+        var(--rp-border);
+
+    border-radius:
+        13px;
+}
+
+
+.report-filter-group {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 6px;
+
+    min-width: 180px;
+}
+
+
+.report-filter-label {
+
+    color: var(--rp-muted);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .06em;
+}
+
+
+.report-filter-select {
+
+    padding: 10px 14px;
+
+    border:
+        1px solid
+        var(--rp-border);
+
+    border-radius: 10px;
+
+    background: var(--rp-white);
+
+    color: var(--rp-text);
+
+    font-size: 13px;
+
+    font-weight: 500;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    outline: none;
+
+    transition:
+        border-color .2s ease,
+        box-shadow .2s ease;
+
+    appearance: auto;
+}
+
+
+.report-filter-select:focus {
+
+    border-color:
+        var(--rp-blue);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(21,87,176,.10);
+}
+
+
+/* =========================================================
+   EXPORT BUTTON
+========================================================= */
+
+.report-export-btn {
+
+    padding: 10px 22px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background:
+        linear-gradient(
+            135deg,
+            var(--rp-green),
+            #22c55e
+        );
+
+    color: #ffffff;
+
+    font-size: 13px;
+
+    font-weight: 700;
+
+    font-family: inherit;
+
+    cursor: pointer;
+
+    white-space: nowrap;
+
+    transition:
+        transform .2s var(--rp-ease),
+        box-shadow .2s ease,
+        opacity .2s ease;
+
+    margin-left: auto;
+
+    align-self: flex-end;
+}
+
+
+.report-export-btn:hover {
+
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 6px 18px
+        rgba(22,163,74,.25);
+}
+
+
+.report-export-btn:disabled {
+
+    opacity: 0.5;
+
+    cursor: not-allowed;
+
+    transform: none;
+
+    box-shadow: none;
+}
+
+
+/* =========================================================
+   RESULT COUNT
+========================================================= */
+
+.report-result-count {
+
+    margin: 0 0 16px;
+
+    color: var(--rp-muted);
+
+    font-size: 12px;
+
+    font-weight: 500;
+}
+
+.report-result-count strong {
+
+    color: var(--rp-navy);
+
+    font-weight: 800;
+}
+
+
+/* =========================================================
+   STATUS BADGE
+========================================================= */
+
+.status-badge {
+
+    display: inline-block;
+
+    padding: 4px 12px;
+
+    border-radius: 20px;
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: .04em;
+}
+
+.status-badge.pending {
+
+    color: #92400e;
+
+    background: rgba(245,158,11,.12);
+}
+
+.status-badge.ongoing {
+
+    color: #1557b0;
+
+    background: rgba(21,87,176,.10);
+}
+
+.status-badge.completed {
+
+    color: #15803d;
+
+    background: rgba(22,163,74,.10);
+}
+
+.status-badge.rejected {
+
+    color: #b91c1c;
+
+    background: rgba(220,38,38,.10);
+}
+
+
+/* =========================================================
+   RESPONSIVE — FILTER BAR
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .report-filter-bar {
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .report-filter-group {
+
+        min-width: 100%;
+    }
+
+    .report-export-btn {
+
+        margin-left: 0;
+
+        width: 100%;
+    }
+
+}

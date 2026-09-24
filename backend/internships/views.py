@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 
 from applications.permissions import IsCoordinatorOrAdmin
 from .models import Company, Internship
-from .serializers import AdminInternshipSerializer, InternshipSerializer
+from .serializers import AdminInternshipSerializer, InternshipSerializer, ReportInternshipSerializer
 from .serializers_company import CompanySerializer
 
 
@@ -73,3 +73,57 @@ class AdminCompanyDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = CompanySerializer
     permission_classes = [IsAuthenticated, IsCoordinatorOrAdmin]
 
+
+class InternshipReportListView(generics.ListAPIView):
+    serializer_class = ReportInternshipSerializer
+    permission_classes = [IsAuthenticated, IsCoordinatorOrAdmin]
+
+    def get_queryset(self):
+        queryset = Internship.objects.select_related(
+            "student"
+        ).all().order_by("-created_at")
+
+        # Company filter
+        company = self.request.query_params.get("company")
+        if company:
+            queryset = queryset.filter(
+                company_name__icontains=company
+            )
+
+        # Stipend range filters
+        stipend_min = self.request.query_params.get("stipend_min")
+        if stipend_min:
+            queryset = queryset.filter(
+                stipend__gte=stipend_min
+            )
+
+        stipend_max = self.request.query_params.get("stipend_max")
+        if stipend_max:
+            queryset = queryset.filter(
+                stipend__lte=stipend_max
+            )
+
+        # Department filter
+        department = self.request.query_params.get("department")
+        if department:
+            queryset = queryset.filter(
+                student__department__icontains=department
+            )
+
+        # Status filter
+        status = self.request.query_params.get("status")
+        if status:
+            queryset = queryset.filter(
+                status=status.upper()
+            )
+
+        # Internship type filter
+        internship_type = self.request.query_params.get(
+            "internship_type"
+        )
+        if internship_type:
+            queryset = queryset.filter(
+                internship_type=internship_type.upper()
+            )
+
+        return queryset

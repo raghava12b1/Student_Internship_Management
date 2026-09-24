@@ -1,8 +1,9 @@
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./AdminReports.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
-import { useEffect, useState } from "react";
-import { getAdminDashboard } from "../../../services/api";
+import { useEffect, useMemo, useState } from "react";
+import { getAdminDashboard, getInternshipReport } from "../../../services/api";
+import { exportToExcel } from "../../../utils/exportExcel";
 
 const initialReports = [
   {
@@ -47,6 +48,121 @@ const AdminReports = () => {
       .then((data) => setReports(data.reports || []))
       .catch(() => setReports([]));
   }, []);
+
+  /* =====================================================
+     INTERNSHIP REPORT STATE
+  ===================================================== */
+
+  const [internships, setInternships] = useState([]);
+  const [internshipLoading, setInternshipLoading] = useState(true);
+  const [internshipError, setInternshipError] = useState("");
+  const [companyFilter, setCompanyFilter] = useState("All Companies");
+  const [stipendFilter, setStipendFilter] = useState("All Students");
+
+  useEffect(() => {
+    const loadInternships = async () => {
+      try {
+        setInternshipLoading(true);
+        setInternshipError("");
+
+        const data = await getInternshipReport();
+
+        if (Array.isArray(data)) {
+          setInternships(data);
+        } else if (Array.isArray(data.results)) {
+          setInternships(data.results);
+        } else {
+          setInternships([]);
+        }
+      } catch (err) {
+        console.error("Internship report error:", err);
+        setInternshipError("Unable to load internship data.");
+      } finally {
+        setInternshipLoading(false);
+      }
+    };
+
+    loadInternships();
+  }, []);
+
+  /* Company options from data */
+  const companyOptions = useMemo(() => {
+    const names = [
+      ...new Set(
+        internships.map((i) => i.company_name).filter(Boolean)
+      ),
+    ];
+    return names.sort();
+  }, [internships]);
+
+  /* Filtered internships */
+  const filteredInternships = useMemo(() => {
+    return internships.filter((item) => {
+
+      const matchesCompany =
+        companyFilter === "All Companies" ||
+        item.company_name === companyFilter;
+
+      let matchesStipend = true;
+
+      if (stipendFilter === "Getting Stipend") {
+        matchesStipend =
+          item.stipend !== null &&
+          item.stipend !== undefined &&
+          Number(item.stipend) > 0;
+      }
+
+      if (stipendFilter === "Not Getting Stipend") {
+        matchesStipend =
+          item.stipend === null ||
+          item.stipend === undefined ||
+          Number(item.stipend) <= 0;
+      }
+
+      return matchesCompany && matchesStipend;
+    });
+  }, [internships, companyFilter, stipendFilter]);
+
+  /* Excel export */
+  const handleExportExcel = () => {
+
+    const columns = [
+      { header: "Student Name", key: "student_name" },
+      { header: "Roll Number", key: "roll_number" },
+      { header: "Department", key: "department" },
+      { header: "Year", key: "year" },
+      { header: "Company", key: "company_name" },
+      { header: "Role", key: "role" },
+      { header: "Internship Status", key: "status" },
+      { header: "Stipend Amount", key: "stipend" },
+    ];
+
+    const exportData = filteredInternships.map((item) => ({
+      ...item,
+      stipend:
+        item.stipend !== null && item.stipend !== undefined
+          ? item.stipend
+          : "0",
+    }));
+
+    const parts = ["SIMS"];
+
+    if (companyFilter !== "All Companies") {
+      parts.push(companyFilter.replace(/\s+/g, "_"));
+    }
+
+    if (stipendFilter === "Getting Stipend") {
+      parts.push("Getting_Stipend");
+    }
+
+    if (stipendFilter === "Not Getting Stipend") {
+      parts.push("Not_Getting_Stipend");
+    }
+
+    parts.push("Internship_Report");
+
+    exportToExcel(exportData, columns, parts.join("_") + ".xlsx");
+  };
 
   return (
     <DashboardLayout>
@@ -129,6 +245,176 @@ const AdminReports = () => {
             </tbody>
 
           </table>
+
+        </div>
+
+        {/* =============================================
+            INTERNSHIP REPORT — FILTERS + TABLE
+        ============================================= */}
+
+        <div className="table-card internship-report-card">
+
+          <h2 className="internship-report-title">
+            Internship Report
+          </h2>
+          <p className="internship-report-desc">
+            Filter by company and stipend status
+          </p>
+
+          {/* Filter Bar */}
+          <div className="admin-filter-bar">
+
+            <div className="admin-filter-group">
+              <label
+                className="admin-filter-label"
+                htmlFor="admin-company-filter"
+              >
+                Company
+              </label>
+              <select
+                id="admin-company-filter"
+                className="admin-filter-select"
+                value={companyFilter}
+                onChange={(e) =>
+                  setCompanyFilter(e.target.value)
+                }
+              >
+                <option value="All Companies">
+                  All Companies
+                </option>
+                {companyOptions.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="admin-filter-group">
+              <label
+                className="admin-filter-label"
+                htmlFor="admin-stipend-filter"
+              >
+                Stipend
+              </label>
+              <select
+                id="admin-stipend-filter"
+                className="admin-filter-select"
+                value={stipendFilter}
+                onChange={(e) =>
+                  setStipendFilter(e.target.value)
+                }
+              >
+                <option value="All Students">
+                  All Students
+                </option>
+                <option value="Getting Stipend">
+                  Getting Stipend
+                </option>
+                <option value="Not Getting Stipend">
+                  Not Getting Stipend
+                </option>
+              </select>
+            </div>
+
+            <button
+              className="admin-export-btn"
+              onClick={handleExportExcel}
+              disabled={
+                filteredInternships.length === 0
+              }
+            >
+              ⬇ Download Excel
+            </button>
+
+          </div>
+
+          {/* Result Count */}
+          <p className="admin-result-count">
+            Showing{" "}
+            <strong>
+              {filteredInternships.length}
+            </strong>{" "}
+            student{filteredInternships.length !== 1
+              ? "s"
+              : ""}
+          </p>
+
+          {/* Internship Table */}
+          {internshipLoading ? (
+
+            <p style={{ color: "#64748b", padding: "20px 0" }}>
+              Loading internship data...
+            </p>
+
+          ) : internshipError ? (
+
+            <p style={{ color: "#dc2626", padding: "20px 0" }}>
+              {internshipError}
+            </p>
+
+          ) : filteredInternships.length === 0 ? (
+
+            <p style={{ color: "#64748b", padding: "20px 0" }}>
+              No internship records match the
+              selected filters.
+            </p>
+
+          ) : (
+
+            <table>
+
+              <thead>
+                <tr>
+                  <th>Student Name</th>
+                  <th>Roll Number</th>
+                  <th>Department</th>
+                  <th>Year</th>
+                  <th>Company</th>
+                  <th>Role</th>
+                  <th>Status</th>
+                  <th>Stipend</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {filteredInternships.map(
+                  (item, index) => (
+                    <tr key={item.id || index}>
+                      <td>
+                        <strong>
+                          {item.student_name || "--"}
+                        </strong>
+                      </td>
+                      <td>
+                        {item.roll_number || "--"}
+                      </td>
+                      <td>
+                        {item.department || "--"}
+                      </td>
+                      <td>{item.year || "--"}</td>
+                      <td>
+                        {item.company_name || "--"}
+                      </td>
+                      <td>{item.role || "--"}</td>
+                      <td>{item.status || "--"}</td>
+                      <td>
+                        {item.stipend !== null &&
+                        item.stipend !== undefined &&
+                        Number(item.stipend) > 0
+                          ? `₹${Number(
+                              item.stipend
+                            ).toLocaleString()}`
+                          : "No Stipend"}
+                      </td>
+                    </tr>
+                  )
+                )}
+              </tbody>
+
+            </table>
+
+          )}
 
         </div>
 

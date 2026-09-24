@@ -63,3 +63,147 @@
 .download-btn{
     background:#10b981;
 }
+
+
+/* =========================================================
+   INTERNSHIP REPORT CARD
+========================================================= */
+
+.internship-report-card {
+    margin-top: 25px;
+}
+
+.internship-report-title {
+    font-size: 20px;
+    color: #1e293b;
+    margin: 0 0 4px;
+    font-weight: 700;
+}
+
+.internship-report-desc {
+    color: #64748b;
+    font-size: 13px;
+    margin: 0 0 18px;
+}
+
+
+/* =========================================================
+   ADMIN FILTER BAR
+========================================================= */
+
+.admin-filter-bar {
+    display: flex;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 16px;
+    padding: 16px 18px;
+    background: #f8fafc;
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+}
+
+.admin-filter-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-width: 180px;
+}
+
+.admin-filter-label {
+    color: #64748b;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: .05em;
+}
+
+.admin-filter-select {
+    padding: 9px 14px;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #1e293b;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+    transition: border-color .2s ease;
+}
+
+.admin-filter-select:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 3px rgba(37,99,235,.10);
+}
+
+
+/* =========================================================
+   ADMIN EXPORT BUTTON
+========================================================= */
+
+.admin-export-btn {
+    padding: 9px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #10b981;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+    margin-left: auto;
+    align-self: flex-end;
+    transition: background .2s ease, transform .2s ease;
+}
+
+.admin-export-btn:hover {
+    background: #059669;
+    transform: translateY(-1px);
+}
+
+.admin-export-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* =========================================================
+   ADMIN RESULT COUNT
+========================================================= */
+
+.admin-result-count {
+    margin: 0 0 14px;
+    color: #64748b;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.admin-result-count strong {
+    color: #1e293b;
+    font-weight: 700;
+}
+
+
+/* =========================================================
+   RESPONSIVE — ADMIN FILTER BAR
+========================================================= */
+
+@media (max-width: 640px) {
+
+    .admin-filter-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .admin-filter-group {
+        min-width: 100%;
+    }
+
+    .admin-export-btn {
+        margin-left: 0;
+        width: 100%;
+    }
+}

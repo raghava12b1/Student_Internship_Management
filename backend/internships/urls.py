@@ -4,6 +4,7 @@ from .views import (
     AdminCompanyDetailView,
     AdminCompanyListCreateView,
     AdminInternshipDetailView,
+    InternshipReportListView,
     MyInternshipListCreateView,
     MyInternshipDetailView,
 )
@@ -24,6 +25,11 @@ urlpatterns = [
         "admin/<int:pk>/",
         AdminInternshipDetailView.as_view(),
         name="admin-internship-detail",
+    ),
+    path(
+        "report/",
+        InternshipReportListView.as_view(),
+        name="internship-report-list",
     ),
     path(
         "",

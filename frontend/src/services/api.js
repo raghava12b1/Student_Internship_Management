@@ -539,3 +539,63 @@ export const submitFinalReport = async ({
 
   return await response.json();
 };
+
+
+// ============================================================
+// INTERNSHIP REPORT (FILTERED)
+// ============================================================
+
+export const getInternshipReport = async (filters = {}) => {
+
+  const params = new URLSearchParams();
+
+  if (filters.company) {
+    params.append("company", filters.company);
+  }
+
+  if (filters.stipend_min) {
+    params.append("stipend_min", filters.stipend_min);
+  }
+
+  if (filters.stipend_max) {
+    params.append("stipend_max", filters.stipend_max);
+  }
+
+  if (filters.department) {
+    params.append("department", filters.department);
+  }
+
+  if (filters.status) {
+    params.append("status", filters.status);
+  }
+
+  if (filters.internship_type) {
+    params.append("internship_type", filters.internship_type);
+  }
+
+  const queryString = params.toString();
+
+  const endpoint = queryString
+    ? `/internships/report/?${queryString}`
+    : "/internships/report/";
+
+  const response = await apiFetch(
+    endpoint,
+    { method: "GET" }
+  );
+
+  if (!response.ok) {
+    const data = await response
+      .json()
+      .catch(() => ({}));
+
+    throw new Error(
+      data?.detail ||
+      data?.message ||
+      `Failed to fetch internship report (${response.status})`
+    );
+  }
+
+  return await response.json();
+
+};

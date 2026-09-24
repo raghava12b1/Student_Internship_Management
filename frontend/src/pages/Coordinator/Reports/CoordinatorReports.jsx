@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./CoordinatorReports.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+import { getInternshipReport } from "../../../services/api";
+import { exportToExcel } from "../../../utils/exportExcel";
 
 const API_BASE_URL = "http://127.0.0.1:8000/api";
 
@@ -9,6 +11,13 @@ const CoordinatorReports = () => {
   const [documents, setDocuments] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+
+  /* Internship report state */
+  const [internships, setInternships] = useState([]);
+  const [internshipLoading, setInternshipLoading] = useState(true);
+  const [internshipError, setInternshipError] = useState("");
+  const [companyFilter, setCompanyFilter] = useState("All Companies");
+  const [stipendFilter, setStipendFilter] = useState("All Students");
 
   /*
    * =====================================================
@@ -118,6 +127,40 @@ const CoordinatorReports = () => {
     };
 
     loadReports();
+  }, []);
+
+  /*
+   * =====================================================
+   * LOAD INTERNSHIP DATA
+   * =====================================================
+   */
+
+  useEffect(() => {
+    const loadInternships = async () => {
+      try {
+        setInternshipLoading(true);
+        setInternshipError("");
+
+        const data = await getInternshipReport();
+
+        if (Array.isArray(data)) {
+          setInternships(data);
+        } else if (Array.isArray(data.results)) {
+          setInternships(data.results);
+        } else {
+          setInternships([]);
+        }
+      } catch (err) {
+        console.error("Internship report error:", err);
+        setInternshipError(
+          "Unable to load internship data."
+        );
+      } finally {
+        setInternshipLoading(false);
+      }
+    };
+
+    loadInternships();
   }, []);
 
   /*
@@ -432,6 +475,117 @@ const CoordinatorReports = () => {
       .slice(0, 10);
 
   }, [documents]);
+
+  /*
+   * =====================================================
+   * COMPANY OPTIONS (FROM INTERNSHIP DATA)
+   * =====================================================
+   */
+
+  const companyOptions = useMemo(() => {
+    const names = [
+      ...new Set(
+        internships
+          .map((item) => item.company_name)
+          .filter(Boolean)
+      ),
+    ];
+    return names.sort();
+  }, [internships]);
+
+  /*
+   * =====================================================
+   * FILTERED INTERNSHIPS
+   * =====================================================
+   */
+
+  const filteredInternships = useMemo(() => {
+    return internships.filter((item) => {
+
+      /* Company filter */
+      const matchesCompany =
+        companyFilter === "All Companies" ||
+        item.company_name === companyFilter;
+
+      /* Stipend filter */
+      let matchesStipend = true;
+
+      if (stipendFilter === "Getting Stipend") {
+        matchesStipend =
+          item.stipend !== null &&
+          item.stipend !== undefined &&
+          Number(item.stipend) > 0;
+      }
+
+      if (stipendFilter === "Not Getting Stipend") {
+        matchesStipend =
+          item.stipend === null ||
+          item.stipend === undefined ||
+          Number(item.stipend) <= 0;
+      }
+
+      return matchesCompany && matchesStipend;
+
+    });
+  }, [internships, companyFilter, stipendFilter]);
+
+  /*
+   * =====================================================
+   * EXCEL EXPORT HANDLER
+   * =====================================================
+   */
+
+  const handleExportExcel = () => {
+
+    const columns = [
+      { header: "Student Name", key: "student_name" },
+      { header: "Roll Number", key: "roll_number" },
+      { header: "Department", key: "department" },
+      { header: "Year", key: "year" },
+      { header: "Company", key: "company_name" },
+      { header: "Role", key: "role" },
+      { header: "Internship Status", key: "status" },
+      { header: "Stipend Amount", key: "stipend" },
+    ];
+
+    /* Add computed stipend status */
+    const exportData = filteredInternships.map(
+      (item) => ({
+        ...item,
+        stipend:
+          item.stipend !== null &&
+          item.stipend !== undefined
+            ? item.stipend
+            : "0",
+      })
+    );
+
+    /* Build dynamic filename */
+    const parts = ["SIMS"];
+
+    if (companyFilter !== "All Companies") {
+      parts.push(
+        companyFilter.replace(/\s+/g, "_")
+      );
+    }
+
+    if (stipendFilter === "Getting Stipend") {
+      parts.push("Getting_Stipend");
+    }
+
+    if (stipendFilter === "Not Getting Stipend") {
+      parts.push("Not_Getting_Stipend");
+    }
+
+    parts.push("Internship_Report");
+
+    exportToExcel(
+      exportData,
+      columns,
+      parts.join("_") + ".xlsx"
+    );
+
+  };
 
   /*
    * =====================================================
@@ -822,6 +976,195 @@ const CoordinatorReports = () => {
               </tbody>
 
             </table>
+
+          )}
+
+        </div>
+
+        {/* =============================================
+            INTERNSHIP REPORT — FILTERS + TABLE
+        ============================================= */}
+
+        <div className="table-card">
+
+          <div className="table-header">
+            <div>
+              <h2>Internship Report</h2>
+              <p className="table-description">
+                Filter by company and stipend status
+              </p>
+            </div>
+          </div>
+
+          {/* Filter Bar */}
+          <div className="report-filter-bar">
+
+            <div className="report-filter-group">
+              <label
+                className="report-filter-label"
+                htmlFor="company-filter"
+              >
+                Company
+              </label>
+              <select
+                id="company-filter"
+                className="report-filter-select"
+                value={companyFilter}
+                onChange={(e) =>
+                  setCompanyFilter(e.target.value)
+                }
+              >
+                <option value="All Companies">
+                  All Companies
+                </option>
+                {companyOptions.map((name) => (
+                  <option key={name} value={name}>
+                    {name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="report-filter-group">
+              <label
+                className="report-filter-label"
+                htmlFor="stipend-filter"
+              >
+                Stipend
+              </label>
+              <select
+                id="stipend-filter"
+                className="report-filter-select"
+                value={stipendFilter}
+                onChange={(e) =>
+                  setStipendFilter(e.target.value)
+                }
+              >
+                <option value="All Students">
+                  All Students
+                </option>
+                <option value="Getting Stipend">
+                  Getting Stipend
+                </option>
+                <option value="Not Getting Stipend">
+                  Not Getting Stipend
+                </option>
+              </select>
+            </div>
+
+            <button
+              className="report-export-btn"
+              onClick={handleExportExcel}
+              disabled={
+                filteredInternships.length === 0
+              }
+            >
+              ⬇ Download Excel
+            </button>
+
+          </div>
+
+          {/* Result Count */}
+          <p className="report-result-count">
+            Showing{" "}
+            <strong>
+              {filteredInternships.length}
+            </strong>{" "}
+            student{filteredInternships.length !== 1
+              ? "s"
+              : ""}
+          </p>
+
+          {/* Internship Table */}
+          {internshipLoading ? (
+
+            <div className="loading-state">
+              <p>Loading internship data...</p>
+            </div>
+
+          ) : internshipError ? (
+
+            <div className="error-state">
+              <p>{internshipError}</p>
+            </div>
+
+          ) : filteredInternships.length === 0 ? (
+
+            <div className="loading-state">
+              <p>
+                No internship records match the
+                selected filters.
+              </p>
+            </div>
+
+          ) : (
+
+            <div className="table-wrapper">
+              <table>
+
+                <thead>
+                  <tr>
+                    <th>Student Name</th>
+                    <th>Roll Number</th>
+                    <th>Department</th>
+                    <th>Year</th>
+                    <th>Company</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Stipend</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  {filteredInternships.map(
+                    (item, index) => (
+                      <tr key={item.id || index}>
+                        <td>
+                          <strong>
+                            {item.student_name ||
+                              "--"}
+                          </strong>
+                        </td>
+                        <td>
+                          {item.roll_number || "--"}
+                        </td>
+                        <td>
+                          {item.department || "--"}
+                        </td>
+                        <td>{item.year || "--"}</td>
+                        <td>
+                          {item.company_name || "--"}
+                        </td>
+                        <td>
+                          {item.role || "--"}
+                        </td>
+                        <td>
+                          <span
+                            className={
+                              "status-badge " +
+                              (item.status || "")
+                                .toLowerCase()
+                            }
+                          >
+                            {item.status || "--"}
+                          </span>
+                        </td>
+                        <td>
+                          {item.stipend !== null &&
+                          item.stipend !== undefined &&
+                          Number(item.stipend) > 0
+                            ? `₹${Number(
+                                item.stipend
+                              ).toLocaleString()}`
+                            : "No Stipend"}
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </tbody>
+
+              </table>
+            </div>
 
           )}
 
