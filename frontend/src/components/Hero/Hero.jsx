@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import "./Hero.css";
 
 import heroImage from "../../assets/images/hero.png";
@@ -13,6 +13,20 @@ import {
 function Hero() {
   const location = useLocation();
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    const userRole = localStorage.getItem("userRole");
+    if (accessToken && !location.state?.showLogin) {
+      if (userRole === "Administrator") {
+        navigate("/admin/dashboard", { replace: true });
+      } else if (userRole === "Internship Coordinator") {
+        navigate("/coordinator/dashboard", { replace: true });
+      } else {
+        navigate("/student/dashboard", { replace: true });
+      }
+    }
+  }, [navigate, location.state]);
 
   // ============================================================
   // ROLE
@@ -174,9 +188,6 @@ function Hero() {
 
       case "Coordinator":
         return "/register/coordinator";
-
-      case "Admin":
-        return "/register/admin";
 
       default:
         return "/register/student";
@@ -638,18 +649,19 @@ function Hero() {
                     </button>
 
                     {/* REGISTER */}
-
-                    <Link
-                      to={getRegistrationPath()}
-                      state={{
-                        fromLogin: true,
-                        selectedRole:
-                          selectedRole,
-                      }}
-                      className="register-link-btn"
-                    >
-                      Register
-                    </Link>
+                    {selectedRole === "Student" && (
+                      <Link
+                        to={getRegistrationPath()}
+                        state={{
+                          fromLogin: true,
+                          selectedRole:
+                            selectedRole,
+                        }}
+                        className="register-link-btn"
+                      >
+                        Register
+                      </Link>
+                    )}
 
                   </div>
                 </div>

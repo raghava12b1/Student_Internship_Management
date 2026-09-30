@@ -8,7 +8,15 @@ from .views import (
     MyInternshipListCreateView,
     MyInternshipDetailView,
 )
-
+from .views import (
+    AdminCompanyDetailView,
+    AdminCompanyListCreateView,
+    AdminInternshipDetailView,
+    CoordinatorStudentInternshipListView,
+    InternshipReportListView,
+    MyInternshipListCreateView,
+    MyInternshipDetailView,
+)
 
 urlpatterns = [
     path(
@@ -41,5 +49,10 @@ urlpatterns = [
         "<int:pk>/",
         MyInternshipDetailView.as_view(),
         name="my-internship-detail",
+    ),
+    path(
+    "student/<int:student_id>/",
+    CoordinatorStudentInternshipListView.as_view(),
+    name="coordinator-student-internships",
     ),
 ]

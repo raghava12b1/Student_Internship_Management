@@ -4,10 +4,7 @@ import DashboardLayout from "../../../layouts/DashboardLayout";
 import "./CoordinatorNotifications.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
 
-
-const API_BASE_URL =
-  "http://127.0.0.1:8000/api";
-
+import { apiFetch } from "../../../services/api";
 
 const CoordinatorNotifications = () => {
 
@@ -41,129 +38,29 @@ const CoordinatorNotifications = () => {
   // ============================================================
 
   useEffect(() => {
-
     const fetchNotifications = async () => {
-
       try {
-
         setLoading(true);
         setError("");
-
-
-        const accessToken =
-          getAccessToken();
-
-
-        if (!accessToken) {
-
-          setError(
-            "Access token not found. Please login again."
-          );
-
-          setLoading(false);
-
-          return;
-        }
-
-
-        const response = await fetch(
-          `${API_BASE_URL}/notifications/`,
-          {
-            method: "GET",
-
-            headers: {
-              "Content-Type":
-                "application/json",
-
-              Authorization:
-                `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-
-        // ======================================================
-        // SESSION EXPIRED
-        // ======================================================
-
-        if (response.status === 401) {
-
-          setError(
-            "Your login session has expired. Please login again."
-          );
-
-          setLoading(false);
-
-          return;
-        }
-
-
-        // ======================================================
-        // OTHER SERVER ERRORS
-        // ======================================================
-
-        if (!response.ok) {
-
-          throw new Error(
-            `Server returned ${response.status}`
-          );
-
-        }
-
-
-        const data =
-          await response.json();
-
-
-        // ======================================================
-        // HANDLE DIFFERENT DRF RESPONSE FORMATS
-        // ======================================================
+        
+        const data = await apiFetch("/notifications/");
 
         let notificationList = [];
 
-
         if (Array.isArray(data)) {
-
           notificationList = data;
-
-        } else if (
-          Array.isArray(data.results)
-        ) {
-
-          notificationList =
-            data.results;
-
-        } else if (
-          Array.isArray(data.notifications)
-        ) {
-
-          notificationList =
-            data.notifications;
-
+        } else if (Array.isArray(data.results)) {
+          notificationList = data.results;
         }
 
-
-        setNotifications(
-          notificationList
-        );
+        setNotifications(notificationList);
 
       } catch (err) {
-
-        console.error(
-          "Unable to load notifications:",
-          err
-        );
-
-        setError(
-          "Unable to connect to Django server. Please make sure Django is running."
-        );
-
+        console.error("Unable to load notifications:", err);
+        setError("Unable to load notifications. Please try again later.");
       } finally {
-
         setLoading(false);
-
       }
-
     };
 
 

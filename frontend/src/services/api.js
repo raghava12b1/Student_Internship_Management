@@ -1,7 +1,6 @@
 // ============================================================
 // API BASE URL
 // ============================================================
-
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL ||
   "http://127.0.0.1:8000/api";
@@ -297,12 +296,15 @@ export const getCoordinatorDashboard =
 
   };
 
+
 export const login = async (username, password) => {
   const response = await fetch(
     `${API_BASE_URL}/accounts/login/`,
     {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+      },
       body: JSON.stringify({ username, password }),
     }
   );
@@ -311,16 +313,25 @@ export const login = async (username, password) => {
 
   if (!response.ok) {
     throw new Error(
-      data?.detail || data?.message || data?.error || "Invalid username or password."
+      data?.detail ||
+      data?.message ||
+      data?.error ||
+      "Invalid username or password."
     );
   }
 
   if (!data.access || !data.refresh || !data.role) {
-    throw new Error("Login response is missing required authentication data.");
+    throw new Error(
+      "Login response is missing required authentication data."
+    );
   }
+
+  localStorage.setItem("accessToken", data.access);
+  localStorage.setItem("refreshToken", data.refresh);
 
   return data;
 };
+
 
 // ============================================================
 // ADMIN DASHBOARD
@@ -407,6 +418,33 @@ export const updateCoordinator = async (id, changes) => {
     throw new Error(data?.detail || `Failed to update coordinator (${response.status})`);
   }
   return await response.json();
+};
+export const createCoordinator = async (coordinatorData) => {
+  const response = await apiFetch("/accounts/coordinator/register/", {
+    method: "POST",
+    body: JSON.stringify(coordinatorData),
+  });
+
+  const data = await response.json().catch(() => ({}));
+
+  if (!response.ok) {
+    const message =
+      data.detail ||
+      data.message ||
+      Object.entries(data)
+        .map(([field, errors]) => {
+          const errorText = Array.isArray(errors)
+            ? errors.join(", ")
+            : String(errors);
+          return `${field}: ${errorText}`;
+        })
+        .join("\n") ||
+      "Failed to create coordinator.";
+
+    throw new Error(message);
+  }
+
+  return data;
 };
 
 export const updateInternship = async (id, changes) => {

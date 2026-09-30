@@ -20,6 +20,7 @@ const OfferLetter = () => {
     internship_type: "",
     start_date: "",
     end_date: "",
+    stipend_type: "",
     stipend: "",
     hr_name: "",
     hr_email: "",
@@ -127,6 +128,17 @@ const OfferLetter = () => {
       return "End date is required.";
     }
 
+    if (!formData.stipend_type) {
+      return "Please select a stipend type.";
+    }
+
+    if (
+      formData.stipend_type === "STIPEND" &&
+      (!formData.stipend.trim() || Number(formData.stipend) <= 0)
+    ) {
+      return "Please enter a stipend amount greater than zero.";
+    }
+
 
     // ----------------------------------------------------------
     // DATE VALIDATION
@@ -210,6 +222,14 @@ const OfferLetter = () => {
         end_date:
           formData.end_date,
 
+        stipend_type:
+          formData.stipend_type,
+
+        stipend:
+          formData.stipend_type === "STIPEND"
+            ? formData.stipend.trim()
+            : null,
+
         hr_name:
           formData.hr_name.trim(),
 
@@ -219,20 +239,6 @@ const OfferLetter = () => {
         hr_phone:
           formData.hr_phone.trim(),
       };
-
-
-      // --------------------------------------------------------
-      // STIPEND
-      //
-      // Don't send an empty string to DecimalField.
-      // --------------------------------------------------------
-
-      if (formData.stipend.trim()) {
-
-        internshipPayload.stipend =
-          formData.stipend.trim();
-
-      }
 
 
       console.log(
@@ -382,6 +388,7 @@ const OfferLetter = () => {
         internship_type: "",
         start_date: "",
         end_date: "",
+        stipend_type: "",
         stipend: "",
         hr_name: "",
         hr_email: "",
@@ -616,19 +623,46 @@ const OfferLetter = () => {
           ================================================== */}
 
           <label>
-            Stipend (Optional)
+            Stipend Type
           </label>
 
-          <input
-            type="number"
-            name="stipend"
-            value={formData.stipend}
-            onChange={handleChange}
-            placeholder="Enter Monthly Stipend"
-            min="0"
-            step="0.01"
+          <select
+            name="stipend_type"
+            value={formData.stipend_type}
+            onChange={(event) => {
+              const value = event.target.value;
+              setFormData((previousData) => ({
+                ...previousData,
+                stipend_type: value,
+                stipend: value === "STIPEND" ? previousData.stipend : "",
+              }));
+            }}
             disabled={loading}
-          />
+          >
+            <option value="">Select Stipend Type</option>
+            <option value="STIPEND">Stipend</option>
+            <option value="NO_STIPEND">No Stipend</option>
+            <option value="PAID_BY_STUDENT">Paid By Student</option>
+          </select>
+
+          {formData.stipend_type === "STIPEND" && (
+            <>
+              <label>
+                Monthly Stipend Amount (₹)
+              </label>
+              <input
+                type="number"
+                name="stipend"
+                value={formData.stipend}
+                onChange={handleChange}
+                placeholder="Enter Monthly Stipend"
+                min="0.01"
+                step="0.01"
+                disabled={loading}
+                required
+              />
+            </>
+          )}
 
 
           {/* ==================================================

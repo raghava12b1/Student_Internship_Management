@@ -1,1055 +1,548 @@
-import { useEffect, useState } from "react";
+
+import { useCallback, useEffect, useState } from "react";
 import DashboardLayout from "../../../layouts/DashboardLayout";
-import "./CoordinatorProfile.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+import "./CoordinatorProfile.css";
 
+// Set VITE_API_BASE_URL in your .env file if needed.
+// Example: VITE_API_BASE_URL=http://127.0.0.1:8000/api
+const API_BASE_URL = (
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api"
+).replace(/\/+$/, "");
 
-// ============================================================
-// DJANGO PROFILE API
-// ============================================================
-//
-// IMPORTANT:
-// Your backend friend must provide this endpoint.
-//
-// Expected:
-// GET http://127.0.0.1:8000/api/accounts/profile/
-//
-// If your friend gives a different URL later,
-// change ONLY the line below.
-// ============================================================
+const PROFILE_API = `${API_BASE_URL}/accounts/coordinator/profile/`;
 
-const PROFILE_API = "http://127.0.0.1:8000/api/accounts/profile/";
+const EMPTY_PROFILE = {
+  full_name: "",
+  email: "",
+  phone_number: "",
+  designation: "",
+  department: "",
+  experience: "",
+  staff_id: "",
+  role: "",
+  account_status: "",
+  account_type: "",
+  last_updated: "",
+};
 
+const getAccessToken = () =>
+  localStorage.getItem("accessToken") ||
+  localStorage.getItem("access_token") ||
+  localStorage.getItem("access") ||
+  "";
 
-const CoordinatorProfile = () => {
-
-  // ==========================================================
-  // STATE
-  // ==========================================================
-
-  const [loading, setLoading] = useState(true);
-
-  const [error, setError] = useState("");
-
-  // Form state
-  const [formData, setFormData] = useState({
-    full_name: "",
-    email: "",
-    phone_number: "",
-    designation: "",
-    department: "",
-    experience: "",
-    staff_id: "",
-    role: "",
-    account_status: "",
-    account_type: "",
-    last_updated: "",
-  });
-
-
-  // ==========================================================
-  // GET ACCESS TOKEN
-  // ==========================================================
-
-  const getAccessToken = () => {
-
-    return (
-      localStorage.getItem("accessToken") ||
-      localStorage.getItem("access_token") ||
-      localStorage.getItem("access")
+const getProfileValue = (data, keys, fallback = "") => {
+  for (const key of keys) {
+    const value = key.split(".").reduce(
+      (obj, part) => obj?.[part],
+      data
     );
 
-  };
-
-
-  // ==========================================================
-  // FETCH COORDINATOR PROFILE
-  // ==========================================================
-
-  useEffect(() => {
-
-    const fetchCoordinatorProfile = async () => {
-
-      try {
-
-        setLoading(true);
-
-        setError("");
-
-
-        const token = getAccessToken();
-
-
-        // ----------------------------------------------------
-        // CHECK LOGIN TOKEN
-        // ----------------------------------------------------
-
-        if (!token) {
-
-          setError(
-            "Access token not found. Please login again."
-          );
-
-          setLoading(false);
-
-          return;
-        }
-
-
-        // ----------------------------------------------------
-        // CALL DJANGO API
-        // ----------------------------------------------------
-
-        const response = await fetch(PROFILE_API, {
-
-          method: "GET",
-
-          headers: {
-            "Content-Type": "application/json",
-            "Authorization": `Bearer ${token}`,
-          },
-
-        });
-
-
-        // ----------------------------------------------------
-        // TOKEN EXPIRED / UNAUTHORIZED
-        // ----------------------------------------------------
-
-        if (response.status === 401) {
-
-          setError(
-            "Your login session has expired. Please login again."
-          );
-
-          setLoading(false);
-
-          return;
-        }
-
-
-        // ----------------------------------------------------
-        // OTHER SERVER ERROR
-        // ----------------------------------------------------
-
-        if (!response.ok) {
-
-          throw new Error(
-            `Server returned ${response.status}`
-          );
-
-        }
-
-
-        // ----------------------------------------------------
-        // GET JSON
-        // ----------------------------------------------------
-
-        const data = await response.json();
-
-
-        console.log(
-          "Coordinator profile from Django:",
-          data
-        );
-
-
-        // ----------------------------------------------------
-        // STORE ORIGINAL DATA
-        // ----------------------------------------------------
-
-
-        // ----------------------------------------------------
-        // SUPPORT DIFFERENT BACKEND FIELD NAMES
-        // ----------------------------------------------------
-
-        const fullName =
-          data.full_name ||
-          data.name ||
-          data.coordinator_name ||
-          data.user?.full_name ||
-          data.user?.name ||
-          "";
-
-
-        const email =
-          data.email ||
-          data.email_address ||
-          data.user?.email ||
-          "";
-
-
-        const phone =
-          data.phone_number ||
-          data.phone ||
-          data.mobile_number ||
-          "";
-
-
-        const designation =
-          data.designation ||
-          data.position ||
-          data.job_title ||
-          "";
-
-
-        const department =
-          data.department ||
-          data.department_name ||
-          "";
-
-
-        const experience =
-          data.experience ||
-          data.experience_years ||
-          "";
-
-
-        const staffId =
-          data.staff_id ||
-          data.employee_id ||
-          "";
-
-
-        const role =
-          data.role ||
-          data.account_role ||
-          data.user?.role ||
-          "Coordinator";
-
-
-        const accountStatus =
-          data.account_status ||
-          data.status ||
-          "Active";
-
-
-        const accountType =
-          data.account_type ||
-          "University Staff";
-
-
-        const lastUpdated =
-          data.last_updated ||
-          data.updated_at ||
-          "";
-
-
-        // ----------------------------------------------------
-        // PUT API DATA INTO FORM
-        // ----------------------------------------------------
-
-        setFormData({
-
-          full_name: fullName,
-
-          email: email,
-
-          phone_number: phone,
-
-          designation: designation,
-
-          department: department,
-
-          experience: experience,
-
-          staff_id: staffId,
-
-          role: role,
-
-          account_status: accountStatus,
-
-          account_type: accountType,
-
-          last_updated: lastUpdated,
-
-        });
-
-
-      } catch (err) {
-
-        console.error(
-          "Coordinator Profile Error:",
-          err
-        );
-
-
-        setError(
-          "Unable to connect to Django server. Please make sure the backend is running."
-        );
-
-      } finally {
-
-        setLoading(false);
-
+    if (value !== undefined && value !== null && value !== "") {
+      return value;
+    }
+  }
+
+  return fallback;
+};
+
+const CoordinatorProfile = () => {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [formData, setFormData] = useState(EMPTY_PROFILE);
+  const [retryCount, setRetryCount] = useState(0);
+
+  const fetchCoordinatorProfile = useCallback(async () => {
+    setLoading(true);
+    setError("");
+
+    const token = getAccessToken();
+
+    if (!token) {
+      setError("Access token not found. Please log in again.");
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(PROFILE_API, {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.status === 401) {
+        throw new Error("Your session has expired. Please log in again.");
       }
 
-    };
+      if (response.status === 403) {
+        throw new Error(
+          "You do not have permission to view this profile."
+        );
+      }
 
+      if (response.status === 404) {
+        throw new Error(
+          `Profile API not found (404). Check the Django URL: ${PROFILE_API}`
+        );
+      }
 
-    fetchCoordinatorProfile();
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(
+          errorData.detail ||
+          errorData.message ||
+          `Django returned an error (${response.status}).`
+        );
+      }
 
+      const data = await response.json();
+      const profile = data.user || data.coordinator || data;
+
+      setFormData({
+        full_name: getProfileValue(profile, [
+          "full_name",
+          "name",
+          "coordinator_name",
+          "first_name",
+        ]),
+        email: getProfileValue(profile, [
+          "email",
+          "email_address",
+          "user.email",
+        ]),
+        phone_number: getProfileValue(profile, [
+          "phone_number",
+          "phone",
+          "mobile_number",
+        ]),
+        designation: getProfileValue(profile, [
+          "designation",
+          "position",
+          "job_title",
+        ]),
+        department: getProfileValue(profile, [
+          "department_name",
+          "department.name",
+          "department",
+        ]),
+        experience: getProfileValue(profile, [
+          "experience",
+          "experience_years",
+        ]),
+        staff_id: getProfileValue(profile, [
+          "staff_id",
+          "employee_id",
+          "user.staff_id",
+        ]),
+        role: getProfileValue(
+          profile,
+          ["role", "account_role", "user.role"],
+          "Coordinator"
+        ),
+        account_status: getProfileValue(
+          profile,
+          ["account_status", "status"],
+          "Active"
+        ),
+        account_type: getProfileValue(
+          profile,
+          ["account_type"],
+          "University Staff"
+        ),
+        last_updated: getProfileValue(profile, [
+          "last_updated",
+          "updated_at",
+        ]),
+      });
+    } catch (err) {
+      console.error("Coordinator profile error:", err);
+
+      if (err instanceof TypeError) {
+        setError(
+          "Unable to connect to Django. Check that the backend is running and the API URL is correct."
+        );
+      } else {
+        setError(err.message || "Unable to load your profile.");
+      }
+    } finally {
+      setLoading(false);
+    }
   }, []);
 
-
-  // ==========================================================
-  // HANDLE INPUT CHANGE
-  // ==========================================================
+  useEffect(() => {
+    fetchCoordinatorProfile();
+  }, [fetchCoordinatorProfile, retryCount]);
 
   const handleChange = (event) => {
-
     const { name, value } = event.target;
 
     setFormData((previous) => ({
-
       ...previous,
-
       [name]: value,
-
     }));
-
   };
 
-
-  // ==========================================================
-  // AVATAR INITIALS
-  // ==========================================================
-
   const getInitials = () => {
-
     const name = formData.full_name
       ?.replace(/^Dr\.\s*/i, "")
       .trim();
 
+    if (!name) return "CO";
 
-    if (!name) {
-      return "CO";
-    }
-
-
-    const words = name
-      .split(" ")
-      .filter(Boolean);
-
+    const words = name.split(/\s+/).filter(Boolean);
 
     if (words.length === 1) {
-
-      return words[0]
-        .substring(0, 2)
-        .toUpperCase();
-
+      return words[0].substring(0, 2).toUpperCase();
     }
 
-
     return (
-      words[0][0] +
-      words[words.length - 1][0]
+      words[0][0] + words[words.length - 1][0]
     ).toUpperCase();
-
   };
 
-
-  // ==========================================================
-  // LOADING SCREEN
-  // ==========================================================
-
   if (loading) {
-
     return (
-
       <DashboardLayout>
-
         <div className="coordinator-profile-page">
-
           <div className="profile-navigation">
             <BackButton />
           </div>
 
           <div className="profile-page-header">
-
             <div className="header-title">
-
               <span className="header-eyebrow">
                 COORDINATOR ACCOUNT
               </span>
-
               <h1>My Profile</h1>
-
-              <p>
-                Loading your profile information...
-              </p>
-
+              <p>Loading your profile information...</p>
             </div>
-
           </div>
-
         </div>
-
       </DashboardLayout>
-
     );
-
   }
-
-
-  // ==========================================================
-  // ERROR SCREEN
-  // ==========================================================
 
   if (error) {
-
     return (
-
       <DashboardLayout>
-
         <div className="coordinator-profile-page">
-
           <div className="profile-navigation">
             <BackButton />
           </div>
 
-
           <div className="profile-page-header">
-
             <div className="header-title">
-
               <span className="header-eyebrow">
                 COORDINATOR ACCOUNT
               </span>
-
               <h1>My Profile</h1>
+              <p role="alert">{error}</p>
 
-              <p>
-                {error}
-              </p>
-
+              <button
+                type="button"
+                className="save-btn"
+                onClick={() => setRetryCount((count) => count + 1)}
+              >
+                Retry
+              </button>
             </div>
-
           </div>
-
         </div>
-
       </DashboardLayout>
-
     );
-
   }
 
-
-  // ==========================================================
-  // MAIN PAGE
-  // ==========================================================
-
   return (
-
     <DashboardLayout>
-
       <div className="coordinator-profile-page">
-
-
-        {/* ==================================================
-            BACK BUTTON
-        ================================================== */}
-
         <div className="profile-navigation">
-
           <BackButton />
-
         </div>
 
-
-        {/* ==================================================
-            PAGE HEADER
-        ================================================== */}
-
         <div className="profile-page-header">
-
           <div className="header-title">
-
             <span className="header-eyebrow">
               COORDINATOR ACCOUNT
             </span>
-
-            <h1>
-              My Profile
-            </h1>
-
+            <h1>My Profile</h1>
             <p>
-              Manage your personal information and university profile details.
+              Manage your personal information and university
+              profile details.
             </p>
-
           </div>
 
-
           <div className="profile-status">
-
             <span className="status-indicator"></span>
-
             <div>
-
               <strong>
                 {formData.account_status || "Active Account"}
               </strong>
-
               <small>
                 {formData.account_type || "University Staff"}
               </small>
-
             </div>
-
           </div>
-
         </div>
 
-
-        {/* ==================================================
-            MAIN PROFILE CARD
-        ================================================== */}
-
         <div className="profile-main-card">
-
-
-          {/* ==================================================
-              PROFILE HERO
-          ================================================== */}
-
           <div className="profile-hero">
-
             <div className="profile-identity">
-
-
               <div className="profile-avatar-wrapper">
-
                 <div className="profile-avatar">
-
                   {getInitials()}
-
                 </div>
-
                 <span className="avatar-status"></span>
-
               </div>
-
 
               <div className="identity-content">
-
                 <span className="identity-label">
-
                   INTERNSHIP COORDINATOR
-
                 </span>
-
-
-                <h2>
-
-                  {formData.full_name || "Coordinator"}
-
-                </h2>
-
-
+                <h2>{formData.full_name || "Coordinator"}</h2>
                 <p>
-
                   {formData.department || "University Department"}
-
                 </p>
 
-
                 <div className="identity-meta">
-
-
                   <span>
-
                     <span className="meta-dot"></span>
-
                     {formData.email || "Email not available"}
-
                   </span>
-
-
                   <span>
-
-                    Staff ID:{" "}
-
-                    {formData.staff_id || "Not available"}
-
+                    Staff ID: {formData.staff_id || "Not available"}
                   </span>
-
-
                 </div>
-
               </div>
-
             </div>
-
-
-            {/* VERIFIED BADGE */}
 
             <div className="profile-hero-badge">
-
-              <span className="badge-icon">
-
-                ✓
-
-              </span>
-
+              <span className="badge-icon">✓</span>
               <div>
-
-                <strong>
-                  Verified
-                </strong>
-
-                <small>
-                  University Account
-                </small>
-
+                <strong>Verified</strong>
+                <small>University Account</small>
               </div>
-
             </div>
-
           </div>
 
-
-          {/* ==================================================
-              PROFILE CONTENT
-          ================================================== */}
-
           <div className="profile-content">
-
-
-            {/* ==================================================
-                PERSONAL INFORMATION
-            ================================================== */}
-
             <section className="profile-section">
-
               <div className="section-heading">
-
-                <div className="section-icon">
-                  👤
-                </div>
-
+                <div className="section-icon">👤</div>
                 <div>
-
-                  <h3>
-                    Personal Information
-                  </h3>
-
+                  <h3>Personal Information</h3>
                   <p>
-                    Basic information associated with your university account.
+                    Basic information associated with your university
+                    account.
                   </p>
-
                 </div>
-
               </div>
 
-
               <div className="profile-grid">
-
-
-                {/* FULL NAME */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Full Name
-                  </label>
-
+                  <label>Full Name</label>
                   <div className="input-wrapper">
-
-                    <span className="input-icon">
-                      A
-                    </span>
-
+                    <span className="input-icon">A</span>
                     <input
                       type="text"
                       name="full_name"
                       value={formData.full_name}
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
 
-
-                {/* EMAIL */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Email Address
-                  </label>
-
+                  <label>Email Address</label>
                   <div className="input-wrapper">
-
-                    <span className="input-icon">
-                      @
-                    </span>
-
+                    <span className="input-icon">@</span>
                     <input
                       type="email"
                       name="email"
                       value={formData.email}
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
 
-
-                {/* PHONE */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Phone Number
-                  </label>
-
+                  <label>Phone Number</label>
                   <div className="input-wrapper">
-
-                    <span className="input-icon">
-                      ☎
-                    </span>
-
+                    <span className="input-icon">☎</span>
                     <input
                       type="text"
                       name="phone_number"
                       value={formData.phone_number}
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
 
-
-                {/* DESIGNATION */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Designation
-                  </label>
-
+                  <label>Designation</label>
                   <div className="input-wrapper">
-
-                    <span className="input-icon">
-                      ID
-                    </span>
-
+                    <span className="input-icon">ID</span>
                     <input
                       type="text"
                       name="designation"
                       value={formData.designation}
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
-
               </div>
-
             </section>
 
-
-            {/* ==================================================
-                PROFESSIONAL INFORMATION
-            ================================================== */}
-
             <section className="profile-section">
-
               <div className="section-heading">
-
-                <div className="section-icon">
-                  🏛
-                </div>
-
+                <div className="section-icon">🏛</div>
                 <div>
-
-                  <h3>
-                    Professional Information
-                  </h3>
-
+                  <h3>Professional Information</h3>
                   <p>
                     University department and professional experience.
                   </p>
-
                 </div>
-
               </div>
 
-
               <div className="profile-grid">
-
-
-                {/* DEPARTMENT */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Department
-                  </label>
-
+                  <label>Department</label>
                   <div className="input-wrapper">
-
-                    <span className="input-icon">
-                      DE
-                    </span>
-
+                    <span className="input-icon">DE</span>
                     <input
                       type="text"
                       name="department"
                       value={formData.department}
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
 
-
-                {/* EXPERIENCE */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Experience
-                  </label>
-
+                  <label>Experience</label>
                   <div className="input-wrapper">
-
-                    <span className="input-icon">
-                      EX
-                    </span>
-
+                    <span className="input-icon">EX</span>
                     <input
                       type="text"
                       name="experience"
                       value={formData.experience}
                       onChange={handleChange}
                     />
-
                   </div>
-
                 </div>
 
-
-                {/* STAFF ID */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Staff ID
-                  </label>
-
+                  <label>Staff ID</label>
                   <div className="input-wrapper readonly">
-
-                    <span className="input-icon">
-                      #
-                    </span>
-
+                    <span className="input-icon">#</span>
                     <input
                       type="text"
                       name="staff_id"
                       value={formData.staff_id}
                       readOnly
                     />
-
                   </div>
-
                 </div>
 
-
-                {/* ACCOUNT ROLE */}
-
                 <div className="profile-field">
-
-                  <label>
-                    Account Role
-                  </label>
-
+                  <label>Account Role</label>
                   <div className="input-wrapper readonly">
-
-                    <span className="input-icon">
-                      R
-                    </span>
-
+                    <span className="input-icon">R</span>
                     <input
                       type="text"
                       name="role"
                       value={formData.role}
                       readOnly
                     />
-
                   </div>
-
                 </div>
-
               </div>
-
             </section>
 
-
-            {/* ==================================================
-                ACCOUNT INFORMATION
-            ================================================== */}
-
             <section className="profile-section account-section">
-
               <div className="section-heading">
-
-                <div className="section-icon">
-                  🔐
-                </div>
-
+                <div className="section-icon">🔐</div>
                 <div>
-
-                  <h3>
-                    Account Information
-                  </h3>
-
+                  <h3>Account Information</h3>
                   <p>
                     Security and account status information.
                   </p>
-
                 </div>
-
               </div>
 
-
               <div className="account-info-grid">
-
-
-                {/* ACCOUNT STATUS */}
-
                 <div className="account-info-item">
-
                   <span className="account-info-label">
                     ACCOUNT STATUS
                   </span>
-
                   <span className="account-active">
-
                     <span></span>
-
                     {formData.account_status || "Active"}
-
                   </span>
-
                 </div>
 
-
-                {/* ACCOUNT TYPE */}
-
                 <div className="account-info-item">
-
                   <span className="account-info-label">
                     ACCOUNT TYPE
                   </span>
-
                   <strong>
                     {formData.account_type || "University Staff"}
                   </strong>
-
                 </div>
 
-
-                {/* LAST UPDATED */}
-
                 <div className="account-info-item">
-
                   <span className="account-info-label">
                     LAST UPDATED
                   </span>
-
                   <strong>
                     {formData.last_updated || "Not available"}
                   </strong>
-
                 </div>
-
               </div>
-
             </section>
-
           </div>
 
-
-          {/* ==================================================
-              FOOTER ACTIONS
-          ================================================== */}
-
           <div className="profile-footer">
-
-
             <div className="footer-message">
-
-              <span className="footer-icon">
-                ✓
-              </span>
-
+              <span className="footer-icon">✓</span>
               <div>
-
-                <strong>
-                  Keep your information updated
-                </strong>
-
+                <strong>Keep your information updated</strong>
                 <p>
                   Make sure your contact details are accurate.
                 </p>
-
               </div>
-
             </div>
 
-
             <div className="profile-actions">
-
               <button
                 type="button"
                 className="cancel-btn"
-                onClick={() => window.location.reload()}
+                onClick={fetchCoordinatorProfile}
               >
                 Cancel
               </button>
 
-
               <button
                 type="button"
                 className="save-btn"
-                onClick={() => {
+                onClick={() =>
                   alert(
-                    "Profile data is loaded from Django. Save API will be connected when the backend update endpoint is provided."
-                  );
-                }}
+                    "Profile update API is not connected yet."
+                  )
+                }
               >
-
-                <span>
-                  Save Changes
-                </span>
-
-                <span className="save-arrow">
-                  →
-                </span>
-
+                <span>Save Changes</span>
+                <span className="save-arrow">→</span>
               </button>
-
             </div>
-
           </div>
-
-
         </div>
-
       </div>
-
     </DashboardLayout>
-
   );
-
 };
-
 
 export default CoordinatorProfile;

@@ -37,7 +37,16 @@ class AdminInternshipDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Internship.objects.select_related("student").all()
     serializer_class = AdminInternshipSerializer
     permission_classes = [IsAuthenticated, IsCoordinatorOrAdmin]
+class CoordinatorStudentInternshipListView(generics.ListAPIView):
+    serializer_class = InternshipSerializer
+    permission_classes = [IsAuthenticated, IsCoordinatorOrAdmin]
 
+    def get_queryset(self):
+        student_id = self.kwargs["student_id"]
+
+        return Internship.objects.filter(
+            student_id=student_id
+        ).order_by("-created_at")
 
 class AdminCompanyListCreateView(generics.ListCreateAPIView):
     serializer_class = CompanySerializer

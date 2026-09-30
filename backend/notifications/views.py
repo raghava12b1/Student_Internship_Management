@@ -10,8 +10,16 @@ class MyNotificationListView(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
 
     def get_queryset(self):
-        if self.request.user.role in ["COORDINATOR", "ADMIN"]:
+        if self.request.user.role == "ADMIN":
             return Notification.objects.all().order_by("-created_at")
+        elif self.request.user.role == "COORDINATOR":
+            if hasattr(self.request.user, "coordinator_profile"):
+                dept = self.request.user.coordinator_profile.department
+                return Notification.objects.filter(
+                    recipient__department__iexact=dept
+                ).order_by("-created_at")
+            return Notification.objects.none()
+            
         return Notification.objects.filter(
             recipient=self.request.user.student_profile
         ).order_by("-created_at")

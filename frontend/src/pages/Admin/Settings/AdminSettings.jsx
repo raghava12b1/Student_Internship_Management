@@ -24,7 +24,7 @@ const AdminSettings = () => {
 
             <p>Manage your administrator account information.</p>
 
-            <button>Edit Account</button>
+            <button disabled>Edit Account (Coming Soon)</button>
 
           </div>
 
@@ -34,7 +34,7 @@ const AdminSettings = () => {
 
             <p>Update password and security preferences.</p>
 
-            <button>Change Password</button>
+            <button disabled>Change Password (Coming Soon)</button>
 
           </div>
 
@@ -44,7 +44,7 @@ const AdminSettings = () => {
 
             <p>Control email and system notifications.</p>
 
-            <button>Notification Settings</button>
+            <button disabled>Notification Settings (Coming Soon)</button>
 
           </div>
 
@@ -54,7 +54,7 @@ const AdminSettings = () => {
 
             <p>Configure internship management preferences.</p>
 
-            <button>Manage</button>
+            <button disabled>Manage (Coming Soon)</button>
 
           </div>
 
@@ -64,7 +64,7 @@ const AdminSettings = () => {
 
             <p>Create or restore system backups.</p>
 
-            <button>Backup Data</button>
+            <button disabled>Backup Data (Coming Soon)</button>
 
           </div>
 
@@ -74,7 +74,7 @@ const AdminSettings = () => {
 
             <p>Version 1.0.0</p>
 
-            <button>View Details</button>
+            <button disabled>View Details (Coming Soon)</button>
 
           </div>
 

@@ -3,6 +3,7 @@ import BackButton from "../../../components/common/BackButton/BackButton";
 import { useEffect, useState } from "react";
 import { getMyProfile } from "../../../services/api";
 
+
 import {
   FaUserGraduate,
   FaIdCard,
@@ -16,9 +17,20 @@ import {
 
 const StudentProfile = () => {
   const [profile, setProfile] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    getMyProfile().then(setProfile).catch(() => {});
+    getMyProfile()
+      .then((data) => {
+        setProfile(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error("Failed to load profile:", err);
+        setError("Unable to load profile data.");
+        setLoading(false);
+      });
   }, []);
 
   /*
@@ -65,6 +77,7 @@ const StudentProfile = () => {
       "--",
 
     email:
+      profile?.email ||
       currentUser?.email ||
       "--",
 
@@ -136,9 +149,10 @@ const StudentProfile = () => {
 
 
   return (
-    <div className="student-profile">
+    
+      <div className="student-profile">
 
-      {/* =====================================================
+        {/* =====================================================
           BACK BUTTON
       ===================================================== */}
 
@@ -146,7 +160,11 @@ const StudentProfile = () => {
         <BackButton />
       </div>
 
+      {loading && <div style={{ padding: "20px" }}>Loading profile...</div>}
+      {error && <div style={{ padding: "20px", color: "red" }}>{error}</div>}
 
+      {!loading && !error && (
+        <>
       {/* =====================================================
           PAGE HEADER
       ===================================================== */}
@@ -386,7 +404,11 @@ const StudentProfile = () => {
 
       </div>
 
+      </>
+      )}
+
     </div>
+    
   );
 };
 

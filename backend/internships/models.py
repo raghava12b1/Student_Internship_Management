@@ -27,6 +27,11 @@ class Internship(models.Model):
         OFFLINE = "OFFLINE", "Offline"
         HYBRID = "HYBRID", "Hybrid"
 
+    class StipendType(models.TextChoices):
+        STIPEND = "STIPEND", "Stipend"
+        NO_STIPEND = "NO_STIPEND", "No Stipend"
+        PAID_BY_STUDENT = "PAID_BY_STUDENT", "Paid By Student"
+
     student = models.ForeignKey(
         StudentProfile,
         on_delete=models.CASCADE,
@@ -54,6 +59,12 @@ class Internship(models.Model):
     start_date = models.DateField()
 
     end_date = models.DateField()
+
+    stipend_type = models.CharField(
+        max_length=20,
+        choices=StipendType.choices,
+        default=StipendType.NO_STIPEND,
+    )
 
     stipend = models.DecimalField(
         max_digits=10,

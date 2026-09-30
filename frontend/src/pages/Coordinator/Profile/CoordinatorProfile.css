@@ -1588,5 +1588,113 @@
 
         transition: none !important;
     }
+    
+/* Compact coordinator profile card */
+.profile-main-card {
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+.profile-hero {
+  min-height: 0 !important;
+  height: auto !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 34px !important;
+}
+
+.profile-identity {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.profile-avatar {
+  width: 100px;
+  height: 100px;
+  font-size: 38px;
+}
+
+.identity-content {
+  min-width: 0;
+}
+
+.identity-content h2 {
+  margin: 5px 0;
+  font-size: 25px;
+}
+
+.identity-content p {
+  margin: 4px 0 10px;
+}
+
+.identity-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.profile-hero-badge {
+  flex-shrink: 0;
+  align-self: center;
+  margin: 0 !important;
+}
+
+.profile-content {
+  padding: 28px 34px;
+}
+
+.profile-section {
+  margin-bottom: 24px;
+}
+
+.profile-grid {
+  gap: 18px 24px;
+}
+
+.profile-footer {
+  padding: 20px 34px;
+}
+
+@media (max-width: 700px) {
+  .profile-hero {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 24px 20px !important;
+  }
+
+  .profile-identity {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .profile-hero-badge {
+    align-self: flex-start;
+  }
+
+  .profile-content {
+    padding: 22px 20px;
+  }
+
+  .profile-footer {
+    padding: 18px 20px;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 }

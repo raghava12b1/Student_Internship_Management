@@ -1,5 +1,5 @@
-from django.urls import path
 
+from django.urls import path
 from rest_framework_simplejwt.views import TokenRefreshView
 
 from .views import (
@@ -7,6 +7,7 @@ from .views import (
     StudentRegistrationView,
     CoordinatorRegistrationView,
     MyProfileView,
+    CoordinatorProfileView,
     StudentDashboardView,
     CoordinatorDashboardView,
     AdminDashboardView,
@@ -15,9 +16,7 @@ from .views import (
     AdminCoordinatorDetailView,
 )
 
-
 urlpatterns = [
-
     path(
         "students/",
         StudentProfileListCreateView.as_view(),
@@ -41,6 +40,7 @@ urlpatterns = [
         StudentRegistrationView.as_view(),
         name="student-register",
     ),
+
     path(
         "coordinator/register/",
         CoordinatorRegistrationView.as_view(),
@@ -59,10 +59,18 @@ urlpatterns = [
         name="token-refresh",
     ),
 
+    # Student/general profile
     path(
         "profile/",
         MyProfileView.as_view(),
         name="my-profile",
+    ),
+
+    # Coordinator profile
+    path(
+        "coordinator/profile/",
+        CoordinatorProfileView.as_view(),
+        name="coordinator-profile",
     ),
 
     path(

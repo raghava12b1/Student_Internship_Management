@@ -1,691 +1,373 @@
-import { useEffect, useState } from "react";
-import DashboardLayout from "../../../layouts/DashboardLayout";
+import { useCallback, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import "./DocumentVerification.css";
-import BackButton from "../../../components/common/BackButton/BackButton";
 
-const API_BASE_URL = "http://127.0.0.1:8000/api";
+import DashboardLayout from "../../../layouts/DashboardLayout";
+import BackButton from "../../../components/common/BackButton/BackButton";
+import { apiFetch } from "../../../services/api";
+import "./DocumentVerification.css";
 
 const documentData = {
   offer: {
     title: "Offer Letter Verification",
-    type: "Offer Letter",
+    type: "OFFER_LETTER",
+    displayType: "Offer Letter",
   },
   final: {
     title: "Final Report Verification",
-    type: "Final Internship Report",
+    type: "FINAL_REPORT",
+    displayType: "Final Report",
   },
   certificate: {
     title: "Completion Certificate Verification",
-    type: "Completion Certificate",
+    type: "CERTIFICATE",
+    displayType: "Certificate",
   },
+  weekly: {
+    title: "Weekly Report Verification",
+    type: "WEEKLY_REPORT",
+    displayType: "Weekly Report",
+  },
+};
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api";
+
+const normalizeType = (value) =>
+  String(value || "")
+    .trim()
+    .toUpperCase()
+    .replace(/[\s-]+/g, "_");
+
+const getDocumentId = (document) =>
+  document?.id ?? document?.pk ?? document?.document_id ?? document?.document;
+
+const getDocumentList = (data) => {
+  if (Array.isArray(data)) return data;
+  if (Array.isArray(data?.results)) return data.results;
+  if (Array.isArray(data?.documents)) return data.documents;
+  if (Array.isArray(data?.data)) return data.data;
+  return [];
 };
 
 const DocumentVerification = () => {
   const { type } = useParams();
-
-  const documentConfig =
-    documentData[type] || documentData.offer;
+  const documentConfig = documentData[type] || documentData.offer;
 
   const [documents, setDocuments] = useState([]);
+  const [remarks, setRemarks] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [processingId, setProcessingId] = useState(null);
 
-  /*
-   * =====================================================
-   * GET ACCESS TOKEN
-   * =====================================================
-   */
+  const loadDocuments = useCallback(async () => {
+    setLoading(true);
+    setError("");
 
-  const getAccessToken = () => {
-    return (
-      localStorage.getItem("accessToken") ||
-      localStorage.getItem("access_token") ||
-      localStorage.getItem("access")
-    );
-  };
+    try {
+      const params = new URLSearchParams({
+        status: "PENDING",
+        document_type: documentConfig.type,
+      });
 
-  /*
-   * =====================================================
-   * LOAD DOCUMENTS FROM DJANGO
-   * =====================================================
-   */
+      const response = await apiFetch(
+        `/documents/review/?${params.toString()}`,
+        { method: "GET" }
+      );
+
+      if (!response.ok) {
+        const body = await response.json().catch(() => ({}));
+        throw new Error(
+          body?.detail ||
+            body?.message ||
+            `Unable to fetch documents (${response.status}).`
+        );
+      }
+
+      const data = await response.json();
+      const list = getDocumentList(data).filter(
+        (item) =>
+          normalizeType(item?.document_type || item?.type) ===
+          normalizeType(documentConfig.type)
+      );
+
+      setDocuments(list);
+      setRemarks((current) => {
+        const next = { ...current };
+        list.forEach((item) => {
+          const id = getDocumentId(item);
+          if (id != null && next[id] === undefined) next[id] = "";
+        });
+        return next;
+      });
+    } catch (err) {
+      console.error("Unable to load pending documents:", err);
+      setError(err.message || "Unable to load pending documents.");
+      setDocuments([]);
+    } finally {
+      setLoading(false);
+    }
+  }, [documentConfig.type]);
 
   useEffect(() => {
-    const loadDocuments = async () => {
-      setLoading(true);
-      setError("");
-
-      try {
-        const accessToken = getAccessToken();
-
-        if (!accessToken) {
-          setError(
-            "Access token not found. Please login again."
-          );
-          setLoading(false);
-          return;
-        }
-
-        const response = await fetch(
-          `${API_BASE_URL}/documents/review/`,
-          {
-            method: "GET",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${accessToken}`,
-            },
-          }
-        );
-
-        if (response.status === 401) {
-          setError(
-            "Your login session has expired. Please login again."
-          );
-          setLoading(false);
-          return;
-        }
-
-        if (!response.ok) {
-          throw new Error(
-            `Server returned ${response.status}`
-          );
-        }
-
-        const data = await response.json();
-
-        /*
-         * Django REST Framework can return either:
-         *
-         * [
-         *   {...},
-         *   {...}
-         * ]
-         *
-         * OR
-         *
-         * {
-         *   results: [...]
-         * }
-         */
-
-        let documentList = [];
-
-        if (Array.isArray(data)) {
-          documentList = data;
-        } else if (Array.isArray(data.results)) {
-          documentList = data.results;
-        } else if (Array.isArray(data.documents)) {
-          documentList = data.documents;
-        }
-
-        /*
-         * =================================================
-         * FILTER CURRENT DOCUMENT TYPE
-         * =================================================
-         */
-
-        const normalizeDocumentType = (value) => {
-          return String(value || "")
-            .trim()
-            .toLowerCase()
-            .replace(/&/g, "and")
-            .replace(/[_\s-]+/g, "")
-            .replace(/[^a-z0-9]/g, "");
-        };
-
-        const requiredType = normalizeDocumentType(
-          documentConfig.type
-        );
-
-        const filteredDocuments = documentList.filter((item) => {
-          const itemType = normalizeDocumentType(
-            item.document_type ||
-              item.type ||
-              item.documentType ||
-              item.document_type_display ||
-              ""
-          );
-
-          if (!itemType) {
-            return true;
-          }
-
-          return itemType.includes(requiredType) || requiredType.includes(itemType);
-        });
-
-        setDocuments(filteredDocuments);
-      } catch (err) {
-        console.error(
-          "Unable to load documents:",
-          err
-        );
-
-        setError(
-          "Unable to connect to Django server. Please make sure Django is running."
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadDocuments();
-  }, [type, documentConfig.type]);
+  }, [loadDocuments]);
 
-  /*
-   * =====================================================
-   * HELPERS
-   * =====================================================
-   */
+  const getStudentName = (document) =>
+    document.student_name ||
+    document.student?.name ||
+    document.student?.full_name ||
+    document.student?.user?.first_name ||
+    document.user?.name ||
+    document.user?.username ||
+    "--";
 
-  const getStudentName = (document) => {
-    return (
-      document.student_name ||
-      document.student?.name ||
-      document.student?.full_name ||
-      document.user?.name ||
-      document.user?.username ||
-      "--"
-    );
-  };
+  const getRollNumber = (document) =>
+    document.roll_number ||
+    document.student?.roll_number ||
+    document.student?.rollNumber ||
+    document.student?.user?.username ||
+    "--";
 
-  const getRollNumber = (document) => {
-    return (
-      document.roll_number ||
-      document.student?.roll_number ||
-      document.student?.rollNumber ||
-      "--"
-    );
-  };
+  const getDepartment = (document) =>
+    document.department || document.student?.department || "--";
 
-  const getDepartment = (document) => {
-    return (
-      document.department ||
-      document.student?.department ||
-      "--"
-    );
-  };
+  const getCompany = (document) =>
+    document.company ||
+    document.company_name ||
+    document.internship?.company ||
+    document.internship?.company_name ||
+    "--";
 
-  const getCompany = (document) => {
-    return (
-      document.company ||
-      document.company_name ||
-      document.internship?.company ||
-      document.internship?.company_name ||
-      "--"
-    );
-  };
-
-  const getRole = (document) => {
-    return (
-      document.role ||
-      document.internship?.role ||
-      document.internship?.position ||
-      "--"
-    );
-  };
+  const getRole = (document) =>
+    document.role ||
+    document.internship?.role ||
+    document.internship?.position ||
+    "--";
 
   const getDuration = (document) => {
-    if (
-      document.start_date &&
-      document.end_date
-    ) {
-      return `${document.start_date} - ${document.end_date}`;
-    }
+    const start = document.start_date || document.internship?.start_date;
+    const end = document.end_date || document.internship?.end_date;
 
-    if (
-      document.internship?.start_date &&
-      document.internship?.end_date
-    ) {
-      return `${document.internship.start_date} - ${document.internship.end_date}`;
-    }
-
-    if (document.duration) {
-      return document.duration;
-    }
-
-    return "--";
+    if (start && end) return `${start} - ${end}`;
+    return document.duration || "--";
   };
 
-  const getUploadedDate = (document) => {
-    return (
-      document.uploaded_on ||
-      document.uploaded_at ||
-      document.created_at ||
-      "--"
-    );
-  };
+  const getUploadedDate = (document) =>
+    document.uploaded_on ||
+    document.uploaded_at ||
+    document.created_at ||
+    "--";
 
-  const getStatus = (document) => {
-    return (
-      document.status ||
-      document.verification_status ||
-      "Pending Verification"
-    );
-  };
+  const getStatus = (document) =>
+    document.status || document.verification_status || "PENDING";
 
-  const getFileName = (document) => {
-    return (
-      document.file_name ||
-      document.filename ||
-      document.name ||
-      document.file?.split("/").pop() ||
-      `${documentConfig.type}.pdf`
-    );
-  };
+  const getFileName = (document) =>
+    document.file_name ||
+    document.filename ||
+    document.name ||
+    document.file?.split("/").pop() ||
+    `${documentConfig.displayType}.pdf`;
 
   const getFileUrl = (document) => {
-    return (
+    const rawUrl =
       document.file_url ||
       document.document_url ||
       document.file ||
-      document.url ||
-      null
-    );
+      document.url;
+
+    if (!rawUrl) return null;
+    if (/^https?:\/\//i.test(rawUrl)) return rawUrl;
+
+    const backendOrigin = API_BASE_URL.replace(/\/api\/?$/, "");
+    return `${backendOrigin}/${String(rawUrl).replace(/^\/+/, "")}`;
   };
 
-  /*
-   * =====================================================
-   * STATUS COLOR
-   * =====================================================
-   */
-
   const getStatusColor = (status) => {
-    const value = String(status).toLowerCase();
-
-    if (
-      value.includes("approved") ||
-      value.includes("verified")
-    ) {
+    const value = String(status || "").toLowerCase();
+    if (value.includes("approved") || value.includes("verified"))
       return "#16a34a";
-    }
-
-    if (
-      value.includes("rejected") ||
-      value.includes("declined")
-    ) {
+    if (value.includes("rejected") || value.includes("declined"))
       return "#dc2626";
-    }
-
     return "#f59e0b";
   };
 
-  /*
-   * =====================================================
-   * VIEW DOCUMENT
-   * =====================================================
-   */
-
   const handleViewDocument = (document) => {
     const fileUrl = getFileUrl(document);
-
     if (!fileUrl) {
       alert("Document file is not available.");
       return;
     }
-
-    window.open(fileUrl, "_blank");
+    window.open(fileUrl, "_blank", "noopener,noreferrer");
   };
-
-  /*
-   * =====================================================
-   * DOWNLOAD DOCUMENT
-   * =====================================================
-   */
 
   const handleDownloadDocument = (document) => {
     const fileUrl = getFileUrl(document);
-
     if (!fileUrl) {
       alert("Document file is not available.");
       return;
     }
 
     const link = window.document.createElement("a");
-
     link.href = fileUrl;
     link.target = "_blank";
+    link.rel = "noopener noreferrer";
     link.download = getFileName(document);
-
     window.document.body.appendChild(link);
     link.click();
     window.document.body.removeChild(link);
   };
 
-  /*
-   * =====================================================
-   * APPROVE / REJECT
-   *
-   * IMPORTANT:
-   * We are NOT inventing the backend endpoint here.
-   * Once your friend gives us the exact PATCH/POST API,
-   * we will connect these buttons.
-   * =====================================================
-   */
-
-  const handleApprove = async (item) => {
-    const textarea = window.document.querySelector(`#remarks-${item.id || item.pk || item.document_id}`);
-    const remarks = textarea ? textarea.value.trim() : "";
-    const accessToken = getAccessToken();
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/documents/${item.id || item.pk}/review/`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          status: "APPROVED",
-          remarks,
-        }),
-      });
-
-      if (!response.ok) {
-        const errorBody = await response.text();
-        throw new Error(errorBody || "Could not approve document.");
-      }
-
-      setDocuments((current) =>
-        current.map((currentItem) =>
-          (currentItem.id || currentItem.pk) === (item.id || item.pk)
-            ? { ...currentItem, status: "APPROVED", remarks }
-            : currentItem
-        )
-      );
-      alert("Document approved successfully.");
-    } catch (err) {
-      console.error("Approve document failed:", err);
-      alert("Approval failed. Please check the backend and try again.");
+  const handleReview = async (document, status) => {
+    const id = getDocumentId(document);
+    if (id == null) {
+      alert("Document ID is missing. Cannot submit the review.");
+      return;
     }
-  };
 
-  const handleReject = async (item) => {
-    const textarea = window.document.querySelector(`#remarks-${item.id || item.pk || item.document_id}`);
-    const remarks = textarea ? textarea.value.trim() : "";
-    if (!remarks) {
+    const note = String(remarks[id] || "").trim();
+    if (status === "REJECTED" && !note) {
       alert("Please enter remarks before rejecting the document.");
       return;
     }
 
-    const accessToken = getAccessToken();
-
+    setProcessingId(id);
     try {
-      const response = await fetch(`${API_BASE_URL}/documents/${item.id || item.pk}/review/`, {
+      const response = await apiFetch(`/documents/${id}/review/`, {
         method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${accessToken}`,
-        },
-        body: JSON.stringify({
-          status: "REJECTED",
-          remarks,
-        }),
+        body: JSON.stringify({ status, remarks: note }),
       });
 
       if (!response.ok) {
-        const errorBody = await response.text();
-        throw new Error(errorBody || "Could not reject document.");
+        const body = await response.json().catch(() => ({}));
+        const message =
+          body?.detail ||
+          body?.message ||
+          body?.error ||
+          (typeof body === "object"
+            ? Object.entries(body)
+                .map(([key, value]) =>
+                  `${key}: ${Array.isArray(value) ? value.join(", ") : value}`
+                )
+                .join("\n")
+            : "");
+        throw new Error(
+          message || `Unable to ${status.toLowerCase()} document (${response.status}).`
+        );
       }
 
+      // Keep the database record; remove it only from this pending list.
       setDocuments((current) =>
-        current.map((currentItem) =>
-          (currentItem.id || currentItem.pk) === (item.id || item.pk)
-            ? { ...currentItem, status: "REJECTED", remarks }
-            : currentItem
-        )
+        current.filter((item) => String(getDocumentId(item)) !== String(id))
       );
-      alert("Document rejected successfully.");
+      alert(
+        status === "APPROVED"
+          ? "Document approved successfully."
+          : "Document rejected successfully."
+      );
     } catch (err) {
-      console.error("Reject document failed:", err);
-      alert("Rejection failed. Please check the backend and try again.");
+      console.error(`${status} document failed:`, err);
+      alert(err.message || `Unable to ${status.toLowerCase()} document.`);
+    } finally {
+      setProcessingId(null);
     }
   };
 
-  /*
-   * =====================================================
-   * UI
-   * =====================================================
-   */
-
   return (
     <DashboardLayout>
-
       <BackButton />
-
       <div className="verification-page">
-
-        {/* Header */}
-
         <div className="page-header">
-
-          <h1>
-            {documentConfig.title}
-          </h1>
-
-          <p>
-            Review the uploaded documents and take
-            appropriate action.
-          </p>
-
+          <h1>{documentConfig.title}</h1>
+          <p>Review the uploaded documents and take appropriate action.</p>
         </div>
 
-
-        {/* Loading */}
-
         {loading && (
-
           <div className="card">
-
-            <h2>
-              Loading documents...
-            </h2>
-
-            <p>
-              Fetching student documents from the
-              Django backend.
-            </p>
-
+            <h2>Loading documents...</h2>
+            <p>Fetching pending student documents from the Django backend.</p>
           </div>
-
         )}
-
-
-        {/* Error */}
 
         {!loading && error && (
-
           <div className="card">
-
-            <h2>
-              Unable to Load Documents
-            </h2>
-
-            <p
-              style={{
-                color: "#dc2626",
-                marginTop: "10px",
-              }}
-            >
-              {error}
-            </p>
-
+            <h2>Unable to Load Documents</h2>
+            <p style={{ color: "#dc2626", marginTop: "10px" }}>{error}</p>
+            <button className="view-btn" onClick={loadDocuments}>
+              Retry
+            </button>
           </div>
-
         )}
 
-
-        {/* No Documents */}
-
-        {!loading &&
-          !error &&
-          documents.length === 0 && (
-
-            <div className="card">
-
-              <h2>
-                No {documentConfig.type} Documents
-              </h2>
-
-              <p>
-                No student documents are currently
-                available for verification.
-              </p>
-
-            </div>
-
-          )}
-
-
-        {/* =================================================
-            ALL STUDENT DOCUMENTS
-        ================================================= */}
+        {!loading && !error && documents.length === 0 && (
+          <div className="card">
+            <h2>No Pending {documentConfig.displayType} Documents</h2>
+            <p>No student documents are currently available for verification.</p>
+            <button className="view-btn" onClick={loadDocuments}>
+              Refresh
+            </button>
+          </div>
+        )}
 
         {!loading &&
           !error &&
           documents.map((document, index) => {
-
-            const status =
-              getStatus(document);
+            const id = getDocumentId(document);
+            const status = getStatus(document);
+            const busy = processingId != null && String(processingId) === String(id);
 
             return (
-
               <div
                 className="verification-document"
-                key={
-                  document.id ||
-                  document.pk ||
-                  index
-                }
+                key={id ?? `${documentConfig.type}-${index}`}
               >
-
-                {/* Student Information */}
-
                 <div className="card">
-
-                  <h2>
-                    Student Information
-                  </h2>
-
+                  <h2>Student Information</h2>
                   <div className="student-grid">
-
                     <div>
                       <span>Name</span>
-                      <h3>
-                        {getStudentName(document)}
-                      </h3>
+                      <h3>{getStudentName(document)}</h3>
                     </div>
-
-
                     <div>
                       <span>Roll Number</span>
-                      <h3>
-                        {getRollNumber(document)}
-                      </h3>
+                      <h3>{getRollNumber(document)}</h3>
                     </div>
-
-
                     <div>
                       <span>Department</span>
-                      <h3>
-                        {getDepartment(document)}
-                      </h3>
+                      <h3>{getDepartment(document)}</h3>
                     </div>
-
-
                     <div>
                       <span>Company</span>
-                      <h3>
-                        {getCompany(document)}
-                      </h3>
+                      <h3>{getCompany(document)}</h3>
                     </div>
-
-
                     <div>
                       <span>Role</span>
-                      <h3>
-                        {getRole(document)}
-                      </h3>
+                      <h3>{getRole(document)}</h3>
                     </div>
-
-
                     <div>
-                      <span>
-                        Internship Duration
-                      </span>
-
-                      <h3>
-                        {getDuration(document)}
-                      </h3>
+                      <span>Internship Duration</span>
+                      <h3>{getDuration(document)}</h3>
                     </div>
-
-
                     <div>
-                      <span>
-                        Document Type
-                      </span>
-
-                      <h3>
-                        {documentConfig.type}
-                      </h3>
+                      <span>Document Type</span>
+                      <h3>{documentConfig.displayType}</h3>
                     </div>
-
-
                     <div>
-                      <span>
-                        Uploaded On
-                      </span>
-
-                      <h3>
-                        {getUploadedDate(document)}
-                      </h3>
+                      <span>Uploaded On</span>
+                      <h3>{getUploadedDate(document)}</h3>
                     </div>
-
-
                     <div>
-                      <span>
-                        Status
-                      </span>
-
-                      <h3
-                        style={{
-                          color:
-                            getStatusColor(status),
-                        }}
-                      >
-                        {status}
-                      </h3>
+                      <span>Status</span>
+                      <h3 style={{ color: getStatusColor(status) }}>{status}</h3>
                     </div>
-
                   </div>
-
                 </div>
 
-
-                {/* Uploaded Document */}
-
                 <div className="card">
-
-                  <h2>
-                    Uploaded Document
-                  </h2>
-
+                  <h2>Uploaded Document</h2>
                   <div className="document-preview">
-
-                    <div className="pdf-icon">
-                      📄
-                    </div>
-
-                    <h3>
-                      {getFileName(document)}
-                    </h3>
-
-                    <p>
-                      Click below to preview or
-                      download the uploaded document.
-                    </p>
-
-
+                    <div className="pdf-icon">📄</div>
+                    <h3>{getFileName(document)}</h3>
+                    <p>Click below to preview or download the uploaded document.</p>
                     <div
                       style={{
                         display: "flex",
@@ -695,86 +377,58 @@ const DocumentVerification = () => {
                         flexWrap: "wrap",
                       }}
                     >
-
                       <button
                         className="view-btn"
-                        onClick={() =>
-                          handleViewDocument(
-                            document
-                          )
-                        }
+                        onClick={() => handleViewDocument(document)}
                       >
                         👀 Preview Document
                       </button>
-
-
                       <button
                         className="view-btn"
-                        onClick={() =>
-                          handleDownloadDocument(
-                            document
-                          )
-                        }
+                        onClick={() => handleDownloadDocument(document)}
                       >
                         ⬇ Download Document
                       </button>
-
                     </div>
-
                   </div>
-
                 </div>
 
-
-                {/* Remarks */}
-
                 <div className="card">
-
-                  <h2>
-                    Coordinator Remarks
-                  </h2>
-
+                  <h2>Coordinator Remarks</h2>
                   <textarea
                     rows="6"
                     placeholder="Enter remarks before approving or rejecting the document..."
-                    id={`remarks-${document.id || index}`}
-                  ></textarea>
-
+                    value={id == null ? "" : remarks[id] || ""}
+                    onChange={(event) =>
+                      id != null &&
+                      setRemarks((current) => ({
+                        ...current,
+                        [id]: event.target.value,
+                      }))
+                    }
+                  />
                 </div>
-
-
-                {/* Action Buttons */}
 
                 <div className="actions">
-
                   <button
                     className="approve-btn"
-                    onClick={() =>
-                      handleApprove(document)
-                    }
+                    disabled={busy}
+                    onClick={() => handleReview(document, "APPROVED")}
                   >
-                    ✅ Approve
+                    {busy ? "Processing..." : "✅ Approve"}
                   </button>
-
-
                   <button
                     className="reject-btn"
-                    onClick={() =>
-                      handleReject(document)
-                    }
+                    disabled={busy}
+                    onClick={() => handleReview(document, "REJECTED")}
                   >
-                    ❌ Reject
+                    {busy ? "Processing..." : "❌ Reject"}
                   </button>
-
                 </div>
-
               </div>
-
             );
           })}
-
       </div>
-
     </DashboardLayout>
   );
 };

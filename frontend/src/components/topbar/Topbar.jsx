@@ -1,9 +1,10 @@
 import "./Topbar.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { IoNotificationsOutline } from "react-icons/io5";
 import { FaUserCircle } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
+import { apiFetch } from "../../services/api";
 
 import LogoutModal from "../common/LogoutModal/LogoutModal";
 import NotificationDropdown from "../common/NotificationDropdown/NotificationDropdown";
@@ -14,8 +15,32 @@ const Topbar = ({ setSidebarOpen }) => {
   const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [showNotifications, setShowNotifications] = useState(false);
   const [showProfile, setShowProfile] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [notifications, setNotifications] = useState([]);
 
   const location = useLocation();
+
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        const data = await apiFetch("/notifications/");
+        
+        let notificationList = [];
+        if (Array.isArray(data)) {
+          notificationList = data;
+        } else if (Array.isArray(data.results)) {
+          notificationList = data.results;
+        }
+
+        const unread = notificationList.filter((n) => !n.is_read).length;
+        setUnreadCount(unread);
+        setNotifications(notificationList);
+      } catch (err) {
+        console.error("Failed to fetch notifications:", err);
+      }
+    };
+    fetchNotifications();
+  }, []);
 
   // =====================================================
   // CURRENT USER
@@ -252,14 +277,16 @@ const Topbar = ({ setSidebarOpen }) => {
 
             <IoNotificationsOutline />
 
-            <span className="notification-badge">
-              3
-            </span>
+            {unreadCount > 0 && (
+              <span className="notification-badge">
+                {unreadCount}
+              </span>
+            )}
 
           </button>
 
           {showNotifications && (
-            <NotificationDropdown />
+            <NotificationDropdown notifications={notifications} />
           )}
 
         </div>

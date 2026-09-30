@@ -57,7 +57,7 @@ const AdminReports = () => {
   const [internshipLoading, setInternshipLoading] = useState(true);
   const [internshipError, setInternshipError] = useState("");
   const [companyFilter, setCompanyFilter] = useState("All Companies");
-  const [stipendFilter, setStipendFilter] = useState("All Students");
+  const [stipendFilter, setStipendFilter] = useState("ALL");
 
   useEffect(() => {
     const loadInternships = async () => {
@@ -103,21 +103,16 @@ const AdminReports = () => {
         companyFilter === "All Companies" ||
         item.company_name === companyFilter;
 
-      let matchesStipend = true;
+      const stipendType = item.stipend_type || (
+        item.stipend !== null &&
+        item.stipend !== undefined &&
+        Number(item.stipend) > 0
+          ? "STIPEND"
+          : "NO_STIPEND"
+      );
 
-      if (stipendFilter === "Getting Stipend") {
-        matchesStipend =
-          item.stipend !== null &&
-          item.stipend !== undefined &&
-          Number(item.stipend) > 0;
-      }
-
-      if (stipendFilter === "Not Getting Stipend") {
-        matchesStipend =
-          item.stipend === null ||
-          item.stipend === undefined ||
-          Number(item.stipend) <= 0;
-      }
+      const matchesStipend =
+        stipendFilter === "ALL" || stipendType === stipendFilter;
 
       return matchesCompany && matchesStipend;
     });
@@ -134,15 +129,23 @@ const AdminReports = () => {
       { header: "Company", key: "company_name" },
       { header: "Role", key: "role" },
       { header: "Internship Status", key: "status" },
+      { header: "Stipend Type", key: "stipend_type_label" },
       { header: "Stipend Amount", key: "stipend" },
     ];
 
     const exportData = filteredInternships.map((item) => ({
       ...item,
+      stipend_type_label:
+        item.stipend_type === "PAID_BY_STUDENT"
+          ? "Paid By Student"
+          : item.stipend_type === "STIPEND" ||
+            (!item.stipend_type && Number(item.stipend) > 0)
+            ? "Stipend"
+            : "No Stipend",
       stipend:
         item.stipend !== null && item.stipend !== undefined
           ? item.stipend
-          : "0",
+          : "",
     }));
 
     const parts = ["SIMS"];
@@ -151,12 +154,8 @@ const AdminReports = () => {
       parts.push(companyFilter.replace(/\s+/g, "_"));
     }
 
-    if (stipendFilter === "Getting Stipend") {
-      parts.push("Getting_Stipend");
-    }
-
-    if (stipendFilter === "Not Getting Stipend") {
-      parts.push("Not_Getting_Stipend");
+    if (stipendFilter !== "ALL") {
+      parts.push(stipendFilter);
     }
 
     parts.push("Internship_Report");
@@ -305,14 +304,17 @@ const AdminReports = () => {
                   setStipendFilter(e.target.value)
                 }
               >
-                <option value="All Students">
+                <option value="ALL">
                   All Students
                 </option>
-                <option value="Getting Stipend">
-                  Getting Stipend
+                <option value="STIPEND">
+                  Stipend
                 </option>
-                <option value="Not Getting Stipend">
-                  Not Getting Stipend
+                <option value="NO_STIPEND">
+                  No Stipend
+                </option>
+                <option value="PAID_BY_STUDENT">
+                  Paid By Student
                 </option>
               </select>
             </div>
@@ -399,13 +401,14 @@ const AdminReports = () => {
                       <td>{item.role || "--"}</td>
                       <td>{item.status || "--"}</td>
                       <td>
-                        {item.stipend !== null &&
-                        item.stipend !== undefined &&
-                        Number(item.stipend) > 0
-                          ? `₹${Number(
-                              item.stipend
-                            ).toLocaleString()}`
-                          : "No Stipend"}
+                        {item.stipend_type === "PAID_BY_STUDENT"
+                          ? "Paid By Student"
+                          : item.stipend_type === "STIPEND" ||
+                            (!item.stipend_type && Number(item.stipend) > 0)
+                            ? `Stipend - ₹${Number(
+                                item.stipend
+                              ).toLocaleString()}`
+                            : "No Stipend"}
                       </td>
                     </tr>
                   )

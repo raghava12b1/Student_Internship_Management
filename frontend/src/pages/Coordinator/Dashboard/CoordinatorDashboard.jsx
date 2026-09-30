@@ -39,38 +39,56 @@ const CoordinatorDashboard = () => {
 
   const statistics = dashboardData?.statistics || {};
 
-  const stats = [
-    {
-      title: "Total Applications",
-      value: statistics.applications ?? 0,
-      color: "#2563eb",
-      icon: "🎓",
-    },
-    {
-      title: "Pending Applications",
-      value: statistics.pending_applications ?? 0,
-      color: "#f59e0b",
-      icon: "📄",
-    },
-    {
-      title: "Approved Applications",
-      value: statistics.approved_applications ?? 0,
-      color: "#10b981",
-      icon: "📝",
-    },
-    {
-      title: "Rejected Applications",
-      value: statistics.rejected_applications ?? 0,
-      color: "#ef4444",
-      icon: "📚",
-    },
-    {
-      title: "Internships",
-      value: statistics.internships ?? 0,
-      color: "#8b5cf6",
-      icon: "🏆",
-    },
-  ];
+ const stats = [
+  {
+    title: "Internships",
+    value: statistics.internships ?? 0,
+    color: "#8b5cf6",
+    icon: "🏆",
+  },
+  {
+    title: "Total Documents",
+    value: statistics.documents ?? 0,
+    color: "#0891b2",
+    icon: "📁",
+  },
+  {
+    title: "Pending Documents",
+    value: statistics.pending_documents ?? 0,
+    color: "#f59e0b",
+    icon: "⏳",
+  },
+  {
+    title: "Approved Documents",
+    value: statistics.approved_documents ?? 0,
+    color: "#10b981",
+    icon: "✅",
+  },
+  {
+    title: "Rejected Documents",
+    value: statistics.rejected_documents ?? 0,
+    color: "#ef4444",
+    icon: "❌",
+  },
+  {
+    title: "Offer Letters",
+    value: statistics.offer_letters ?? 0,
+    color: "#0d9488",
+    icon: "📃",
+  },
+  {
+    title: "Final Reports",
+    value: statistics.final_reports ?? 0,
+    color: "#6366f1",
+    icon: "📘",
+  },
+  {
+    title: "Certificates",
+    value: statistics.certificates ?? 0,
+    color: "#9333ea",
+    icon: "🏅",
+  },
+];
 
   /*
    * =====================================================
@@ -184,10 +202,10 @@ const CoordinatorDashboard = () => {
 
             <button
               onClick={() =>
-                navigate("/coordinator/document/offer")
+                navigate("/coordinator/applications")
               }
             >
-              📄 Verify Offer Letters
+              📄 View Applications
             </button>
 
 

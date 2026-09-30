@@ -25,20 +25,20 @@ const NotificationDropdown = ({ notifications = [] }) => {
 
         notifications.map((item) => (
 
-          <div
-            className="notification-item"
-            key={item.id}
-          >
+            <div
+              className={`notification-item ${!item.is_read ? "unread" : ""}`}
+              key={item.id}
+            >
 
-            <h5>
-              {item.title}
-            </h5>
+              <h5>
+                {item.title}
+              </h5>
 
-            <p>
-              {item.time}
-            </p>
+              <p>
+                {new Date(item.created_at || item.time).toLocaleDateString()}
+              </p>
 
-          </div>
+            </div>
 
         ))
 

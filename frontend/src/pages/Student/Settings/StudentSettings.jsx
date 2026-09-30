@@ -1,8 +1,10 @@
 import "./StudentSettings.css";
 import BackButton from "../../../components/common/BackButton/BackButton";
+import DashboardLayout from "../../../layouts/DashboardLayout";
 
 const StudentSettings = () => {
   return (
+    
     <div className="student-settings">
          <BackButton />
 
@@ -16,19 +18,19 @@ const StudentSettings = () => {
         <div className="setting-item">
           <div>
             <h4>Change Password</h4>
-            <p>Update your account password.</p>
+            <p>Update your account password (Coming Soon).</p>
           </div>
 
-          <button>Change</button>
+          <button disabled>Change</button>
         </div>
 
         <div className="setting-item">
           <div>
             <h4>Email Notifications</h4>
-            <p>Receive internship updates via email.</p>
+            <p>Receive internship updates via email (Coming Soon).</p>
           </div>
 
-          <input type="checkbox" defaultChecked />
+          <input type="checkbox" disabled />
         </div>
 
         <div className="setting-item">
@@ -43,6 +45,7 @@ const StudentSettings = () => {
       </div>
 
     </div>
+    
   );
 };
 

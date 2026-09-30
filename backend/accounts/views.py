@@ -8,6 +8,7 @@ from rest_framework.response import Response
 from rest_framework.exceptions import NotFound
 from rest_framework_simplejwt.views import TokenObtainPairView
 
+
 from .models import StudentProfile, CoordinatorProfile
 from .serializers import (
     StudentProfileSerializer,
@@ -58,8 +59,10 @@ class StudentProfileListCreateView(generics.ListCreateAPIView):
     serializer_class = StudentProfileSerializer
     permission_classes = [IsAuthenticated]
 
+    
     def get_queryset(self):
-        queryset = StudentProfile.objects.select_related("user").all()
+        return StudentProfile.objects.select_related("user").all()
+
 
         if self.request.user.role == "COORDINATOR":
             if not hasattr(self.request.user, "coordinator_profile"):
@@ -125,28 +128,66 @@ class StudentRegistrationView(generics.CreateAPIView):
             status=status.HTTP_201_CREATED,
         )
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+
+class CoordinatorProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+
+        department = getattr(user, "department", "")
+        if not isinstance(department, str):
+            department = getattr(department, "name", "")
+
+        full_name = (
+            getattr(user, "get_full_name", lambda: "")()
+            or getattr(user, "username", "")
+        )
+
+        return Response({
+            "full_name": full_name,
+            "email": getattr(user, "email", ""),
+            "phone_number": getattr(user, "phone_number", ""),
+            "designation": getattr(user, "designation", ""),
+            "department": department,
+            "experience": getattr(user, "experience", ""),
+            "staff_id": getattr(user, "staff_id", ""),
+            "role": getattr(user, "role", "Coordinator"),
+            "account_status": "Active",
+            "account_type": "University Staff",
+            "last_updated": (
+                user.updated_at.isoformat()
+                if getattr(user, "updated_at", None)
+                else ""
+            ),
+        })
+
 # ============================================================
 # COORDINATOR REGISTRATION
 # ============================================================
 
 class CoordinatorRegistrationView(generics.CreateAPIView):
     serializer_class = CoordinatorRegistrationSerializer
+    permission_classes = [IsAuthenticated]
 
     def create(self, request, *args, **kwargs):
+        if request.user.role != "ADMIN":
+            return Response(
+                {"detail": "Only admins can create coordinator accounts."},
+                status=status.HTTP_403_FORBIDDEN,
+            )
 
-        serializer = self.get_serializer(
-            data=request.data
-        )
-
-        serializer.is_valid(
-            raise_exception=True
-        )
-
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
         coordinator_profile = serializer.save()
 
         return Response(
             {
-                "message": "Coordinator registration successful.",
+                "message": "Coordinator account created successfully.",
                 "coordinator": CoordinatorProfileSerializer(
                     coordinator_profile
                 ).data,
@@ -171,6 +212,17 @@ class StudentDashboardView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
+        if request.user.role != "STUDENT":
+            return Response(
+                {
+                    "detail": (
+                        "You do not have permission to access "
+                        "the student dashboard."
+                    )
+                },
+                status=status.HTTP_403_FORBIDDEN,
+            )
+
         # Check if user has student profile
         if not hasattr(request.user, 'student_profile'):
             raise NotFound(
@@ -471,14 +523,12 @@ class StudentDashboardView(generics.GenericAPIView):
         return Response(data)
 
 
+
 class CoordinatorDashboardView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        if request.user.role not in [
-            "COORDINATOR",
-            "ADMIN",
-        ]:
+        if request.user.role not in ["COORDINATOR", "ADMIN"]:
             return Response(
                 {
                     "detail": (
@@ -489,37 +539,123 @@ class CoordinatorDashboardView(generics.GenericAPIView):
                 status=status.HTTP_403_FORBIDDEN,
             )
 
-        applications = Application.objects.all()
-        internships = Internship.objects.all()
+        applications = Application.objects.select_related(
+            "student", "student__user"
+        ).all()
+
+        internships = Internship.objects.select_related(
+            "student"
+        ).all()
+
+        documents = Document.objects.select_related(
+            "student", "internship"
+        ).all()
+
+        # Coordinators see records belonging to their department.
+        if request.user.role == "COORDINATOR":
+            coordinator = getattr(
+                request.user, "coordinator_profile", None
+            )
+
+            if not coordinator:
+                return Response(
+                    {"detail": "Coordinator profile not found."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+
+            department = normalize_department_value(
+                coordinator.department
+            )
+
+            application_ids = [
+                app.id for app in applications
+                if normalize_department_value(
+                    app.student.department
+                ) == department
+            ]
+
+            internship_ids = [
+                internship.id for internship in internships
+                if normalize_department_value(
+                    internship.student.department
+                ) == department
+            ]
+
+            document_ids = [
+                document.id for document in documents
+                if normalize_department_value(
+                    document.student.department
+                ) == department
+            ]
+
+            applications = applications.filter(
+                id__in=application_ids
+            )
+            internships = internships.filter(
+                id__in=internship_ids
+            )
+            documents = documents.filter(
+                id__in=document_ids
+            )
+
+        # Application statistics
+        total_applications = applications.count()
+        pending_applications = applications.filter(
+            status=Application.Status.PENDING
+        ).count()
+        approved_applications = applications.filter(
+            status=Application.Status.APPROVED
+        ).count()
+        rejected_applications = applications.filter(
+            status=Application.Status.REJECTED
+        ).count()
+
+        # Document statistics
+        total_documents = documents.count()
+        pending_documents = documents.filter(
+            status=Document.Status.PENDING
+        ).count()
+        approved_documents = documents.filter(
+            status=Document.Status.APPROVED
+        ).count()
+        rejected_documents = documents.filter(
+            status=Document.Status.REJECTED
+        ).count()
+
+        recent_applications = applications.order_by(
+            "-applied_at"
+        )[:10]
 
         data = {
             "statistics": {
-                "applications": applications.count(),
-
-                "pending_applications": applications.filter(
-                    status=Application.Status.PENDING
-                ).count(),
-
-                "approved_applications": applications.filter(
-                    status=Application.Status.APPROVED
-                ).count(),
-
-                "rejected_applications": applications.filter(
-                    status=Application.Status.REJECTED
-                ).count(),
-
+                "applications": total_applications,
+                "pending_applications": pending_applications,
+                "approved_applications": approved_applications,
+                "rejected_applications": rejected_applications,
                 "internships": internships.count(),
-            },
 
+                "documents": total_documents,
+                "pending_documents": pending_documents,
+                "approved_documents": approved_documents,
+                "rejected_documents": rejected_documents,
+
+                "offer_letters": documents.filter(
+                    document_type=Document.DocumentType.OFFER_LETTER
+                ).count(),
+                "final_reports": documents.filter(
+                    document_type=Document.DocumentType.FINAL_REPORT
+                ).count(),
+                "certificates": documents.filter(
+                    document_type=Document.DocumentType.CERTIFICATE
+                ).count(),
+            },
             "recent_applications": ApplicationSerializer(
-                applications.order_by("-applied_at")[:10],
+                recent_applications,
                 many=True,
             ).data,
         }
 
         return Response(data)
-
-
 class AdminDashboardView(generics.GenericAPIView):
     permission_classes = [IsAuthenticated]
 

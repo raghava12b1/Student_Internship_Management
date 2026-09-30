@@ -16,6 +16,7 @@ from .models import (
 # ============================================================
 
 class StudentProfileSerializer(serializers.ModelSerializer):
+    email = serializers.SerializerMethodField()
 
     class Meta:
         model = StudentProfile
@@ -28,7 +29,11 @@ class StudentProfileSerializer(serializers.ModelSerializer):
             "year",
             "semester",
             "mobile_number",
+            "email",
         ]
+
+    def get_email(self, obj):
+        return obj.user.email
 
 
 # ============================================================

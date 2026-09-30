@@ -42,6 +42,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }) => {
     // First close sidebar
     setSidebarOpen(false);
 
+    // Clear authentication data
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("userName");
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("internshipId");
+
     // Go to Home page and directly open Login screen
     navigate("/", {
       replace: true,

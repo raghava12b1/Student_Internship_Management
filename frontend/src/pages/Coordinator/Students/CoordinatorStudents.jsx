@@ -180,7 +180,7 @@ const CoordinatorStudents = () => {
      * a different student-details route.
      */
 
-    navigate(`/coordinator/students/${student.id}`, {
+    navigate(`/coordinator/student-details`, {
       state: {
         student,
       },

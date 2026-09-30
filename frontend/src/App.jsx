@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 // ============================================================
 // PUBLIC COMPONENTS
@@ -45,6 +45,9 @@ import StudentProfile
 import StudentSettings
   from "./pages/Student/Settings/StudentSettings";
 
+import StudentApplications
+  from "./pages/Student/Applications/StudentApplications";
+
 // ============================================================
 // COORDINATOR
 // ============================================================
@@ -57,6 +60,9 @@ import CoordinatorStudents
 
 import CoordinatorStudentDetails
   from "./pages/Coordinator/StudentDetails/CoordinatorStudentDetails";
+
+import CoordinatorApplications
+  from "./pages/Coordinator/Applications/CoordinatorApplications";
 
 import OfferLetterVerification
   from "./pages/Coordinator/OfferLetters/OfferLetterVerification";
@@ -115,13 +121,19 @@ import AdminSettings
 // ============================================================
 
 function App() {
+  const location = useLocation();
+  const isDashboardRoute = 
+    location.pathname.startsWith("/student") ||
+    location.pathname.startsWith("/coordinator") ||
+    location.pathname.startsWith("/admin");
+
   return (
     <>
       {/* ======================================================
           PUBLIC NAVBAR
       ====================================================== */}
 
-      <Navbar />
+      {!isDashboardRoute && <Navbar />}
 
       <Routes>
 
@@ -163,6 +175,7 @@ function App() {
           element={<CoordinatorRegistration />}
         />
 
+
         {/* ====================================================
             STUDENT
         ==================================================== */}
@@ -202,6 +215,11 @@ function App() {
           element={<StudentSettings />}
         />
 
+        <Route
+          path="/student/applications"
+          element={<StudentApplications />}
+        />
+
         {/* ====================================================
             COORDINATOR
         ==================================================== */}
@@ -219,6 +237,11 @@ function App() {
         <Route
           path="/coordinator/student-details"
           element={<CoordinatorStudentDetails />}
+        />
+
+        <Route
+          path="/coordinator/applications"
+          element={<CoordinatorApplications />}
         />
 
         <Route

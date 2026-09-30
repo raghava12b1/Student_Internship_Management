@@ -16,6 +16,7 @@ const FinalReport = () => {
   const [file, setFile] = useState(null);
 
   const [internshipId, setInternshipId] = useState(null);
+  const [internship, setInternship] = useState(null);
 
   const [loading, setLoading] = useState(false);
   const [loadingInternship, setLoadingInternship] =
@@ -51,6 +52,7 @@ const FinalReport = () => {
         }
 
         setInternshipId(id);
+        setInternship(dashboard.internship);
 
         console.log(
           "INTERNSHIP ID:",
@@ -276,7 +278,9 @@ const FinalReport = () => {
 
             <input
               type="text"
-              placeholder="Enter Company Name"
+              value={internship?.company_name || ""}
+              disabled
+              readOnly
             />
 
           </div>
@@ -292,7 +296,9 @@ const FinalReport = () => {
 
             <input
               type="text"
-              placeholder="Example: 15 May 2026 - 15 July 2026"
+              value={internship ? `${internship.start_date} to ${internship.end_date}` : ""}
+              disabled
+              readOnly
             />
 
           </div>

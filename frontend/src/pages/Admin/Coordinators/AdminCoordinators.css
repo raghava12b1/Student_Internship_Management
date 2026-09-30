@@ -1,65 +1,197 @@
-.admin-coordinators{
-    padding:30px;
+.admin-coordinators {
+  padding: 30px;
 }
 
-.page-header{
-    margin-bottom:25px;
+.admin-coordinators .page-header {
+  margin-bottom: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
 }
 
-.page-header h1{
-    font-size:32px;
-    color:#1e293b;
+.admin-coordinators .page-header h1 {
+  font-size: 32px;
+  color: #1e293b;
 }
 
-.page-header p{
-    color:#64748b;
-    margin-top:6px;
+.admin-coordinators .page-header p {
+  color: #64748b;
+  margin-top: 6px;
 }
 
-.table-card{
-    background:#fff;
-    border-radius:18px;
-    padding:25px;
-    box-shadow:0 10px 30px rgba(0,0,0,.08);
-    overflow-x:auto;
+.table-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  overflow-x: auto;
 }
 
-.table-card table{
-    width:100%;
-    border-collapse:collapse;
+.table-card table {
+  width: 100%;
+  border-collapse: collapse;
 }
 
-.table-card th{
-    background:#2563eb;
-    color:white;
-    padding:15px;
-    text-align:left;
+.table-card th {
+  background: #2563eb;
+  color: white;
+  padding: 15px;
+  text-align: left;
 }
 
-.table-card td{
-    padding:15px;
-    border-bottom:1px solid #e5e7eb;
+.table-card td {
+  padding: 15px;
+  border-bottom: 1px solid #e5e7eb;
 }
 
-.table-card tr:hover{
-    background:#f8fafc;
+.table-card tr:hover {
+  background: #f8fafc;
 }
 
 .view-btn,
-.edit-btn{
-    border:none;
-    padding:8px 16px;
-    border-radius:8px;
-    color:white;
-    cursor:pointer;
-    margin-right:8px;
-    font-weight:600;
+.edit-btn {
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  margin-right: 8px;
+  font-weight: 600;
 }
 
-.view-btn{
-    background:#2563eb;
+.view-btn {
+  background: #2563eb;
 }
 
-.edit-btn{
-    background:#10b981;
+.edit-btn {
+  background: #10b981;
+}
+
+.add-coordinator-btn,
+.create-coordinator-btn {
+  border: none;
+  padding: 11px 20px;
+  border-radius: 9px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.add-coordinator-btn:hover,
+.create-coordinator-btn:hover {
+  background: #1d4ed8;
+}
+
+.create-coordinator-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.coordinator-create-card {
+  background: #fff;
+  border-radius: 18px;
+  padding: 25px;
+  margin-bottom: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.coordinator-create-card h2 {
+  color: #1e293b;
+  font-size: 23px;
+  margin-bottom: 6px;
+}
+
+.coordinator-create-card > p {
+  color: #64748b;
+  margin-bottom: 22px;
+}
+
+.coordinator-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.coordinator-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.coordinator-form-field label {
+  color: #334155;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.coordinator-form-field input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  outline: none;
+  font-size: 14px;
+  color: #1e293b;
+  background: #fff;
+  box-sizing: border-box;
+}
+
+.coordinator-form-field input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.create-coordinator-btn {
+  margin-top: 22px;
+}
+
+.coordinator-message {
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  font-size: 14px;
+}
+
+.coordinator-message.error {
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+}
+
+.coordinator-message.success {
+  background: #f0fdf4;
+  color: #166534;
+  border: 1px solid #bbf7d0;
+}
+
+.empty-coordinators {
+  text-align: center;
+  color: #64748b;
+  padding: 25px !important;
+}
+
+@media (max-width: 768px) {
+  .admin-coordinators {
+    padding: 16px;
+  }
+
+  .admin-coordinators .page-header h1 {
+    font-size: 25px;
+  }
+
+  .coordinator-create-card {
+    padding: 18px;
+  }
+
+  .coordinator-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .table-card {
+    padding: 12px;
+  }
 }

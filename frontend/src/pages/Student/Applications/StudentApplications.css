@@ -1,0 +1,117 @@
+
+.student-application-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.application-heading {
+  margin-bottom: 24px;
+}
+
+.application-heading h1 {
+  margin-bottom: 8px;
+  color: #172554;
+}
+
+.application-heading p {
+  color: #64748b;
+}
+
+.application-form {
+  padding: 28px;
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(15, 23, 42, 0.08);
+}
+
+.application-form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.application-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #334155;
+  font-weight: 600;
+}
+
+.application-form input,
+.application-form select,
+.application-form textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+}
+
+.application-form input:focus,
+.application-form select:focus,
+.application-form textarea:focus {
+  outline: 2px solid #2563eb;
+  border-color: #2563eb;
+}
+
+.application-description {
+  margin-top: 20px;
+}
+
+.application-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 24px;
+}
+
+.application-buttons button {
+  padding: 12px 20px;
+  border: 0;
+  border-radius: 8px;
+  background: #2563eb;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.application-buttons button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.application-buttons .application-cancel {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.application-success {
+  color: #15803d;
+  white-space: pre-line;
+  margin-top: 16px;
+}
+
+.application-error {
+  color: #dc2626;
+  white-space: pre-line;
+  margin-top: 16px;
+}
+
+@media (max-width: 650px) {
+  .student-application-page {
+    padding: 16px;
+  }
+
+  .application-form {
+    padding: 20px;
+  }
+
+  .application-form-grid {
+    grid-template-columns: 1fr;
+  }
+}
